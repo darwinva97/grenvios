@@ -1,0 +1,501 @@
+
+    <h1 class="grenvios-sr-only">{{home_sr_h1}}</h1>
+
+    <div class="slider-section">
+        <div class="main-slider">
+            <div class="swiper-wrapper">
+                {{REP:home_slides}}
+            </div>
+        </div>
+
+        <!-- ════════════════════════════════════════════════════════════════
+             COTIZADOR DEL HERO — vive FUERA del carrusel a propósito: así no
+             se repite en cada diapositiva ni se reconstruye al pasar de una a
+             otra. En escritorio flota sobre la mitad derecha; en móvil cae
+             debajo del carrusel, en el flujo normal.
+             ════════════════════════════════════════════════════════════════ -->
+        <div class="gr-heroquote">
+            <div class="container">
+                HEROQUOTEFORM
+            </div>
+        </div>
+    </div>
+    <!--/.slider-section-->
+
+    <!-- ════════════════════════════════════════════════════════════════
+         PROMOCIÓN DEL MES — OCULTA por defecto.
+         Para ACTIVARLA: cambia  style="display:none"  por  style="display:block"
+         y edita el título, el texto y (opcional) el enlace del botón.
+         ════════════════════════════════════════════════════════════════ -->
+    <section class="grenvios-promo-section" style="display:none;">
+        <div class="container">
+            <div class="grenvios-promo-banner">
+                <div class="promo-text">
+                    <span class="promo-tag"><i class="fa-solid fa-tags"></i> {{home_promo_tag}}</span>
+                    <p class="promo-title">{{home_promo_title}}</p>
+                    <p>{{home_promo_text}}</p>
+                </div>
+                <a href="HOMEURL/cotizar/" class="default-btn">{{home_promo_btn}}</a>
+            </div>
+        </div>
+    </section>
+    <!--/.promo-section-->
+
+
+    <section class="about-section padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="about-img-wrap">
+                        <img class="wow fade-in-left" data-wow-delay="100ms" src="{{home_about_img1}}" alt="Transporte internacional Grenvíos">
+                        <img class="wow fade-in-bottom" data-wow-delay="300ms" src="{{home_about_img2}}" alt="Envíos de paquetes Grenvíos">
+                        <img src="{{home_about_img3}}" alt="Repartidor Grenvíos">
+                        <div class="about-img-info">{{home_about_imginfo}}</div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="section-heading mb-40">
+                        <p class="sub-heading is-border border-anim">{{home_about_sub}}<span class="sh-underline"><img class="sh-truck" src="ARKDINURI/assets/img/truck.svg" alt=""></span></p>
+                        <h2 class="text-anim" data-effect="fade-in-right" data-split="char" data-delay="0.3" data-duration="1">{{home_about_title}}</h2>
+                        <p class="text-anim" data-effect="fade-in-bottom" data-ease="power4.out">{{home_about_text}}</p>
+                    </div>
+                    <ul class="promo-list mb-30">
+                        <li class="wow fade-in-bottom" data-wow-delay="100ms">
+                            <i class="logis logis-airplane-flying"></i>
+                            <div class="promo-content">
+                                <h3>{{home_about_promo1_title}}</h3>
+                                <p>{{home_about_promo1_text}}</p>
+                            </div>
+                        </li>
+                        <li class="wow fade-in-bottom" data-wow-delay="300ms">
+                            <i class="logis logis-airplane-flying"></i>
+                            <div class="promo-content">
+                                <h3>{{home_about_promo2_title}}</h3>
+                                <p>{{home_about_promo2_text}}</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="check-list mb-20 wow fade-in-bottom" data-wow-delay="100ms">
+                        <li><i class="fa-solid fa-check"></i>{{home_about_check1}}</li>
+                        <li><i class="fa-solid fa-check"></i>{{home_about_check2}}</li>
+                        <li><i class="fa-solid fa-check"></i>{{home_about_check3}}</li>
+                    </ul>
+                    <div class="btn-group wow fade-in-bottom" data-wow-delay="300ms">
+                        <a href="HOMEURL/nosotros/" class="default-btn">{{home_about_btn}}</a>
+                        <div class="call-info">
+                            <i class="fa-light fa-phone"></i>
+                            <p class="gr-call">{{home_about_call}} <span><a href="tel:{{contacto_tel}}">{{contacto_telefono}}</a></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/.about-section-->
+
+    <section class="service-section bg-grey padding">
+        <div class="map-pattern"></div>
+        <div class="container">
+            <div class="section-heading text-center mb-40">
+                <p class="sub-heading is-border border-anim">{{home_serv_sub}}<span class="sh-underline"><img class="sh-truck" src="ARKDINURI/assets/img/truck.svg" alt=""></span></p>
+                <h2 class="text-anim" data-effect="fade-in-right" data-split="char" data-delay="0.3" data-duration="1">{{home_serv_title}}</h2>
+                <p class="text-anim" data-effect="fade-in-bottom" data-ease="power4.out">{{home_serv_text}}</p>
+            </div>
+            <div class="service-carousel swiper">
+                <div class="swiper-wrapper">
+                    {{REP:home_services}}
+                </div>
+            </div>
+            <div class="carousel-pagination text-center"></div>
+        </div>
+    </section>
+    <!--/.service-section-->
+
+    <section class="running-text">
+        <div class="container">
+            <div class="scroller" data-speed="slow">
+                <ul class="text-anim scroller__inner">
+                    <li>{{home_run1}}</li>
+                    <li>{{home_run2}}</li>
+                    <li>{{home_run3}}</li>
+                    <li>{{home_run4}}</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <!--/.running-text-->
+
+    <section class="project-section padding">
+        <div class="bg-half" style="background-image:url({{home_dest_bg}})"></div>
+        <div class="container">
+            <div class="section-heading-wrap mb-40">
+                <div class="section-heading white">
+                    <p class="sub-heading is-border border-anim">{{home_dest_sub}}<span class="sh-underline"><img class="sh-truck" src="ARKDINURI/assets/img/truck.svg" alt=""></span></p>
+                    <h2 class="text-anim" data-effect="fade-in-right" data-split="char" data-delay="0.3" data-duration="1">{{home_dest_title}}</h2>
+                    <p class="text-anim" data-effect="fade-in-bottom" data-ease="power4.out">{{home_dest_text}}</p>
+                </div>
+                <a href="HOMEURL/destinos/" class="default-btn wow fade-in-right" data-wow-delay="100ms">{{home_dest_btn}}</a>
+            </div>
+            <div class="swiper-outside">
+                <div class="project-carousel">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="project-item wow fade-in-bottom" data-wow-delay="200ms">
+                                <div class="project-thumb project-view">
+                                    <a href="HOMEURL/destinos/ecuador/"><img src="{{home_dest1_img}}" alt="Envíos a Ecuador"></a>
+                                </div>
+                                <div class="project-content">
+                                    <a href="HOMEURL/destinos/" class="category">{{home_dest1_cat}}</a>
+                                    <h3><a href="HOMEURL/destinos/ecuador/">{{home_dest1_name}}</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="project-item wow fade-in-bottom" data-wow-delay="400ms">
+                                <div class="project-thumb project-view">
+                                    <a href="HOMEURL/destinos/colombia/"><img src="{{home_dest2_img}}" alt="Envíos a Colombia"></a>
+                                </div>
+                                <div class="project-content">
+                                    <a href="HOMEURL/destinos/" class="category">{{home_dest2_cat}}</a>
+                                    <h3><a href="HOMEURL/destinos/colombia/">{{home_dest2_name}}</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="project-item wow fade-in-bottom" data-wow-delay="600ms">
+                                <div class="project-thumb project-view">
+                                    <a href="HOMEURL/destinos/chile/"><img src="{{home_dest3_img}}" alt="Envíos a Chile"></a>
+                                </div>
+                                <div class="project-content">
+                                    <a href="HOMEURL/destinos/" class="category">{{home_dest3_cat}}</a>
+                                    <h3><a href="HOMEURL/destinos/chile/">{{home_dest3_name}}</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="project-item wow fade-in-bottom" data-wow-delay="700ms">
+                                <div class="project-thumb project-view">
+                                    <a href="HOMEURL/destinos/estados-unidos/"><img src="{{home_dest4_img}}" alt="Envíos a Estados Unidos"></a>
+                                </div>
+                                <div class="project-content">
+                                    <a href="HOMEURL/destinos/" class="category">{{home_dest4_cat}}</a>
+                                    <h3><a href="HOMEURL/destinos/estados-unidos/">{{home_dest4_name}}</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="project-item wow fade-in-bottom" data-wow-delay="800ms">
+                                <div class="project-thumb project-view">
+                                    <a href="HOMEURL/destinos/espana/"><img src="{{home_dest5_img}}" alt="Envíos a España desde Lima"></a>
+                                </div>
+                                <div class="project-content">
+                                    <a href="HOMEURL/destinos/" class="category">{{home_dest5_cat}}</a>
+                                    <h3><a href="HOMEURL/destinos/espana/">{{home_dest5_name}}</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-pagination"></div><!-- Carousel Dots -->
+                </div>
+                <!-- Carousel Arrows -->
+                <div class="swiper-nav swiper-next"><i class="fa-regular fa-long-arrow-right"></i></div>
+                <div class="swiper-nav swiper-prev"><i class="fa-regular fa-long-arrow-left"></i></div>
+            </div>
+        </div>
+    </section>
+    <!--/.project-section (destinos)-->
+
+    <section class="quick-quote-section padding bg-grey" id="cotiza-rapido">
+        <div class="container">
+            <div class="section-heading text-center mb-40">
+                <p class="sub-heading is-border border-anim">{{home_qq_sub}}<span class="sh-underline"><img class="sh-truck" src="ARKDINURI/assets/img/truck.svg" alt=""></span></p>
+                <h2 class="text-anim" data-effect="fade-in-right" data-split="char" data-delay="0.3" data-duration="1">{{home_qq_title}}</h2>
+                <p class="text-anim" data-effect="fade-in-bottom" data-ease="power4.out">{{home_qq_text}}</p>
+            </div>
+            <form class="grenvios-quick-quote" onsubmit="return grenviosQuickQuote(event)">
+                <div class="qq-field">
+                    <label for="qq-pais">{{home_qq_pais_label}}</label>
+                    <select id="qq-pais" name="pais" required>
+                        <option value="">{{home_qq_pais_ph}}</option>
+                        {{REP:home_qq_countries}}
+                    </select>
+                </div>
+                <div class="qq-field">
+                    <label for="qq-tipo">{{home_qq_tipo_label}}</label>
+                    <select id="qq-tipo" name="tipo" required>
+                        <option value="">{{home_qq_tipo_ph}}</option>
+                        {{REP:home_qq_types}}
+                    </select>
+                </div>
+                <div class="qq-field">
+                    <label for="qq-peso">{{home_qq_peso_label}}</label>
+                    <input type="number" id="qq-peso" name="peso" min="0" step="0.1" placeholder="{{home_qq_peso_ph}}">
+                </div>
+                <div class="qq-submit">
+                    <button type="submit" class="default-btn"><i class="fa-brands fa-whatsapp"></i> {{home_qq_btn}}</button>
+                </div>
+            </form>
+            <p class="text-center mt-20">{{home_qq_note}}</p>
+        </div>
+    </section>
+    <script>
+        function grenviosQuickQuote(e){
+            e.preventDefault();
+            var f = e.target;
+            var pais = f.pais.value, tipo = f.tipo.value, peso = f.peso.value;
+            var msg = 'Hola Grenvíos, quiero cotizar un envío.';
+            msg += '\nPaís de destino: ' + pais;
+            msg += '\nTipo de envío: ' + tipo;
+            if (peso) msg += '\nPeso aprox.: ' + peso + ' kg';
+            window.open('https://wa.me/{{contacto_wa}}?text=' + encodeURIComponent(msg), '_blank');
+            return false;
+        }
+    </script>
+    <!--/.quick-quote-section-->
+
+    <section class="content-features bg-dark padding-bottom">
+        <div class="bg-half" style="background-image:url({{home_feat_bg}})"></div>
+        <div class="map-pattern"></div>
+        <div class="container">
+            <div class="counter-wrap">
+                <div class="counter-item wow fade-in-bottom" data-wow-delay="200ms">
+                    <div class="counter-icon">
+                        <i class="logis logis-worldwide"></i>
+                    </div>
+                    <div class="counter-content">
+                        <p class="gr-cnum"><span class="odometer" data-count="30" aria-hidden="true">00</span><span class="grenvios-sr-only">30</span></p>
+                        <p class="gr-clabel">{{home_count1_label}}</p>
+                    </div>
+                </div>
+                <div class="counter-item wow fade-in-bottom" data-wow-delay="400ms">
+                    <div class="counter-icon">
+                        <i class="logis logis-loader"></i>
+                    </div>
+                    <div class="counter-content">
+                        <p class="gr-cnum"><span class="odometer" data-count="4" aria-hidden="true">00</span><span class="grenvios-sr-only">4</span></p>
+                        <p class="gr-clabel">{{home_count2_label}}</p>
+                    </div>
+                </div>
+                <div class="counter-item wow fade-in-bottom" data-wow-delay="600ms">
+                    <div class="counter-icon">
+                        <i class="logis logis-map-1"></i>
+                    </div>
+                    <div class="counter-content">
+                        <p class="gr-cnum"><span class="odometer" data-count="5000" aria-hidden="true">00</span><span class="grenvios-sr-only">5000</span></p>
+                        <p class="gr-clabel">{{home_count3_label}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="section-heading white mb-40">
+                        <p class="sub-heading is-border border-anim">{{home_feat_sub}}<span class="sh-underline"><img class="sh-truck" src="ARKDINURI/assets/img/truck.svg" alt=""></span></p>
+                        <h2 class="text-anim" data-effect="fade-in-right" data-split="char" data-delay="0.3" data-duration="1">{{home_feat_title}}</h2>
+                        <p class="text-anim" data-effect="fade-in-bottom" data-ease="power4.out">{{home_feat_text}}</p>
+                    </div>
+                    <ul class="promo-list white mb-30">
+                        <li class="wow fade-in-bottom" data-wow-delay="100ms">
+                            <i class="logis logis-airplane-flying"></i>
+                            <div class="promo-content">
+                                <h3>{{home_feat_promo1_title}}</h3>
+                                <p>{{home_feat_promo1_text}}</p>
+                            </div>
+                        </li>
+                        <li class="wow fade-in-bottom" data-wow-delay="300ms">
+                            <i class="logis logis-airplane-flying"></i>
+                            <div class="promo-content">
+                                <h3>{{home_feat_promo2_title}}</h3>
+                                <p>{{home_feat_promo2_text}}</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-6 position-relative">
+                    <div class="feature-tab wow fade-in-bottom" data-wow-delay="200ms">
+                        <nav class="feature-tab-nav">
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">{{home_feat_tab1_label}}</button>
+                                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">{{home_feat_tab2_label}}</button>
+                            </div>
+                        </nav>
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                <div class="tab-inner">
+                                    <div class="feature-tab-content">
+                                        <h3>{{home_feat_tab1_title}}</h3>
+                                        <p>{{home_feat_tab1_text}}</p>
+                                        <ul class="check-list mb-20">
+                                            <li><i class="fa-solid fa-check"></i>{{home_feat_tab1_li1}}</li>
+                                            <li><i class="fa-solid fa-check"></i>{{home_feat_tab1_li2}}</li>
+                                            <li><i class="fa-solid fa-check"></i>{{home_feat_tab1_li3}}</li>
+                                        </ul>
+                                        <a href="HOMEURL/rastreo-de-envios/" class="default-btn">{{home_feat_tab1_btn}}</a>
+                                    </div>
+                                    <div class="tab-thumb">
+                                        <img src="{{home_feat_img1}}" alt="Rastreo de envíos">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                <div class="tab-inner">
+                                    <div class="feature-tab-content">
+                                        <h3>{{home_feat_tab2_title}}</h3>
+                                        <p>{{home_feat_tab2_text}}</p>
+                                        <ul class="check-list mb-20">
+                                            <li><i class="fa-solid fa-check"></i>{{home_feat_tab2_li1}}</li>
+                                            <li><i class="fa-solid fa-check"></i>{{home_feat_tab2_li2}}</li>
+                                            <li><i class="fa-solid fa-check"></i>{{home_feat_tab2_li3}}</li>
+                                        </ul>
+                                        <a href="HOMEURL/destinos/" class="default-btn">{{home_feat_tab2_btn}}</a>
+                                    </div>
+                                    <div class="tab-thumb">
+                                        <img src="{{home_feat_img2}}" alt="Operación global">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/.content-features-->
+
+    <section class="process-section padding">
+        <div class="map-pattern"></div>
+        <div class="container">
+            <div class="section-heading text-center mb-40">
+                <p class="sub-heading is-border border-anim">{{home_proc_sub}}<span class="sh-underline"><img class="sh-truck" src="ARKDINURI/assets/img/truck.svg" alt=""></span></p>
+                <h2 class="text-anim" data-effect="fade-in-right" data-split="char" data-delay="0.3" data-duration="1">{{home_proc_title}}</h2>
+                <p class="text-anim" data-effect="fade-in-bottom" data-ease="power4.out">{{home_proc_text}}</p>
+            </div>
+            <div class="row process-wrapper gy-lg-0 gy-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="process-item wow fade-in-bottom" data-wow-delay="100ms">
+                        <div class="process-icon">
+                            <i class="logis logis-package"></i>
+                            <span>1</span>
+                        </div>
+                        <div class="process-content">
+                            <h3>{{home_proc1_title}}</h3>
+                            <p>{{home_proc1_text}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="process-item wow fade-in-bottom" data-wow-delay="300ms">
+                        <div class="process-icon">
+                            <i class="logis logis-package-1"></i>
+                            <span>2</span>
+                        </div>
+                        <div class="process-content">
+                            <h3>{{home_proc2_title}}</h3>
+                            <p>{{home_proc2_text}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="process-item wow fade-in-bottom" data-wow-delay="500ms">
+                        <div class="process-icon">
+                            <i class="logis logis-truck-2"></i>
+                            <span>3</span>
+                        </div>
+                        <div class="process-content">
+                            <h3>{{home_proc3_title}}</h3>
+                            <p>{{home_proc3_text}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="process-item wow fade-in-bottom" data-wow-delay="700ms">
+                        <div class="process-icon">
+                            <i class="logis logis-loader"></i>
+                            <span>4</span>
+                        </div>
+                        <div class="process-content">
+                            <h3>{{home_proc4_title}}</h3>
+                            <p>{{home_proc4_text}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/.process-section-->
+
+    <section class="gr-hcta">
+        <div class="container">
+            <div class="gr-hcta-box">
+                <div class="gr-hcta-text">
+                    <p class="gr-hcta-eyebrow">{{home_cta_sub}}</p>
+                    <h2>{{home_cta_title}}</h2>
+                    <p class="gr-hcta-lead">{{home_cta_text}}</p>
+                    <a href="HOMEURL/cotizar/" class="gr-hcta-btn">{{home_cta_btn}} <i class="fa-regular fa-arrow-right" aria-hidden="true"></i></a>
+                </div>
+                <img class="gr-hcta-img" src="{{home_cta_men}}" alt="{{home_cta_img_alt}}" width="990" height="537" loading="lazy" decoding="async">
+            </div>
+            <div class="gr-hcta-cards">
+                <a class="gr-hcta-card" href="HOMEURL/destinos/">
+                    <span class="gr-hcta-ic" aria-hidden="true"><i class="fa-regular fa-truck-fast"></i></span>
+                    <span class="gr-hcta-card-tx"><strong>{{home_cta_promo1_title}}</strong><span>{{home_cta_promo1_text}}</span></span>
+                    <span class="gr-hcta-go" aria-hidden="true"><i class="fa-regular fa-arrow-right"></i></span>
+                </a>
+                <a class="gr-hcta-card" href="HOMEURL/servicios/envio-internacional-de-paquetes/">
+                    <span class="gr-hcta-ic" aria-hidden="true"><i class="fa-regular fa-plane"></i></span>
+                    <span class="gr-hcta-card-tx"><strong>{{home_cta_promo2_title}}</strong><span>{{home_cta_promo2_text}}</span></span>
+                    <span class="gr-hcta-go" aria-hidden="true"><i class="fa-regular fa-arrow-right"></i></span>
+                </a>
+                <a class="gr-hcta-card" href="HOMEURL/recojo-a-domicilio-lima/">
+                    <span class="gr-hcta-ic" aria-hidden="true"><i class="fa-regular fa-house"></i></span>
+                    <span class="gr-hcta-card-tx"><strong>{{home_cta_promo3_title}}</strong><span>{{home_cta_promo3_text}}</span></span>
+                    <span class="gr-hcta-go" aria-hidden="true"><i class="fa-regular fa-arrow-right"></i></span>
+                </a>
+            </div>
+        </div>
+    </section>
+    <!--/.cta-section-->
+
+    <section class="testimonial-section padding">
+        <div class="cargo-container wow fade-in-top" data-wow-delay="100ms" style="background-image:url({{home_testi_cargo}})"></div>
+        <div class="map-pattern"></div>
+        <div class="container">
+            <div class="section-heading text-center mb-30">
+                <p class="sub-heading is-border border-anim">{{home_testi_sub}}<span class="sh-underline"><img class="sh-truck" src="ARKDINURI/assets/img/truck.svg" alt=""></span></p>
+                <h2 class="text-anim" data-effect="fade-in-right" data-split="char" data-delay="0.3" data-duration="1">{{home_testi_title}}</h2>
+                <p class="text-anim" data-effect="fade-in-bottom" data-ease="power4.out">{{home_testi_text}}</p>
+            </div>
+            <div class="gr-summary">
+                <div class="gr-summary-brand">
+                    <span class="g-word"><span class="g-b">G</span><span class="g-r">o</span><span class="g-y">o</span><span class="g-b">g</span><span class="g-g">l</span><span class="g-r">e</span></span>
+                    <span class="gr-summary-label">Reseñas</span>
+                </div>
+                <div class="gr-summary-score">
+                    <span class="gr-summary-num">{{home_google_rating}}</span>
+                    <span class="gr-summary-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                    <span class="gr-summary-count">Basado en {{home_google_count}} reseñas</span>
+                </div>
+                <a href="{{home_google_url}}" target="_blank" rel="noopener" class="gr-summary-btn"><i class="fa-solid fa-pen-to-square"></i> Escribir reseña</a>
+            </div>
+            <div class="swiper-outside testi-nav position-relative">
+                <div class="testimonial-carousel">
+                    <div class="swiper-wrapper">
+                        {{REP:home_testimonials}}
+                    </div>
+                    <div class="carousel-pagination"></div><!-- Carousel Dots -->
+                </div>
+                <!-- Carousel Arrows -->
+                <div class="swiper-nav swiper-next"><i class="fa-regular fa-long-arrow-right"></i></div>
+                <div class="swiper-nav swiper-prev"><i class="fa-regular fa-long-arrow-left"></i></div>
+            </div>
+            <!-- Reseñas verificadas en Google. TODO: reemplazar el href por el enlace real
+                 del perfil de Google Business de Grenvíos (Maps / "Escribir una reseña"). -->
+            <div class="grenvios-google-reviews text-center">
+                <a href="https://www.google.com/search?q=Grenv%C3%ADos+env%C3%ADos+internacionales+opiniones" target="_blank" rel="noopener" class="grenvios-google-badge">
+                    <i class="fa-brands fa-google"></i>
+                    <span class="g-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
+                    <span class="g-text">{{home_google_text}}</span>
+                </a>
+            </div>
+        </div>
+    </section>
+    <!--/.testimonial-section-->

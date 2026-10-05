@@ -1,0 +1,147 @@
+
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-info text-center">
+                <h4>{{doc_hero_eyebrow}}</h4>
+                <h1>{{doc_hero_title}}</h1>
+                <nav class="breadcrumbs" aria-label="Breadcrumb">
+                    <ul class="breadcrumb-list">
+                        <li><a href="HOMEURL/">{{doc_hero_bc_inicio}}</a></li>
+                        <li><a href="HOMEURL/servicios/">{{doc_hero_bc_servicios}}</a></li>
+                        <li><span aria-current="page">{{doc_hero_bc_current}}</span></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+    <!--page-header-->
+
+    <!-- Intro -->
+    <section class="srv-intro padding-top">
+        <div class="container">
+            <div class="srv-lead text-center">
+                <h2>{{doc_intro_title}}</h2>
+                <p>{{doc_intro_p1}}</p>
+                <p>{{doc_intro_p2}}</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ¿Qué documentos puedes enviar? · 6 tarjetas con icono -->
+    <section class="srv-section padding">
+        <div class="container">
+            <div class="srv-head text-center">
+                <h2>{{doc_docs_title}}</h2>
+                <p>{{doc_docs_intro}}</p>
+            </div>
+            <div class="srv-cards-6">
+                <div class="srv-card"><span class="srv-card-ic"><i class="fa-solid fa-scale-balanced"></i></span><h3>{{doc_docs_item1}}</h3></div>
+                <div class="srv-card"><span class="srv-card-ic"><i class="fa-solid fa-graduation-cap"></i></span><h3>{{doc_docs_item2}}</h3></div>
+                <div class="srv-card"><span class="srv-card-ic"><i class="fa-solid fa-id-card"></i></span><h3>{{doc_docs_item3}}</h3></div>
+                <div class="srv-card"><span class="srv-card-ic"><i class="fa-solid fa-file-signature"></i></span><h3>{{doc_docs_item4}}</h3></div>
+                <div class="srv-card"><span class="srv-card-ic"><i class="fa-solid fa-folder-open"></i></span><h3>{{doc_docs_item5}}</h3></div>
+                <div class="srv-card"><span class="srv-card-ic"><i class="fa-solid fa-envelope"></i></span><h3>{{doc_docs_item6}}</h3></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Banda de 3 columnas: Cómo funciona · Restricciones · Tiempos -->
+    <section class="srv-trio bg-grey padding">
+        <div class="container">
+            <div class="srv-trio-grid">
+
+                <div class="srv-panel">
+                    <h3 class="srv-panel-title">{{doc_como_title}}</h3>
+                    <ul class="srv-steps">
+                        <li><span class="srv-step-n">1</span><span class="srv-step-ic"><i class="fa-solid fa-box-open"></i></span><div class="srv-step-tx"><h4>{{doc_como_s1_t}}</h4><p>{{doc_como_s1_d}}</p></div></li>
+                        <li><span class="srv-step-n">2</span><span class="srv-step-ic"><i class="fa-solid fa-envelope-open-text"></i></span><div class="srv-step-tx"><h4>{{doc_como_s2_t}}</h4><p>{{doc_como_s2_d}}</p></div></li>
+                        <li><span class="srv-step-n">3</span><span class="srv-step-ic"><i class="fa-solid fa-plane-departure"></i></span><div class="srv-step-tx"><h4>{{doc_como_s3_t}}</h4><p>{{doc_como_s3_d}}</p></div></li>
+                        <li><span class="srv-step-n">4</span><span class="srv-step-ic"><i class="fa-solid fa-house-circle-check"></i></span><div class="srv-step-tx"><h4>{{doc_como_s4_t}}</h4><p>{{doc_como_s4_d}}</p></div></li>
+                    </ul>
+                </div>
+
+                <div class="srv-panel srv-warn">
+                    <h3 class="srv-panel-title">{{doc_restric_title}}</h3>
+                    <div class="srv-warn-ic"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    <p class="srv-warn-intro">{{doc_no_intro}}</p>
+                    <ul class="srv-no-list">
+                        <li><i class="fa-solid fa-circle-xmark"></i>{{doc_no1}}</li>
+                        <li><i class="fa-solid fa-circle-xmark"></i>{{doc_no2}}</li>
+                        <li><i class="fa-solid fa-circle-xmark"></i>{{doc_no3}}</li>
+                    </ul>
+                    <a href="HOMEURL/servicios/" class="default-btn">{{doc_como_title_btn}}</a>
+                </div>
+
+                <div class="srv-panel">
+                    <h3 class="srv-panel-title">{{doc_tiempos_title}}</h3>
+                    <ul class="srv-times">
+                        <li><span class="srv-time-ic"><i class="fa-solid fa-earth-americas"></i></span><span class="srv-time-v">{{doc_tiempos_item1}}</span></li>
+                        <li><span class="srv-time-ic"><i class="fa-solid fa-earth-europe"></i></span><span class="srv-time-v">{{doc_tiempos_item2}}</span></li>
+                        <li><span class="srv-time-ic"><i class="fa-solid fa-earth-asia"></i></span><span class="srv-time-v">{{doc_tiempos_item3}}</span></li>
+                    </ul>
+                    <p class="srv-time-foot"><i class="fa-solid fa-shield-halved"></i>{{doc_tiempos_item4}}</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Destinos más solicitados + Validez legal -->
+    <section class="srv-section padding">
+        <div class="container">
+            <div class="srv-two-grid">
+                <div class="srv-dest-card">
+                    <h2>{{doc_destinos_title}}</h2>
+                    <p>{{doc_destinos_intro}}</p>
+                    <ul class="srv-dest-list">
+                        <li><i class="fa-solid fa-location-dot"></i>{{doc_destinos_item1_pre}}<a href="HOMEURL/destinos/estados-unidos/">{{doc_destinos_item1_link}}</a>{{doc_destinos_item1_post}}</li>
+                        <li><i class="fa-solid fa-location-dot"></i>{{doc_destinos_item2_pre}}<a href="HOMEURL/destinos/espana/">{{doc_destinos_item2_link}}</a>{{doc_destinos_item2_post}}</li>
+                        <li><i class="fa-solid fa-location-dot"></i>{{doc_destinos_item3_pre}}<a href="HOMEURL/destinos/">{{doc_destinos_item3_link}}</a></li>
+                    </ul>
+                    <a href="HOMEURL/destinos/" class="default-btn">{{doc_destinos_btn}}</a>
+                </div>
+                <div class="srv-legal-card">
+                    <h2>{{doc_legal_title}}</h2>
+                    <p>{{doc_legal_p1}} <a href="HOMEURL/servicios/apostilla-y-traduccion/">{{doc_legal_link}}</a>{{doc_legal_p2}}</p>
+                    <div class="srv-legal-grid">
+                        <div class="srv-legal-item"><i class="fa-solid fa-stamp"></i><span>{{doc_legal_f1}}</span></div>
+                        <div class="srv-legal-item"><i class="fa-solid fa-language"></i><span>{{doc_legal_f2}}</span></div>
+                        <div class="srv-legal-item"><i class="fa-solid fa-building-columns"></i><span>{{doc_legal_f3}}</span></div>
+                    </div>
+                    <a href="HOMEURL/servicios/apostilla-y-traduccion/" class="default-btn btn-light">{{doc_legal_btn}}</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tira de garantías -->
+    <section class="srv-features">
+        <div class="container">
+            <div class="srv-features-grid">
+                <div class="srv-feature"><i class="fa-solid fa-shield-halved"></i><div><h4>{{doc_feat1_t}}</h4><p>{{doc_feat1_d}}</p></div></div>
+                <div class="srv-feature"><i class="fa-solid fa-truck-fast"></i><div><h4>{{doc_feat2_t}}</h4><p>{{doc_feat2_d}}</p></div></div>
+                <div class="srv-feature"><i class="fa-solid fa-earth-americas"></i><div><h4>{{doc_feat3_t}}</h4><p>{{doc_feat3_d}}</p></div></div>
+                <div class="srv-feature"><i class="fa-solid fa-location-crosshairs"></i><div><h4>{{doc_feat4_t}}</h4><p>{{doc_feat4_d}}</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA final -->
+    <section class="cta-section padding">
+        <div class="container">
+            <div class="row cta-wrapper gx-0 align-items-center">
+                <div class="col-lg-7">
+                    <div class="section-heading white mb-0">
+                        <h2>{{doc_cta_title}}</h2>
+                        <p>{{doc_cta_text}}</p>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="srv-cta-actions">
+                        <a href="HOMEURL/cotizar/" class="default-btn btn-light">{{doc_cta_cotizar}}</a>
+                        <a href="https://wa.me/{{contacto_wa}}" class="default-btn" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> {{doc_cta_whatsapp}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>

@@ -1,0 +1,152 @@
+
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-info text-center">
+                <h4>{{cont_hero_eyebrow}}</h4>
+                <h1>{{cont_hero_title}}</h1>
+                <nav class="breadcrumbs" aria-label="Breadcrumb">
+                    <ul class="breadcrumb-list">
+                        <li><a href="HOMEURL/">{{cont_hero_breadcrumb_home}}</a></li>
+                        <li><span aria-current="page">{{cont_hero_breadcrumb_current}}</span></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+    <!--/.page-header-->
+
+    <section class="contact-section padding">
+        <div class="map-pattern"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 sm-padding">
+                    <div class="contact-form-wrap row-gap">
+                        <div class="section-heading mb-40">
+                            <h3 class="sub-heading is-border border-anim">{{cont_form_eyebrow}}<span class="sh-underline"><img class="sh-truck" src="ARKDINURI/assets/img/truck.svg" alt="camión"></span></h3>
+                            <h2 class="text-anim" data-effect="fade-in-right" data-split="char" data-delay="0.3" data-duration="1">{{cont_form_title}}</h2>
+                            <p class="text-anim" data-effect="fade-in-bottom" data-ease="power4.out">{{cont_form_text}}</p>
+                        </div>
+                        <div class="contact-form">
+                            <form action="ARKDINURI/php/contact.php" method="post" id="ajax_contact" class="form-horizontal">
+                                <div class="contact-form-group">
+                                    <div class="form-field">
+                                        <label for="firstname">{{cont_form_label_firstname}}</label>
+                                        <input type="text" id="firstname" name="firstname" class="form-control" placeholder="{{cont_form_ph_firstname}}" required>
+                                    </div>
+                                    <div class="form-field">
+                                        <label for="lastname">{{cont_form_label_lastname}}</label>
+                                        <input type="text" id="lastname" name="lastname" class="form-control" placeholder="{{cont_form_ph_lastname}}" required>
+                                    </div>
+                                    <div class="form-field">
+                                        <label for="email">{{cont_form_label_email}}</label>
+                                        <input type="email" id="email" name="email" class="form-control" placeholder="{{cont_form_ph_email}}" required>
+                                    </div>
+                                    <div class="form-field">
+                                        <label for="phone">{{cont_form_label_phone}}</label>
+                                        <input type="text" id="phone" name="phone" class="form-control" placeholder="{{cont_form_ph_phone}}" required>
+                                    </div>
+                                    <div class="form-field">
+                                        <label for="country">{{cont_form_label_country}}</label>
+                                        <input type="text" id="country" name="country" class="form-control" placeholder="{{cont_form_ph_country}}" required>
+                                    </div>
+                                    <div class="form-field">
+                                        <label for="shipping_type">{{cont_form_label_shipping_type}}</label>
+                                        <select id="shipping_type" name="shipping_type" class="form-control" required>
+                                            <option value="">{{cont_form_type_placeholder}}</option>
+                                            {{REP:cont_types}}
+                                        </select>
+                                    </div>
+                                    <div class="form-field">
+                                        <label for="content">{{cont_form_label_content}}</label>
+                                        <input type="text" id="content" name="content" class="form-control" placeholder="{{cont_form_ph_content}}">
+                                    </div>
+                                    <div class="form-field">
+                                        <label for="weight">{{cont_form_label_weight}}</label>
+                                        <input type="text" id="weight" name="weight" class="form-control" placeholder="{{cont_form_ph_weight}}">
+                                    </div>
+                                    <div class="form-field">
+                                        <label for="dimensions">{{cont_form_label_dimensions}}</label>
+                                        <input type="text" id="dimensions" name="dimensions" class="form-control" placeholder="{{cont_form_ph_dimensions}}">
+                                    </div>
+                                    <div class="form-field message">
+                                        <label for="message">{{cont_form_label_message}}</label>
+                                        <textarea id="message" name="message" cols="30" rows="4" class="form-control" placeholder="{{cont_form_ph_message}}" required></textarea>
+                                    </div>
+                                    <div class="form-field submit-btn">
+                                        <button id="submit" class="default-btn" type="submit">{{cont_form_submit}}</button>
+                                    </div>
+                                </div>
+                                <div id="form-messages" class="ajax-form-msg alert" role="alert"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 sm-padding">
+                    <div class="section-heading mb-40">
+                        <h3 class="sub-heading is-border border-anim">{{cont_info_eyebrow}}<span class="sh-underline"><img class="sh-truck" src="ARKDINURI/assets/img/truck.svg" alt="camión"></span></h3>
+                        <h2 class="text-anim" data-effect="fade-in-right" data-split="char" data-delay="0.3" data-duration="1">{{cont_info_title}}</h2>
+                        <p class="text-anim" data-effect="fade-in-bottom" data-ease="power4.out">{{cont_info_text}}</p>
+                    </div>
+                    <ul class="contact-info-list">
+                        <li class="wow fade-in-bottom" data-wow-delay="100ms">
+                            <i class="fa-light fa-phone-volume"></i>
+                            <h3>{{cont_info_phone_label}} <span><a href="tel:{{contacto_tel}}">{{cont_info_phone_value}}</a></span></h3>
+                        </li>
+                        <li class="wow fade-in-bottom" data-wow-delay="300ms">
+                            <i class="fa-light fa-envelope-open-text"></i>
+                            <h3>{{cont_info_email_label}} <span><a href="mailto:{{contacto_email}}">{{cont_info_email_value}}</a></span></h3>
+                        </li>
+                        <li class="wow fade-in-bottom" data-wow-delay="500ms">
+                            <i class="fa-light fa-location-dot"></i>
+                            <h3>{{cont_info_address_label}} <span>{{cont_info_address_value}}</span></h3>
+                        </li>
+                        <li class="wow fade-in-bottom" data-wow-delay="700ms">
+                            <i class="fa-light fa-clock"></i>
+                            <h3>{{cont_info_hours_label}} <span>{{cont_info_hours_value}}</span></h3>
+                        </li>
+                    </ul>
+                    <div class="whatsapp-box">
+                        <a href="https://wa.me/{{contacto_wa}}" class="default-btn" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> {{cont_info_whatsapp_btn}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/.contact-section-->
+
+    <section class="blog-section bg-grey padding">
+        <div class="container">
+            <div class="section-heading text-center mb-40">
+                <h3 class="sub-heading is-border">{{cont_cards_eyebrow}}<span class="sh-underline"><img class="sh-truck" src="ARKDINURI/assets/img/truck.svg" alt="camión"></span></h3>
+                <h2>{{cont_cards_title}}</h2>
+            </div>
+            <div class="grenvios-info-grid">
+                {{REP:cont_cards}}
+            </div>
+        </div>
+    </section>
+    <!--/.contacto-info-->
+
+    <section class="cta-section padding-bottom">
+        <div class="container">
+            <div class="row cta-wrapper gx-0">
+                <div class="col-lg-6">
+                    <div class="section-heading white">
+                        <h3 class="sub-heading is-border border-anim">{{cont_cta_subheading}}<span class="sh-underline"><img class="sh-truck" src="ARKDINURI/assets/img/truck.svg" alt="camión"></span></h3>
+                        <h2 class="text-anim" data-effect="fade-in-right" data-split="char" data-delay="0.3" data-duration="1">{{cont_cta_title}}</h2>
+                        <div class="btn-group">
+                            <a href="HOMEURL/cotizar/" class="default-btn wow fade-in-bottom" data-wow-delay="200ms">{{cont_cta_btn}}</a>
+                            <a href="https://wa.me/{{contacto_wa}}" class="default-btn wow fade-in-bottom" data-wow-delay="300ms"><i class="fa-brands fa-whatsapp"></i> {{cont_cta_btn_whatsapp}}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="cta-men wow fade-in-bottom" data-wow-delay="200ms" style="background-image:url({{cont_cta_men}})"></div>
+            </div>
+        </div>
+    </section>
+    <!--/.cta-section-->
+
+    <div class="map-wrapper">
+        <iframe src="{{cont_map_query}}" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" loading="lazy" title="Mapa de Grenvíos"></iframe>
+    </div><!-- /#google-map -->
+

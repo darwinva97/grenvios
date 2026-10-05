@@ -1,0 +1,132 @@
+
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-info text-center">
+                <h4>{{paq_hero_subtitle}}</h4>
+                <h1>{{paq_hero_title}}</h1>
+                <nav class="breadcrumbs" aria-label="Breadcrumb">
+                    <ul class="breadcrumb-list">
+                        <li><a href="HOMEURL/">{{paq_hero_breadcrumb_inicio}}</a></li>
+                        <li><a href="HOMEURL/servicios/">{{paq_hero_breadcrumb_servicios}}</a></li>
+                        <li><span aria-current="page">{{paq_hero_breadcrumb_actual}}</span></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+    <!--page-header-->
+
+    <section class="srv-intro padding-top">
+        <div class="container">
+            <div class="srv-lead text-center">
+                <h2>{{paq_intro_title}}</h2>
+                <p>{{paq_intro_text}}</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modalidades + Peso volumétrico (2 paneles) -->
+    <section class="srv-section padding">
+        <div class="container">
+            <div class="srv-two-grid">
+                <div class="srv-panel">
+                    <h3 class="srv-panel-title">{{paq_modalidades_title}}</h3>
+                    <p>{{paq_modalidades_text}}</p>
+                    <div class="service-features">
+                        <ul class="check-list">
+                            {{REP:paq_modalidades}}
+                        </ul>
+                    </div>
+                </div>
+                <div class="srv-panel">
+                    <h3 class="srv-panel-title">{{paq_volumetrico_title}}</h3>
+                    <p>{{paq_volumetrico_text}}</p>
+                    <ul class="check-list">
+                        <li><i class="fa-solid fa-calculator"></i>{{paq_volumetrico_item_1}}</li>
+                        <li><i class="fa-solid fa-calculator"></i>{{paq_volumetrico_item_2}}</li>
+                    </ul>
+                    <p>{{paq_volumetrico_text2}}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Envíos terrestres: impuestos y tiempos (tabla) -->
+    <section class="srv-trio bg-grey padding">
+        <div class="container">
+            <div class="srv-head text-center">
+                <h2 id="terrestre" style="scroll-margin-top:120px;">{{paq_terrestre_title}}</h2>
+                <p>{{paq_terrestre_text}}</p>
+            </div>
+            <div class="grenvios-table-wrap">
+                <table class="grenvios-rate-table">
+                    <thead>
+                        <tr>
+                            <th>{{paq_tabla_th_pais}}</th>
+                            <th>{{paq_tabla_th_impuesto}}</th>
+                            <th>{{paq_tabla_th_tiempo}}</th>
+                            <th>{{paq_tabla_th_entrega}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{REP:paq_tarifas}}
+                    </tbody>
+                </table>
+            </div>
+            <p class="srv-table-note">{{paq_terrestre_text2}}</p>
+        </div>
+    </section>
+
+    <!-- Equipaje + Destinos terrestres -->
+    <section class="srv-section padding">
+        <div class="container">
+            <div class="srv-two-grid">
+                <div class="srv-panel">
+                    <h3 class="srv-panel-title">{{paq_equipaje_title}}</h3>
+                    <p>{{paq_equipaje_text}}</p>
+                </div>
+                <div class="srv-dest-card">
+                    <h2>{{paq_destinos_title}}</h2>
+                    <p>{{paq_destinos_text}}</p>
+                    <ul class="srv-dest-list">
+                        <li><i class="fa-solid fa-location-dot"></i>{{paq_destinos_item_1}}</li>
+                        <li><i class="fa-solid fa-location-dot"></i>{{paq_destinos_item_2}}</li>
+                        <li><i class="fa-solid fa-location-dot"></i>{{paq_destinos_item_3}}</li>
+                    </ul>
+                    <a href="HOMEURL/destinos/" class="default-btn">{{paq_destinos_btn}}</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tira de garantías -->
+    <section class="srv-features">
+        <div class="container">
+            <div class="srv-features-grid">
+                <div class="srv-feature"><i class="fa-solid fa-box-open"></i><div><h4>{{paq_feat1_t}}</h4><p>{{paq_feat1_d}}</p></div></div>
+                <div class="srv-feature"><i class="fa-solid fa-plane-departure"></i><div><h4>{{paq_feat2_t}}</h4><p>{{paq_feat2_d}}</p></div></div>
+                <div class="srv-feature"><i class="fa-solid fa-truck-fast"></i><div><h4>{{paq_feat3_t}}</h4><p>{{paq_feat3_d}}</p></div></div>
+                <div class="srv-feature"><i class="fa-solid fa-location-crosshairs"></i><div><h4>{{paq_feat4_t}}</h4><p>{{paq_feat4_d}}</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA final -->
+    <section class="cta-section padding">
+        <div class="container">
+            <div class="row cta-wrapper gx-0 align-items-center">
+                <div class="col-lg-7">
+                    <div class="section-heading white mb-0">
+                        <h2>{{paq_cta_title}}</h2>
+                        <p>{{paq_cta_text}}</p>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="srv-cta-actions">
+                        <a href="HOMEURL/cotizar/" class="default-btn btn-light">{{paq_cta_cotizar}}</a>
+                        <a href="https://wa.me/{{contacto_wa}}" class="default-btn" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> {{paq_cta_whatsapp}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>

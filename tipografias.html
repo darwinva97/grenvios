@@ -1,0 +1,19 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><title>Tipografías</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=Outfit:wght@700;800;900&family=Jost:wght@700;800&family=Manrope:wght@700;800&family=Figtree:wght@800;900&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#fdfbf9;color:#0c0c0c}
+section{padding:14px 30px;border-bottom:1px solid #eee}
+.n{font:700 12px system-ui;letter-spacing:.14em;text-transform:uppercase;color:#b33;margin-bottom:4px}
+h1{margin:0;font-size:62px;line-height:1.0;letter-spacing:-.035em;font-weight:800;white-space:nowrap}
+h1 span{color:#c3172f}
+</style>
+<body>
+<script>
+const f=[['Poppins',800],['Outfit',800],['Outfit',900],['Jost',800],['Manrope',800],['Figtree',900],['Montserrat',800]];
+document.write(f.map(([n,w])=>`
+<section style="font-family:'${n}',sans-serif;font-weight:${w}">
+ <div class="n">${n} ${w}</div>
+ <h1>Envíos internacionales<br>desde Lima a más de <span>195 países</span></h1>
+</section>`).join(''));
+</script>

@@ -1,0 +1,75 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   Grenvíos — Soporte de idiomas de escritura DERECHA A IZQUIERDA (árabe, hebreo).
+
+   Se carga SOLO cuando el idioma activo es RTL (`is_rtl()`), encima del CSS del
+   diseño. Cubre lo estructural: dirección del texto, alineaciones, listas,
+   formularios, menús y los desplazamientos horizontales más habituales del tema.
+
+   AVISO HONESTO: esto es una base funcional, no un rediseño. El tema está
+   construido sobre una rejilla Bootstrap pensada de izquierda a derecha, y hay
+   secciones (carrusel del hero, líneas de tiempo, iconos con posición absoluta)
+   que necesitan revisión visual una a una antes de publicar un idioma RTL.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+html[dir="rtl"] body {
+	direction: rtl;
+	text-align: right;
+}
+
+/* ── Rejilla y utilidades ── */
+html[dir="rtl"] .row { direction: rtl; }
+html[dir="rtl"] .text-left  { text-align: right !important; }
+html[dir="rtl"] .text-right { text-align: left !important; }
+html[dir="rtl"] .float-left  { float: right !important; }
+html[dir="rtl"] .float-right { float: left !important; }
+html[dir="rtl"] .ml-auto { margin-left: 0 !important; margin-right: auto !important; }
+html[dir="rtl"] .mr-auto { margin-right: 0 !important; margin-left: auto !important; }
+
+/* ── Listas ── */
+html[dir="rtl"] ul,
+html[dir="rtl"] ol { padding-right: 20px; padding-left: 0; }
+
+/* ── Menú principal y submenús ── */
+html[dir="rtl"] .nav-menu { padding-right: 0; }
+html[dir="rtl"] .nav-menu > li { float: right; }
+html[dir="rtl"] .nav-menu .sub-menu,
+html[dir="rtl"] .nav-menu li ul { right: 0; left: auto; text-align: right; }
+html[dir="rtl"] .menu-item-has-children > a::after { margin-right: 6px; margin-left: 0; }
+
+/* ── Selector de idioma ── */
+html[dir="rtl"] .grenvios-lang-switcher img { margin-left: 6px; margin-right: 0; }
+
+/* ── Botones e iconos en línea ── */
+html[dir="rtl"] .btn i,
+html[dir="rtl"] .theme-btn i { margin-right: 6px; margin-left: 0; }
+
+/* ── Formularios ── */
+html[dir="rtl"] input,
+html[dir="rtl"] textarea,
+html[dir="rtl"] select { text-align: right; direction: rtl; }
+/* Excepciones: datos que se leen siempre de izquierda a derecha. */
+html[dir="rtl"] input[type="tel"],
+html[dir="rtl"] input[type="email"],
+html[dir="rtl"] input[type="url"],
+html[dir="rtl"] input[name*="guia"],
+html[dir="rtl"] input[name*="track"] { direction: ltr; text-align: left; }
+
+/* ── Migas de pan ── */
+html[dir="rtl"] .breadcrumb { padding-right: 0; }
+html[dir="rtl"] .breadcrumb li { float: right; }
+
+/* ── Tablas (peso volumétrico, impuestos por país) ── */
+html[dir="rtl"] table th,
+html[dir="rtl"] table td { text-align: right; }
+/* Las cifras y los códigos se mantienen LTR para que no se inviertan. */
+html[dir="rtl"] table td[data-num],
+html[dir="rtl"] .grenvios-num { direction: ltr; display: inline-block; }
+
+/* ── Pie de página ── */
+html[dir="rtl"] .footer-widget ul { padding-right: 0; }
+
+/* ── Elementos que NUNCA deben invertirse ── */
+html[dir="rtl"] .grenvios-ltr,
+html[dir="rtl"] code,
+html[dir="rtl"] a[href^="tel:"],
+html[dir="rtl"] a[href^="mailto:"] { direction: ltr; unicode-bidi: embed; }

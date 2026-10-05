@@ -1,0 +1,3563 @@
+/*
+Theme Name: Grenvíos
+Theme URI: https://grenvios.com
+Author: Aimet — Soluciones Digitales
+Author URI: https://grenvios.com
+Description: Grenvíos — Tema de envíos internacionales (documentos, paquetes y carga). Adaptación del template Logisko a la arquitectura web y SEO pillar–cluster de Grenvíos: páginas de Servicios y Destinos, SEO nativo (titles, meta, Schema.org, breadcrumbs), botón flotante de WhatsApp y widget de rastreo. Páginas y menú se auto-crean al activar.
+Version: 2.29.0
+Requires at least: 6.0
+Tested up to: 6.6
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: grenvios
+Tags: logistics, transportation, shipping, business, custom-menu, featured-images, full-width-template
+*/
+
+/* ── Theme-level overrides (el diseño real vive en assets/css/*) ── */
+
+/* Fallback de animación de entrada: si el JS tarda/no corre, nada queda oculto */
+.elementor-invisible { opacity: 1 !important; transform: none !important; }
+.wow { visibility: visible !important; }
+
+/* Sin paginación (puntos) en los carruseles: se ocultan los contenedores vacíos
+   para que no reserven espacio. La paginación también va en pagination:false (main.js). */
+.carousel-pagination { display: none !important; }
+
+/* H1 accesible/crawleable sin alterar el diseño del hero (no es cloaking:
+   mismo mensaje que el slider, disponible para lectores de pantalla y Google) */
+.grenvios-sr-only {
+    position: absolute !important; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* El H1 de las páginas internas vive en el page-header (antes era h2):
+   replicamos exactamente el estilo del h2 del template para no alterar el diseño */
+.page-header-info h1 {
+    color: var(--white-color);
+    font-size: 46px; line-height: 48px;
+    text-transform: capitalize; margin-bottom: 20px;
+    /* Sombra suave: el título blanco se lee sobre cualquier imagen (clara u oscura) */
+    text-shadow: 0 2px 12px rgba(0,0,0,.40);
+}
+.page-header-info h1 span {
+    color: var(--primary-color);
+    display: inline-block; position: relative; z-index: 1;
+    /* Borde blanco MUY fino alrededor de la parte de color, para que resalte
+       sobre el fondo del hero sin verse grueso (igual en todos los heros). */
+    -webkit-text-stroke: 0.6px #fff;
+    text-stroke: 0.6px #fff;
+    paint-order: stroke fill;
+    text-shadow: 0 1px 5px rgba(0,0,0,.28);
+}
+@media (max-width: 767px) {
+    .page-header-info h1 { font-size: 32px; line-height: 42px; }
+    .page-header-info h1 br { display: none; }
+}
+
+/* Contenedor base para blog/single/archive renderizados por WordPress */
+.logisko-entry-content { font-size: 18px; line-height: 28px; color: var(--body-color); }
+.logisko-entry-content img { max-width: 100%; height: auto; border-radius: 2px; margin: 10px 0; }
+.logisko-entry-content h1,
+.logisko-entry-content h2,
+.logisko-entry-content h3 { margin-top: 24px; }
+.logisko-pagination .page-numbers {
+    display: inline-block; padding: 8px 16px; margin: 0 4px;
+    background: var(--bg-grey); color: var(--heading-color); border-radius: 2px;
+}
+.logisko-pagination .page-numbers.current { background: var(--primary-color); color: #fff; }
+
+/* ── Logo de marca (logo.svg = vino sobre transparente) ──
+   La cabecera (.main-header) tiene fondo VINO (--primary-color) con línea diagonal
+   blanca; el logo vive en la columna izquierda de 200px → se muestra en BLANCO
+   (knockout). El footer es claro
+   → logo en su vino original. Se fija por ANCHO para no desbordar la columna de 200px
+   (la cabecera tiene overflow-x: clip). */
+.main-header .site-logo img,
+.sticky-header .site-logo img {
+    width: 172px; height: auto; max-width: 100%;
+    filter: brightness(0) invert(1) drop-shadow(0 1px 2px rgba(0,0,0,.35));
+}
+.footer-logo img { width: 180px; height: auto; max-width: 100%; }
+@media (max-width: 767px) {
+    .main-header .site-logo img, .sticky-header .site-logo img { width: 150px; }
+}
+
+/* ── Grenvíos — botón flotante de WhatsApp ── */
+.grenvios-whatsapp {
+    position: fixed; right: 24px; bottom: 24px; z-index: 9999;
+    width: 58px; height: 58px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: #25D366; color: #fff; font-size: 30px;
+    box-shadow: 0 8px 24px rgba(37, 211, 102, .45);
+    transition: transform .25s ease, box-shadow .25s ease;
+    animation: grenvios-wa-pulse 2.4s infinite;
+}
+.grenvios-whatsapp:hover { color: #fff; transform: scale(1.08); box-shadow: 0 10px 30px rgba(37, 211, 102, .6); }
+@keyframes grenvios-wa-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(37, 211, 102, .55); }
+    70%  { box-shadow: 0 0 0 16px rgba(37, 211, 102, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+@media (max-width: 575px) {
+    .grenvios-whatsapp { right: 16px; bottom: 16px; width: 52px; height: 52px; font-size: 27px; }
+}
+
+/* ── Breadcrumbs ── */
+.breadcrumbs { margin-top: 14px; }
+.breadcrumb-list {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 6px;
+    list-style: none; padding: 0; margin: 0; font-size: 15px;
+}
+.breadcrumb-list li { display: inline-flex; align-items: center; }
+.breadcrumb-list li:not(:last-child)::after { content: '/'; margin-left: 6px; opacity: .55; }
+.breadcrumb-list a { color: var(--primary-color); }
+.breadcrumb-list span[aria-current] { opacity: .8; }
+
+/* ── Botón outline (CTA secundario, ej. WhatsApp en destinos) ── */
+.default-btn.btn-outline {
+    background: transparent; border: 1px solid currentColor;
+}
+
+/* ── Widget de rastreo (Inicio + página de rastreo) ── */
+.grenvios-tracking {
+    background: var(--primary-color, #5e2129);
+    border-radius: 6px; padding: 36px;
+    box-shadow: 0 18px 40px rgba(0,0,0,.12);
+}
+.grenvios-tracking h2, .grenvios-tracking p { color: #fff; }
+/* Enlaces dentro del texto de la caja de rastreo (fondo granate): blancos y subrayados */
+.grenvios-tracking p a { color: #fff; text-decoration: underline; }
+.grenvios-tracking p a:hover { color: #fff; text-decoration: underline; opacity: .85; }
+.grenvios-tracking .track-form { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; margin-top: 18px; }
+.grenvios-tracking .track-form input {
+    flex: 1 1 240px; min-width: 0; height: 56px; padding: 0 18px;
+    border: none; border-radius: 4px; font-size: 16px;
+}
+.grenvios-tracking .track-form button { white-space: nowrap; }
+
+/* Botones sobre la caja de rastreo (fondo granate): en blanco para que
+   resalten y no se pierdan (antes eran granate y se confundían con el fondo). */
+/* Cotizar: botón de WhatsApp del bloque "Llámanos para cotizar" centrado (flex + center) */
+.call-info .call-text .default-btn {
+    display: flex; align-items: center; justify-content: center;
+    width: -moz-fit-content; width: fit-content; margin: 12px auto 0;
+}
+
+.grenvios-tracking .default-btn { background: #fff; color: var(--primary-color, #5e2129); }
+.grenvios-tracking .default-btn i { color: var(--primary-color, #5e2129); }
+.grenvios-tracking .default-btn:hover { color: #fff; }
+.grenvios-tracking .default-btn:hover i { color: #fff; }
+
+/* ─────────────────────────────────────────────────────────────
+ * Preloader eliminado: por seguridad, si quedara markup en caché,
+ * nunca debe tapar la web.
+ * ───────────────────────────────────────────────────────────── */
+#preloader-wrap { display: none !important; }
+
+/* ─────────────────────────────────────────────────────────────
+ * Header — mejoras responsive (encima del CSS del template)
+ * ───────────────────────────────────────────────────────────── */
+.main-header { position: relative; z-index: 999; }
+.main-header .container { max-width: 1240px; }
+
+/* Header fijo al hacer scroll: sombra y fondo sólido para legibilidad */
+.sticky-header.sticky-fixed-top {
+    position: fixed; top: 0; left: 0; width: 100%;
+    background: #fff; box-shadow: 0 6px 24px rgba(0,0,0,.10);
+    animation: grenvios-slidedown .4s ease;
+}
+@keyframes grenvios-slidedown { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+
+/* Tablet/móvil: la barra superior (teléfono, enlaces) se adapta sin desbordar */
+@media (max-width: 991px) {
+    .top-header { flex-wrap: wrap; row-gap: 6px; justify-content: center; text-align: center; }
+    .top-header .top-left,
+    .top-header .top-right { width: 100%; justify-content: center; }
+    .header-social-share { justify-content: center; }
+    .main-header-wapper { gap: 12px; }
+    .site-logo img { max-height: 46px; width: auto; }
+}
+
+/* Móvil: oculta la barra superior secundaria para un header limpio y rápido */
+@media (max-width: 767px) {
+    .top-header .top-right { display: none; }
+    .top-header .top-left { justify-content: center; font-size: 14px; }
+    .main-header-wapper { align-items: center; }
+    .menu-right-item { gap: 14px; }
+    .menu-right-item .default-btn { padding: 10px 16px; font-size: 14px; }
+}
+
+/* El menú móvil cae siempre por encima de todo */
+.mobile-navigation-menu { z-index: 99999; }
+.mobile-menu-icon { cursor: pointer; }
+
+/* CTA de WhatsApp dentro del menú móvil (lo inyecta el header) */
+.mobile-menu-cta {
+    display: block; margin: 18px 20px 0; text-align: center;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * Sección de Preguntas Frecuentes por página (SEO + FAQPage schema)
+ * Reutiliza el acordeón del template.
+ * ───────────────────────────────────────────────────────────── */
+.grenvios-faq-section { background: var(--bg-grey, #f6f7f9); }
+.grenvios-faq-section .section-heading { margin-bottom: 36px; }
+.grenvios-faq-section .accordion-item { margin-bottom: 16px; border-radius: 6px; overflow: hidden; }
+.grenvios-faq-section .accordion-button { font-weight: 600; }
+
+/* Bloque informativo reutilizable (features / pasos / ventajas) */
+.grenvios-info-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px; margin-top: 10px;
+}
+.grenvios-info-card {
+    background: #fff; border: 1px solid rgba(0,0,0,.06); border-radius: 8px;
+    padding: 28px 24px; transition: transform .25s ease, box-shadow .25s ease;
+}
+.grenvios-info-card:hover { transform: translateY(-4px); box-shadow: 0 14px 34px rgba(0,0,0,.08); }
+.grenvios-info-card .info-icon {
+    width: 56px; height: 56px; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; margin-bottom: 16px;
+    background: rgba(94, 33, 41, .10); color: var(--primary-color, #5e2129); font-size: 24px;
+}
+.grenvios-info-card h3 { font-size: 20px; margin-bottom: 10px; }
+.grenvios-info-card p { margin: 0; }
+
+/* ── Tabla de tarifas / impuestos por país ── */
+.grenvios-table-wrap { overflow-x: auto; margin: 22px 0 26px; -webkit-overflow-scrolling: touch; }
+.grenvios-rate-table {
+    width: 100%; border-collapse: collapse; min-width: 520px;
+    background: #fff; border: 1px solid rgba(0,0,0,.08); border-radius: 8px; overflow: hidden;
+}
+.grenvios-rate-table th,
+.grenvios-rate-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid rgba(0,0,0,.07); }
+.grenvios-rate-table thead th {
+    background: var(--primary-color, #5e2129); color: #fff;
+    font-weight: 700; font-size: 15px; letter-spacing: -.2px;
+}
+.grenvios-rate-table tbody tr:last-child td { border-bottom: 0; }
+.grenvios-rate-table tbody tr:nth-child(even) { background: var(--bg-grey, #f6f7f9); }
+.grenvios-rate-table tbody td:nth-child(2) { font-weight: 700; color: var(--primary-color, #5e2129); }
+
+/* ── Lista de certificaciones / respaldo institucional (Nosotros) ── */
+.grenvios-cert-list {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 28px;
+    max-width: 900px; margin: 0 auto;
+}
+.grenvios-cert-list li {
+    display: flex; align-items: center; gap: 10px;
+    background: #fff; border: 1px solid rgba(0,0,0,.07); border-radius: 30px;
+    padding: 12px 22px; font-weight: 600; margin: 0;
+}
+.grenvios-cert-list li i { color: var(--primary-color, #5e2129); }
+
+/* ── Enlaces de la página 404 ── */
+.grenvios-404-links {
+    display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px;
+    margin: 18px auto 28px; max-width: 640px;
+}
+.grenvios-404-links li { display: inline-flex; align-items: center; gap: 6px; }
+.grenvios-404-links li i { color: var(--primary-color, #5e2129); }
+.grenvios-404-links a { font-weight: 600; }
+.grenvios-404-links a:hover { color: var(--primary-color, #5e2129); }
+
+/* ── Badge de reseñas de Google (testimonios) ── */
+.grenvios-google-reviews { margin-top: 40px; }
+.grenvios-google-badge {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: #fff; border: 1px solid rgba(0,0,0,.10); border-radius: 40px;
+    padding: 12px 26px; box-shadow: 0 10px 26px rgba(0,0,0,.07);
+    font-weight: 600; color: var(--heading-color, #1a1a1a);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+.grenvios-google-badge:hover { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(0,0,0,.12); color: var(--heading-color, #1a1a1a); }
+.grenvios-google-badge .fa-google { font-size: 22px; color: #4285F4; }
+.grenvios-google-badge .g-stars { color: #fbbc05; letter-spacing: 1px; }
+.grenvios-google-badge .g-text { font-size: 15px; }
+
+/* ── Tarjeta de reseña estilo Google (carrusel de testimonios) ──
+   Replica el formato real de Google Reseñas (Maps): avatar + nombre +
+   "Local Guide · ciudad", logo G arriba a la derecha, fila de estrellas
+   con la fecha al lado, y el texto de la reseña. ── */
+.testimonial-carousel .swiper-slide { height: auto; }
+.google-review {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #e8eaed;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(60,64,67,.10), 0 6px 18px rgba(60,64,67,.05);
+    padding: 22px 22px 24px;
+    font-family: "DM Sans", Roboto, Arial, sans-serif;
+}
+.google-review .gr-top { display: flex; align-items: center; gap: 12px; }
+.google-review .gr-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    object-fit: cover; flex: 0 0 auto; background: #f1f3f4;
+}
+.google-review .gr-id { flex: 1 1 auto; min-width: 0; }
+.google-review .gr-name {
+    margin: 0; font-size: 16px; font-weight: 600; line-height: 1.3;
+    color: #202124;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.google-review .gr-sub {
+    font-size: 12.5px; color: #5f6368;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block;
+}
+.google-review .gr-glogo { flex: 0 0 auto; width: 20px; height: 20px; align-self: flex-start; }
+.google-review .gr-glogo svg { width: 100%; height: 100%; display: block; }
+.google-review .gr-rating { display: flex; align-items: center; gap: 10px; margin: 12px 0 10px; }
+.google-review .gr-stars { color: #fbbc04; font-size: 15px; letter-spacing: 1px; line-height: 1; }
+.google-review .gr-date { font-size: 12.5px; color: #5f6368; }
+.google-review .gr-text {
+    margin: 0; color: #3c4043; font-size: 14.5px; line-height: 1.6;
+    display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* ── Cabecera resumen estilo Google (sobre el carrusel de reseñas) ── */
+.gr-summary {
+    display: flex; align-items: center; justify-content: center; gap: 34px; flex-wrap: wrap;
+    max-width: 780px; margin: 0 auto 44px;
+    background: #fff; border: 1px solid #e8eaed; border-radius: 14px;
+    box-shadow: 0 1px 3px rgba(60,64,67,.10), 0 8px 24px rgba(60,64,67,.05);
+    padding: 22px 34px;
+}
+.gr-summary-brand { display: flex; flex-direction: column; align-items: center; line-height: 1; }
+.gr-summary .g-word { font-family: Arial, "DM Sans", sans-serif; font-weight: 700; font-size: 30px; letter-spacing: -1px; }
+.gr-summary .g-word .g-b { color: #4285F4; }
+.gr-summary .g-word .g-r { color: #EA4335; }
+.gr-summary .g-word .g-y { color: #FBBC05; }
+.gr-summary .g-word .g-g { color: #34A853; }
+.gr-summary-label { font-size: 13px; color: #5f6368; font-weight: 600; margin-top: 5px; }
+.gr-summary-score { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 0 26px; border-left: 1px solid #e8eaed; border-right: 1px solid #e8eaed; }
+.gr-summary-num { font-size: 38px; font-weight: 700; color: #fbbc04; line-height: 1; }
+.gr-summary-stars { color: #fbbc04; font-size: 18px; letter-spacing: 2px; line-height: 1; }
+.gr-summary-count { font-size: 13px; color: #5f6368; }
+.gr-summary-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #1a73e8; color: #fff; font-weight: 600; font-size: 14px;
+    padding: 12px 24px; border-radius: 26px; transition: background .2s ease, box-shadow .2s ease;
+}
+.gr-summary-btn:hover { background: #1666c1; color: #fff; text-decoration: none; box-shadow: 0 6px 16px rgba(26,115,232,.30); }
+
+@media (max-width: 575px) {
+    .gr-summary { gap: 20px; padding: 22px; }
+    .gr-summary-score { border: 0; padding: 0; }
+}
+
+/* ── Etiquetas de grupo dentro del dropdown de Destinos (por continente) ── */
+.header-menu-wrap li ul li.menu-group-label {
+    display: block; padding: 12px 20px 6px; margin: 0;
+    border-bottom: 0; background: transparent; cursor: default;
+    font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .6px; color: var(--primary-color, #5e2129);
+}
+/* La etiqueta de grupo no debe reaccionar al hover como un ítem clicable */
+.header-menu-wrap li ul li.menu-group-label:hover:before,
+.header-menu-wrap li ul li.menu-group-label:hover:after { content: none; }
+.header-menu-wrap li ul li.menu-group-label::before,
+.header-menu-wrap li ul li.menu-group-label::after { content: none; display: none; }
+/* Mega-dropdown de Destinos en 2 columnas (solo desktop) */
+@media (min-width: 993px) {
+    .header-menu-wrap li ul.grenvios-mega-destinos {
+        width: 520px;
+        left: -90px;
+        padding: 12px 14px 16px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 10px;
+        row-gap: 0;
+    }
+    /* Títulos de grupo (América, Europa, Asia·África) en banner granate */
+    .header-menu-wrap li ul.grenvios-mega-destinos li.menu-group-label {
+        grid-column: 1 / -1;
+        margin: 6px 2px 8px;
+        padding: 8px 14px;
+        background: var(--primary-color, #5e2129);
+        color: #fff;
+        border-radius: 6px;
+        font-size: 12px;
+    }
+    .header-menu-wrap li ul.grenvios-mega-destinos li.menu-group-label:first-child { margin-top: 2px; }
+    .header-menu-wrap li ul.grenvios-mega-destinos li {
+        padding: 0;
+        border-bottom: 0;
+    }
+    /* Sin los rellenos animados base, para un look limpio en grid */
+    .header-menu-wrap li ul.grenvios-mega-destinos li:before,
+    .header-menu-wrap li ul.grenvios-mega-destinos li:after { content: none; display: none; }
+    .header-menu-wrap li ul.grenvios-mega-destinos li > a {
+        padding: 9px 14px; border-radius: 8px; white-space: nowrap;
+        transition: background .2s ease, color .2s ease;
+    }
+    .header-menu-wrap li ul.grenvios-mega-destinos li > a:hover {
+        background: var(--bg-grey, #f8f5f1);
+        color: var(--primary-color, #5e2129);
+    }
+}
+.mobile-navigation-menu .menu-group-label {
+    display: block; padding: 12px 40px 4px; font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .6px; color: var(--primary-color, #5e2129);
+}
+
+/* ── Promoción del mes (Inicio, oculta por defecto) ── */
+.grenvios-promo-section { padding: 22px 0; }
+.grenvios-promo-banner {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 18px;
+    background: linear-gradient(100deg, var(--primary-color, #5e2129), var(--primary-dark, #5e1721));
+    color: #fff; border-radius: 10px; padding: 26px 34px;
+    box-shadow: 0 16px 40px rgba(94,33,41,.25);
+}
+.grenvios-promo-banner .promo-text { flex: 1 1 320px; }
+.grenvios-promo-banner h2, .grenvios-promo-banner p { color: #fff; margin: 6px 0 0; }
+.grenvios-promo-banner .promo-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,.18); padding: 5px 14px; border-radius: 30px;
+    font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px;
+}
+.grenvios-promo-banner .default-btn { background: #fff; color: var(--primary-color, #5e2129); }
+
+/* ── Cotizador rápido (Inicio) ── */
+.grenvios-quick-quote {
+    display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-end;
+    background: #fff; border: 1px solid rgba(0,0,0,.07); border-radius: 10px;
+    padding: 28px; box-shadow: 0 14px 36px rgba(0,0,0,.06); max-width: 1000px; margin: 0 auto;
+}
+.grenvios-quick-quote .qq-field { flex: 1 1 180px; display: flex; flex-direction: column; }
+.grenvios-quick-quote label { font-size: 14px; font-weight: 600; margin-bottom: 7px; color: var(--heading-color, #1a1a1a); }
+.grenvios-quick-quote select,
+.grenvios-quick-quote input {
+    height: 52px; padding: 0 16px; border: 1px solid var(--grey-color, #ddd);
+    border-radius: 6px; font-size: 15px; background: #fff; width: 100%;
+}
+.grenvios-quick-quote .qq-submit { flex: 1 1 240px; }
+.grenvios-quick-quote .qq-submit .default-btn { width: 100%; height: 52px; }
+@media (max-width: 575px) { .grenvios-quick-quote { padding: 20px; } }
+
+/* ── Filtro de categorías del blog ── */
+.blog-filter-list {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+    list-style: none; padding: 0; margin: 0;
+}
+.blog-filter-list a {
+    display: inline-block; padding: 9px 20px; border-radius: 30px;
+    background: var(--bg-grey, #f6f7f9); color: var(--heading-color, #1a1a1a);
+    font-weight: 600; font-size: 15px; border: 1px solid transparent;
+    transition: all .25s ease;
+}
+.blog-filter-list a span { font-weight: 400; opacity: .65; }
+.blog-filter-list a:hover { border-color: var(--primary-color, #5e2129); color: var(--primary-color, #5e2129); }
+.blog-filter-list a.active { background: var(--primary-color, #5e2129); color: #fff; }
+.blog-filter-list a.active span { opacity: .85; }
+
+/* ─────────────────────────────────────────────────────────────
+ * Cursor personalizado eliminado (el punto que seguía al ratón)
+ * ───────────────────────────────────────────────────────────── */
+.dl-cursor { display: none !important; }
+
+/* ─────────────────────────────────────────────────────────────
+ * Botón "subir arriba": a la IZQUIERDA para no superponerse con el
+ * botón flotante de WhatsApp (que va abajo a la derecha).
+ * ───────────────────────────────────────────────────────────── */
+#scrollup { left: 24px; right: auto !important; bottom: 28px; }
+@media (max-width: 575px) {
+    #scrollup { left: 16px; bottom: 84px; width: 42px; height: 42px; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * RESPONSIVE INTEGRAL — todas las páginas, todos los dispositivos
+ * ───────────────────────────────────────────────────────────── */
+
+/* Nunca permitir scroll horizontal por desbordes */
+html, body { overflow-x: hidden; max-width: 100%; }
+/* `clip` corta igual el desborde horizontal pero, a diferencia de `hidden`, no
+ * convierte a html/body en contenedor de scroll: con `hidden` ningún
+ * `position: sticky` del sitio podía quedarse fijo (índice de las fichas). */
+@supports (overflow-x: clip) {
+    html, body { overflow-x: clip; }
+}
+img { max-width: 100%; height: auto; }
+
+/* Icono del menú (hamburguesa) bien visible y táctil */
+.mobile-menu-icon { -webkit-tap-highlight-color: transparent; }
+.mobile-menu-icon.menu-open i:before { content: "\f00d"; } /* cambia a X al abrir (Font Awesome) */
+
+/* El submenú móvil clonado: items cómodos para el dedo */
+@media (max-width: 992px) {
+    .mobile-navigation-menu { width: 320px; max-width: 88%; padding-top: 80px; overflow-y: auto; }
+    .mobile-navigation-menu ul li > a { padding: 14px 30px; }
+    .mobile-navigation-menu li li > a { padding: 12px 30px 12px 45px; }
+    /* CTAs Cotizar/WhatsApp dentro del menú móvil */
+    .mobile-menu-cta { margin: 14px 24px 0; }
+    .mobile-menu-cta + .mobile-menu-cta { margin-top: 10px; }
+}
+
+/* Tablet / móvil grande */
+@media (max-width: 991px) {
+    section.padding, .padding { padding-top: 70px; padding-bottom: 70px; }
+    .padding-bottom { padding-bottom: 70px; }
+    .section-heading h2, .section-heading-wrap h2 { font-size: 30px; line-height: 1.25; }
+    .section-heading br, .promo-content br, .feature-tab-content br { display: none; }
+    /* rejillas de tarjetas informativas a 2/1 columnas */
+    .grenvios-info-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    /* tablas (destinos) con scroll horizontal suave */
+    .table-responsive { -webkit-overflow-scrolling: touch; }
+}
+
+/* Móvil */
+@media (max-width: 767px) {
+    .container { padding-left: 18px; padding-right: 18px; }
+    section.padding, .padding { padding-top: 56px; padding-bottom: 56px; }
+    .padding-bottom { padding-bottom: 56px; }
+    .section-heading h2, .section-heading-wrap h2 { font-size: 26px; }
+    h2 { font-size: 26px; line-height: 1.3; }
+
+    /* Hero/slider del inicio: alturas y textos adaptados */
+    .slider-caption.big { font-size: 30px !important; line-height: 1.2 !important; }
+    .slider-caption.medium { font-size: 16px !important; }
+    .slider-caption.small { font-size: 15px !important; }
+    .slider-caption br { display: none; }
+
+    /* Botones: cómodos al tacto, sin desbordar */
+    .default-btn { padding: 12px 22px; font-size: 15px; }
+    .btn-group { gap: 14px; }
+    .btn-group .call-info { margin-top: 6px; }
+
+    /* Formularios (cotizar / contacto) a una columna */
+    .quote-form-group, .contact-form-group { grid-template-columns: 1fr !important; }
+    .grenvios-cotizar .quote-form .col-md-6 { width: 100%; }
+
+    /* Footer centrado y ordenado */
+    .footer-section .footer-widget { text-align: center; }
+    .footer-section .social-share, .footer-section .blog-filter-list { justify-content: center; }
+    .footer-contact-info li p { justify-content: center; }
+
+    /* CTA con imagen de fondo (hombre): que no tape el texto */
+    .cta-men { display: none; }
+
+    /* Contadores y procesos centrados */
+    .counter-wrap, .process-wrapper { text-align: center; }
+
+    /* Mapa de contacto con altura razonable */
+    .map-wrapper iframe { height: 280px; }
+}
+
+/* Móvil pequeño */
+@media (max-width: 480px) {
+    .section-heading h2, .section-heading-wrap h2, h2 { font-size: 23px; }
+    .slider-caption.big { font-size: 25px !important; }
+    .page-header-info h1 { font-size: 27px; line-height: 34px; }
+    .grenvios-info-grid { grid-template-columns: 1fr; }
+    .breadcrumb-list { font-size: 13px; }
+    .blog-filter-list a { padding: 7px 14px; font-size: 14px; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * FIX página Cotizar: la clase .quote-form del template es
+ * position:absolute con ancho fijo (pensada para flotar sobre un
+ * hero). En /cotizar/ eso descolocaba el formulario y "rompía" la
+ * página. Aquí se neutraliza SOLO en cotizar (clase de body por slug).
+ * ───────────────────────────────────────────────────────────── */
+.grenvios-cotizar .quote-section {
+    background-image: none;
+    background-color: var(--bg-grey, #f6f7f9);
+}
+.grenvios-cotizar .quote-form-wrap { position: relative; }
+.grenvios-cotizar .quote-form {
+    position: static; width: 100%; right: auto; top: auto;
+    background: #fff; box-shadow: 0 18px 40px rgba(0,0,0,.10);
+    border-radius: 8px; padding: 36px;
+}
+.grenvios-cotizar .quote-form .form-control {
+    height: 50px; border: 1px solid #eee; border-radius: 4px;
+    width: 100%; color: var(--heading-color);
+}
+.grenvios-cotizar .quote-form textarea.form-control { height: auto; }
+.grenvios-cotizar .quote-form .form-field { margin-bottom: 18px; }
+.grenvios-cotizar .quote-form label { display: block; margin-bottom: 6px; font-weight: 600; }
+.grenvios-cotizar .quote-aside { margin-top: 10px; }
+@media (max-width: 767px) {
+    .grenvios-cotizar .quote-form { padding: 24px 18px; }
+}
+
+/* ═══════════════════════════════════════════════
+   Seguimiento de envíos — resultado (stepper UX)
+   Paleta: vino #5e2129 · verde entregado #1e7e34 · ámbar atención #b9770e
+═══════════════════════════════════════════════ */
+.grenvios-track-result { margin-top: 28px; }
+.gv-track-card {
+    background: #fff; border: 1px solid #eee; border-radius: 18px;
+    padding: 26px 26px 34px; box-shadow: 0 16px 44px rgba(12,12,12,.10); text-align: left;
+    --gv-accent: #5e2129; --gv-accent2: #8a3a42;
+}
+.gv-track-card.gv-done  { --gv-accent: #1e7e34; --gv-accent2: #34c759; }
+.gv-track-card.gv-warn  { --gv-accent: #b9770e; --gv-accent2: #e0a52e; }
+.gv-track-card.gv-track-loading { text-align: center; color: #5e2129; font-weight: 600; padding: 30px; }
+
+/* Cabecera: ícono grande + estado + % */
+.gv-top { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.gv-hero-ico {
+    flex: 0 0 auto; width: 66px; height: 66px; border-radius: 18px;
+    background: var(--gv-accent); color: #fff; display: flex; align-items: center; justify-content: center;
+    font-size: 1.7rem; box-shadow: 0 10px 22px rgba(94,33,41,.28);
+}
+.gv-track-card.gv-done .gv-hero-ico { box-shadow: 0 10px 22px rgba(30,126,52,.28); }
+.gv-meta { flex: 1 1 auto; min-width: 190px; }
+.gv-badge {
+    display: inline-block; font-size: .68rem; font-weight: 800; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--gv-accent); background: rgba(94,33,41,.08);
+    padding: 4px 12px; border-radius: 999px;
+}
+.gv-track-card.gv-done .gv-badge { background: rgba(30,126,52,.10); }
+.gv-track-card.gv-warn .gv-badge { background: rgba(185,119,14,.12); }
+.gv-cur { font-size: 1.4rem; font-weight: 800; color: #0c0c0c; margin-top: 7px; line-height: 1.2; }
+.gv-sub { font-size: .85rem; color: #7a7a7a; margin-top: 5px; }
+.gv-sub strong { color: #0c0c0c; }
+.gv-pct { flex: 0 0 auto; text-align: center; margin-left: auto; }
+.gv-pct span { display: block; font-size: 1.7rem; font-weight: 800; color: var(--gv-accent); line-height: 1; }
+.gv-pct small { font-size: .62rem; color: #9a9a9a; text-transform: uppercase; letter-spacing: .06em; }
+.gv-notfound .gv-hero-ico { background: #c0392b; box-shadow: none; }
+.gv-notfound .gv-sub a { color: #5e2129; text-decoration: underline; }
+
+/* Datos del envío (cliente / servicio / tipo / descripción) */
+.gv-details {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px;
+    margin-top: 22px; padding-top: 20px; border-top: 1px solid #f0eaea;
+}
+.gv-di { display: flex; align-items: center; gap: 12px; }
+.gv-di-ico {
+    flex: 0 0 auto; width: 40px; height: 40px; border-radius: 12px;
+    background: rgba(94,33,41,.08); color: var(--gv-accent);
+    display: flex; align-items: center; justify-content: center; font-size: 1rem;
+}
+.gv-di-txt { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
+.gv-di-txt small { font-size: .66rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #9a9a9a; }
+.gv-di-txt b { font-size: .95rem; color: #0c0c0c; font-weight: 700; word-break: break-word; }
+.gv-note {
+    display: flex; gap: 12px; margin-top: 14px; padding: 14px 16px;
+    background: #faf7f7; border: 1px solid #f0eaea; border-radius: 14px;
+}
+.gv-note-ico { flex: 0 0 auto; color: var(--gv-accent); font-size: 1rem; margin-top: 2px; }
+.gv-note-txt { display: flex; flex-direction: column; gap: 3px; font-size: .9rem; color: #4a4a4a; line-height: 1.5; white-space: pre-line; word-break: break-word; }
+.gv-note-txt small { font-size: .66rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #9a9a9a; }
+
+/* Stepper de 7 pasos */
+.gv-stepper { list-style: none; display: flex; padding: 0; margin: 34px 0 0; position: relative; }
+.gv-stepper::before { content: ''; position: absolute; top: 23px; left: 23px; right: 23px; height: 4px; background: #ececec; border-radius: 4px; }
+.gv-stepper::after  { content: ''; position: absolute; top: 23px; left: 23px; height: 4px; width: var(--gv-fill, 0%);
+    max-width: calc(100% - 46px); background: linear-gradient(90deg, var(--gv-accent), var(--gv-accent2));
+    border-radius: 4px; transition: width 1.1s cubic-bezier(.4,0,.2,1); }
+.gv-step { flex: 1 1 0; min-width: 0; text-align: center; position: relative; z-index: 1;
+    opacity: 0; transform: translateY(8px); transition: opacity .4s, transform .4s; }
+.gv-step.in { opacity: 1; transform: none; }
+.gv-node {
+    width: 48px; height: 48px; border-radius: 50%; background: #fff; border: 3px solid #e6e6e6;
+    color: #c2b6b8; display: inline-flex; align-items: center; justify-content: center; font-size: 1.05rem;
+    transition: background .3s, border-color .3s, color .3s;
+}
+.gv-name { display: block; font-size: .73rem; color: #9a9a9a; margin-top: 11px; line-height: 1.25; padding: 0 4px; }
+.gv-step.done .gv-node,
+.gv-step.current .gv-node { background: var(--gv-accent); border-color: var(--gv-accent); color: #fff; }
+.gv-step.current .gv-node { animation: gvPulse 1.7s infinite; }
+.gv-step.done .gv-name,
+.gv-step.current .gv-name { color: #0c0c0c; font-weight: 700; }
+.gv-step.current .gv-name { color: var(--gv-accent); }
+@keyframes gvPulse {
+    0%,100% { box-shadow: 0 0 0 6px rgba(94,33,41,.16); }
+    50%     { box-shadow: 0 0 0 11px rgba(94,33,41,.04); }
+}
+.gv-track-card.gv-done .gv-step.current .gv-node { animation: none; box-shadow: 0 0 0 6px rgba(30,126,52,.16); }
+
+/* Móvil: línea vertical (timeline) */
+@media (max-width: 640px) {
+    .gv-pct { margin-left: 0; }
+    .gv-stepper { flex-direction: column; margin-top: 22px; }
+    .gv-stepper::before { left: 23px; right: auto; top: 23px; bottom: 23px; width: 4px; height: auto; }
+    .gv-stepper::after  { left: 23px; top: 23px; width: 4px; height: var(--gv-fill, 0%); max-width: none; }
+    .gv-step { display: flex; align-items: center; gap: 14px; text-align: left; padding: 9px 0; }
+    .gv-name { margin-top: 0; font-size: .9rem; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SERVICIOS · diseño UX/UI unificado (todas las páginas de servicio)
+   Estructura tipo "artículo en tarjeta" con jerarquía clara, chips de
+   icono en las listas y CTA destacado. Mismo diseño para los 4 servicios.
+   ════════════════════════════════════════════════════════════════ */
+.blog-section .service-details {
+    background: #fff;
+    border: 1px solid #ececec;
+    border-radius: 18px;
+    box-shadow: 0 22px 60px rgba(0,0,0,.05);
+    padding: 50px 50px 44px;
+    max-width: 940px;
+    margin: 0 auto;
+}
+.service-details > h2 {
+    position: relative;
+    font-size: 30px;
+    line-height: 1.25;
+    margin: 40px 0 16px;
+    padding-left: 20px;
+}
+.service-details > h2:first-child { margin-top: 0; }
+.service-details > h2::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 6px; bottom: 6px;
+    width: 5px; border-radius: 4px;
+    background: var(--primary-color, #5e2129);
+}
+.service-details p {
+    color: var(--body-color, #666);
+    font-size: 16.5px;
+    line-height: 1.8;
+    margin-bottom: 16px;
+}
+.service-details > p:first-of-type {
+    font-size: 18px;
+    color: #3c4043;
+}
+/* Bloques de características → tarjeta suave con chips de icono */
+.service-details .service-features {
+    background: var(--bg-grey, #f8f5f1);
+    border-radius: 14px;
+    padding: 26px 30px;
+    gap: 30px;
+    align-items: flex-start;
+}
+.service-details .check-list li {
+    align-items: flex-start;
+    line-height: 1.6;
+}
+.service-details .check-list li:not(:last-of-type) { margin-bottom: 14px; }
+.service-details .check-list li i {
+    flex: 0 0 auto;
+    width: 30px; height: 30px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(94,33,41,.10);
+    color: var(--primary-color, #5e2129);
+    border-radius: 50%;
+    font-size: 13px;
+    margin-right: 12px;
+    margin-top: 1px;
+}
+.service-details .post-details-gallery img { border-radius: 12px; }
+/* CTA final destacado */
+.service-details .service-cta {
+    margin-top: 44px;
+    padding: 36px 30px;
+    border-radius: 14px;
+    background: var(--bg-grey, #f8f5f1);
+    text-align: center;
+}
+.service-details .service-cta .default-btn { margin: 6px; }
+
+@media (max-width: 767px) {
+    .blog-section .service-details { padding: 30px 22px 28px; border-radius: 14px; }
+    .service-details > h2 { font-size: 24px; }
+    .service-details .service-features { padding: 22px; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ZONAS / DESTINOS · diseño UX/UI propio (distinto al de servicios)
+   Datos rápidos en tarjetas con icono + grid "qué puedes enviar" +
+   bloque de aviso. Pensado para escaneo rápido y SEO local.
+   ════════════════════════════════════════════════════════════════ */
+.dest-section .dest-intro {
+    max-width: 820px; margin: 0 auto 38px; text-align: center;
+}
+.dest-section .dest-lead {
+    font-size: 18px; color: var(--body-color, #666); line-height: 1.8; margin: 0;
+}
+/* Datos rápidos */
+.dest-facts {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-bottom: 34px;
+}
+.dest-fact {
+    background: #fff; border: 1px solid #ececec; border-radius: 16px;
+    box-shadow: 0 16px 44px rgba(0,0,0,.05);
+    padding: 32px 26px; text-align: center;
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+.dest-fact:hover { transform: translateY(-6px); box-shadow: 0 24px 54px rgba(0,0,0,.10); }
+.dest-fact-ic {
+    width: 66px; height: 66px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(94,33,41,.10); color: var(--primary-color, #5e2129);
+    font-size: 26px; margin-bottom: 18px;
+}
+.dest-fact-k {
+    display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .6px;
+    color: #8a8a8a; font-weight: 700; margin-bottom: 6px;
+}
+.dest-fact-v { display: block; font-size: 18px; font-weight: 700; color: var(--heading-color, #0c0c0c); line-height: 1.4; }
+.dest-cta-top { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 64px; }
+/* Qué puedes enviar */
+.dest-send { max-width: 1040px; margin: 0 auto 56px; text-align: center; }
+.dest-send > h2 { margin-bottom: 14px; }
+.dest-send > p { max-width: 760px; margin: 0 auto 32px; color: var(--body-color, #666); line-height: 1.8; }
+.dest-send-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.dest-send-card {
+    background: var(--bg-grey, #f8f5f1); border-radius: 14px; padding: 30px 20px;
+    transition: var(--transition, all .3s ease);
+}
+.dest-send-card:hover { background: #fff; box-shadow: 0 18px 44px rgba(0,0,0,.08); transform: translateY(-4px); }
+.dest-send-card i { font-size: 28px; color: var(--primary-color, #5e2129); margin-bottom: 14px; display: block; }
+.dest-send-card p { margin: 0; font-weight: 600; color: var(--heading-color, #0c0c0c); font-size: 15px; line-height: 1.5; }
+/* Aviso / información importante */
+.dest-note {
+    display: flex; gap: 22px; align-items: flex-start; max-width: 1040px; margin: 0 auto;
+    background: var(--bg-grey, #f8f5f1); border-left: 5px solid var(--primary-color, #5e2129);
+    border-radius: 14px; padding: 34px 36px;
+}
+.dest-note-ic { flex: 0 0 auto; font-size: 30px; color: var(--primary-color, #5e2129); line-height: 1; margin-top: 4px; }
+.dest-note h2 { margin-top: 0; }
+.dest-note p:last-child { margin-bottom: 0; }
+
+@media (max-width: 991px) {
+    .dest-facts { grid-template-columns: 1fr; }
+    .dest-send-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 575px) {
+    .dest-send-grid { grid-template-columns: 1fr; }
+    .dest-note { flex-direction: column; gap: 14px; padding: 26px 22px; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SERVICIOS · diseño UX/UI tipo plantilla (icon-driven, secciones)
+   Clases srv-* — usado en las páginas de servicio (documentos, etc.)
+   ════════════════════════════════════════════════════════════════ */
+.srv-lead { max-width: 860px; margin: 0 auto; }
+.srv-lead h2 { font-size: 34px; line-height: 1.2; margin-bottom: 16px; }
+.srv-lead p { color: var(--body-color, #666); line-height: 1.8; margin-bottom: 14px; }
+
+.srv-head { max-width: 760px; margin: 0 auto 46px; }
+.srv-head h2 { font-size: 32px; line-height: 1.2; margin-bottom: 14px; }
+.srv-head p { color: var(--body-color, #666); line-height: 1.75; margin: 0; }
+
+/* 6 tarjetas con icono */
+.srv-cards-6 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.srv-card {
+    background: #fff; border: 1px solid #ececec; border-radius: 16px;
+    box-shadow: 0 14px 40px rgba(0,0,0,.05);
+    padding: 34px 26px; text-align: center;
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+.srv-card:hover { transform: translateY(-6px); box-shadow: 0 24px 54px rgba(0,0,0,.10); }
+.srv-card-ic {
+    width: 76px; height: 76px; border-radius: 18px; margin: 0 auto 18px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(94,33,41,.08); color: var(--primary-color, #5e2129); font-size: 30px;
+}
+.srv-card h3 { font-size: 18px; line-height: 1.35; margin: 0; }
+
+/* Banda de 3 columnas */
+.srv-trio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; align-items: start; }
+.srv-panel {
+    background: #fff; border: 1px solid #ececec; border-radius: 18px;
+    box-shadow: 0 14px 40px rgba(0,0,0,.05); padding: 34px 30px; height: 100%;
+}
+.srv-panel-title { font-size: 22px; text-align: center; margin: 0 0 26px; }
+
+/* Pasos numerados con línea conectora */
+.srv-steps { position: relative; margin: 0; padding: 0; list-style: none; }
+.srv-steps li { display: flex; gap: 16px; position: relative; padding-bottom: 26px; }
+.srv-steps li:last-child { padding-bottom: 0; }
+.srv-steps li:not(:last-child)::before {
+    content: ""; position: absolute; left: 17px; top: 40px; bottom: 4px;
+    width: 2px; background: repeating-linear-gradient(to bottom, #d9c9cb 0 5px, transparent 5px 10px);
+}
+.srv-step-n {
+    flex: 0 0 auto; width: 36px; height: 36px; border-radius: 50%;
+    background: var(--primary-color, #5e2129); color: #fff; font-weight: 700; font-size: 15px;
+    display: inline-flex; align-items: center; justify-content: center; z-index: 1;
+}
+.srv-step-ic { flex: 0 0 auto; color: var(--primary-color, #5e2129); font-size: 18px; margin-top: 6px; }
+.srv-step-tx h4 { font-size: 16px; margin: 4px 0 4px; }
+.srv-step-tx p { font-size: 14.5px; color: var(--body-color, #666); line-height: 1.55; margin: 0; }
+
+/* Panel de restricciones */
+.srv-warn { background: #fffdf5; border-color: #f3e6c4; }
+.srv-warn-ic { text-align: center; color: #f0a020; font-size: 38px; margin-bottom: 14px; }
+.srv-warn-intro { text-align: center; color: var(--heading-color, #0c0c0c); font-weight: 600; margin-bottom: 18px; }
+.srv-no-list { list-style: none; margin: 0 0 22px; padding: 0; max-width: 260px; margin-left: auto; margin-right: auto; }
+.srv-no-list li { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--heading-color, #0c0c0c); margin-bottom: 12px; }
+.srv-no-list li i { color: #e23b3b; font-size: 16px; }
+.srv-warn .default-btn { display: block; text-align: center; }
+
+/* Tiempos de entrega */
+.srv-times { list-style: none; margin: 0; padding: 0; }
+.srv-times li { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid #f0eae6; }
+.srv-times li:last-child { border-bottom: 0; }
+.srv-time-ic {
+    flex: 0 0 auto; width: 50px; height: 50px; border-radius: 50%;
+    background: rgba(94,33,41,.08); color: var(--primary-color, #5e2129); font-size: 22px;
+    display: inline-flex; align-items: center; justify-content: center;
+}
+.srv-time-v { font-weight: 700; color: var(--heading-color, #0c0c0c); font-size: 16px; }
+.srv-time-foot { display: flex; align-items: center; gap: 10px; margin: 18px 0 0; color: var(--body-color, #666); font-weight: 600; font-size: 14.5px; }
+.srv-time-foot i { color: var(--primary-color, #5e2129); }
+
+/* Destinos + Validez legal (2 columnas) */
+.srv-two-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; align-items: stretch; }
+.srv-dest-card {
+    background: #fff; border: 1px solid #ececec; border-radius: 18px;
+    box-shadow: 0 14px 40px rgba(0,0,0,.05); padding: 38px 36px;
+    background-image: url(assets/img/map-pattern.png); background-repeat: no-repeat;
+    background-position: right -40px bottom -30px; background-size: 55%;
+}
+.srv-dest-card h2 { font-size: 24px; margin-bottom: 12px; }
+.srv-dest-card > p { color: var(--body-color, #666); line-height: 1.7; margin-bottom: 20px; }
+.srv-dest-list { list-style: none; margin: 0 0 24px; padding: 0; }
+.srv-dest-list li { display: flex; align-items: center; gap: 10px; font-weight: 600; margin-bottom: 12px; }
+.srv-dest-list li i { color: var(--primary-color, #5e2129); }
+.srv-dest-list li a { color: var(--primary-color, #5e2129); text-decoration: underline; }
+
+.srv-legal-card {
+    border-radius: 18px; padding: 38px 36px; color: #fff;
+    background: linear-gradient(120deg, var(--primary-color, #5e2129), var(--primary-dark, #481920));
+    box-shadow: 0 18px 44px rgba(94,33,41,.25);
+}
+.srv-legal-card h2 { color: #fff; font-size: 24px; margin-bottom: 12px; }
+.srv-legal-card > p { color: rgba(255,255,255,.85); line-height: 1.7; margin-bottom: 24px; }
+.srv-legal-card > p a { color: #fff; text-decoration: underline; }
+.srv-legal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 26px; }
+.srv-legal-item { text-align: center; }
+.srv-legal-item i { font-size: 26px; display: block; margin-bottom: 10px; color: #fff; }
+.srv-legal-item span { font-size: 13.5px; font-weight: 600; line-height: 1.4; display: block; }
+.btn-light { background: #fff !important; color: var(--primary-color, #5e2129) !important; }
+.btn-light:hover { background: #f1f1f1 !important; color: var(--primary-color, #5e2129) !important; }
+
+/* Tira de garantías */
+.srv-features { padding: 40px 0; }
+.srv-features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.srv-feature { display: flex; gap: 14px; align-items: flex-start; }
+.srv-feature i {
+    flex: 0 0 auto; width: 48px; height: 48px; border-radius: 50%;
+    background: rgba(94,33,41,.08); color: var(--primary-color, #5e2129); font-size: 20px;
+    display: inline-flex; align-items: center; justify-content: center;
+}
+.srv-feature h4 { font-size: 16px; margin: 2px 0 4px; }
+.srv-feature p { font-size: 13.5px; color: var(--body-color, #666); line-height: 1.5; margin: 0; }
+
+.srv-cta-actions { display: flex; gap: 14px; justify-content: flex-end; flex-wrap: wrap; }
+
+@media (max-width: 991px) {
+    .srv-cards-6 { grid-template-columns: repeat(2, 1fr); }
+    .srv-trio-grid { grid-template-columns: 1fr; }
+    .srv-two-grid { grid-template-columns: 1fr; }
+    .srv-features-grid { grid-template-columns: repeat(2, 1fr); }
+    .srv-cta-actions { justify-content: center; margin-top: 22px; }
+}
+@media (max-width: 575px) {
+    .srv-cards-6 { grid-template-columns: 1fr; }
+    .srv-features-grid { grid-template-columns: 1fr; }
+    .srv-legal-grid { grid-template-columns: 1fr; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   DESTINOS · secciones extra de la plantilla (cómo funciona, por qué)
+   ════════════════════════════════════════════════════════════════ */
+.dest-proc { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+.dest-proc-step { text-align: center; position: relative; padding: 0 8px; }
+.dest-proc-step:not(:last-child)::after {
+    content: "\f105"; font-family: "Font Awesome 6 Pro", "Font Awesome 6 Free"; font-weight: 900;
+    position: absolute; right: -16px; top: 18px; color: #cbb8ba; font-size: 22px;
+}
+.dest-proc-n {
+    width: 40px; height: 40px; border-radius: 50%; margin: 0 auto 14px;
+    background: var(--primary-color, #5e2129); color: #fff; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;
+}
+.dest-proc-ic { display: block; color: var(--primary-color, #5e2129); font-size: 26px; margin-bottom: 12px; }
+.dest-proc-step h4, .dest-proc-step h3 { font-size: 16px; margin: 0 0 6px; }   /* h3: era h4 tras un h2 (salto de nivel) */
+.dest-proc-step p { font-size: 13.5px; color: var(--body-color, #666); line-height: 1.5; margin: 0; }
+
+.dest-why { display: grid; grid-template-columns: repeat(5, 1fr); gap: 22px; }
+.dest-why-item {
+    text-align: center; padding: 28px 18px; border-radius: 16px;
+    transition: background .3s ease, box-shadow .3s ease, transform .3s ease;
+}
+.dest-why-item:hover { background: #fff; box-shadow: 0 16px 40px rgba(0,0,0,.07); transform: translateY(-4px); }
+.dest-why-item i {
+    width: 60px; height: 60px; border-radius: 50%; margin: 0 auto 14px;
+    background: rgba(94,33,41,.08); color: var(--primary-color, #5e2129); font-size: 24px;
+    display: flex; align-items: center; justify-content: center;
+}
+.dest-why-item h4 { font-size: 15px; line-height: 1.4; margin: 0; }
+
+@media (max-width: 991px) {
+    .dest-proc { grid-template-columns: repeat(2, 1fr); }
+    .dest-proc-step:nth-child(2)::after { content: none; }
+    .dest-why { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 575px) {
+    .dest-proc { grid-template-columns: 1fr; }
+    .dest-proc-step::after { content: none !important; }
+    .dest-why { grid-template-columns: 1fr; }
+}
+
+/* Nota bajo la tabla de tarifas (páginas de servicio) */
+.srv-table-note { text-align: center; max-width: 880px; margin: 26px auto 0; color: var(--body-color, #666); line-height: 1.75; }
+
+/* Variantes de los componentes de servicio */
+.srv-cards-2 { grid-template-columns: repeat(2, 1fr); max-width: 720px; margin-left: auto; margin-right: auto; }
+.srv-panel-wide { max-width: 900px; margin: 0 auto; }
+.srv-panel-wide .check-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 30px; }
+@media (max-width: 767px) {
+    .srv-cards-2 { grid-template-columns: 1fr; }
+    .srv-panel-wide .check-list { grid-template-columns: 1fr; }
+}
+
+/* ── Rastreo · tarjetas "Conoce cada etapa de tu paquete" (estados) ── */
+.rast-state-card {
+    background: #fff; border: 1px solid #ececec; border-radius: 16px;
+    box-shadow: 0 14px 40px rgba(0,0,0,.05);
+    padding: 34px 26px; text-align: center; height: 100%;
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+.rast-state-card:hover { transform: translateY(-6px); box-shadow: 0 24px 54px rgba(0,0,0,.10); }
+.rast-state-ic {
+    width: 70px; height: 70px; border-radius: 50%; margin: 0 auto 18px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(94,33,41,.08); color: var(--primary-color, #5e2129); font-size: 28px;
+}
+.rast-state-card h3 { font-size: 18px; margin: 0 0 8px; line-height: 1.3; }
+.rast-state-card p { font-size: 14.5px; color: var(--body-color, #666); line-height: 1.6; margin: 0; }
+
+/* ════════════════════════════════════════════════════════════════
+   BLOG · filtro de categorías + tarjetas de entradas + paginación
+   ════════════════════════════════════════════════════════════════ */
+.blog-filter { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 46px; }
+.blog-filter-btn {
+    display: inline-block; padding: 9px 20px; border-radius: 30px;
+    background: var(--bg-grey, #f8f5f1); color: var(--heading-color, #0c0c0c);
+    font-weight: 600; font-size: 14.5px; transition: all .25s ease; text-decoration: none;
+}
+.blog-filter-btn:hover, .blog-filter-btn.is-active { background: var(--primary-color, #5e2129); color: #fff; }
+
+.blog-card {
+    background: #fff; border: 1px solid #ececec; border-radius: 16px; overflow: hidden;
+    box-shadow: 0 14px 40px rgba(0,0,0,.05); height: 100%;
+    display: flex; flex-direction: column; transition: transform .3s ease, box-shadow .3s ease;
+}
+.blog-card:hover { transform: translateY(-6px); box-shadow: 0 24px 54px rgba(0,0,0,.10); }
+.blog-card-thumb { position: relative; overflow: hidden; aspect-ratio: 16/10; background: #f1f1f1; }
+.blog-card-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+.blog-card:hover .blog-card-thumb img { transform: scale(1.06); }
+.blog-card-cat {
+    position: absolute; left: 14px; top: 14px; background: var(--primary-color, #5e2129); color: #fff;
+    font-size: 12.5px; font-weight: 600; padding: 6px 14px; border-radius: 20px; text-decoration: none;
+}
+.blog-card-cat:hover { background: var(--primary-dark, #481920); color: #fff; }
+.blog-card-body { padding: 24px 24px 26px; display: flex; flex-direction: column; flex: 1 1 auto; }
+.blog-card-meta { display: flex; gap: 18px; font-size: 13px; color: #8a8a8a; margin-bottom: 10px; }
+.blog-card-meta i { color: var(--primary-color, #5e2129); margin-right: 4px; }
+.blog-card-title { font-size: 19px; line-height: 1.35; margin: 0 0 10px; }
+.blog-card-title a { color: var(--heading-color, #0c0c0c); }
+.blog-card-title a:hover { color: var(--primary-color, #5e2129); }
+.blog-card-body p { font-size: 14.5px; color: var(--body-color, #666); line-height: 1.6; margin: 0 0 16px; }
+.blog-card .read-more { margin-top: auto; color: var(--primary-color, #5e2129); font-weight: 700; text-decoration: none; }
+.blog-card .read-more i { font-size: 12px; transition: transform .25s ease; }
+.blog-card .read-more:hover i { transform: translateX(4px); }
+
+.logisko-pagination .page-numbers {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 44px; height: 44px; padding: 0 12px; margin: 0 4px; border-radius: 8px;
+    background: var(--bg-grey, #f8f5f1); color: var(--heading-color, #0c0c0c); font-weight: 600;
+}
+.logisko-pagination .page-numbers.current,
+.logisko-pagination .page-numbers:hover { background: var(--primary-color, #5e2129); color: #fff; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   Secciones de contenido por país (inc/paises-contenido.php)
+   ══════════════════════════════════════════════════════════════════════════
+   Se generan solas en las 24 páginas de cada ruta, así que heredan el ritmo del
+   tema en vez de traer un estilo propio: titular centrado, cuerpo en una columna
+   legible y el mismo tratamiento de tablas y listas que el resto del sitio. */
+
+.gr-pais-sec .gr-pais-head h2 { margin-bottom: 14px; }
+
+/* Medida de lectura. A todo el ancho del contenedor las líneas pasaban de 130
+   caracteres, que es donde el ojo empieza a perder el renglón. */
+.gr-pais-sec .gr-pais-body { max-width: 860px; margin: 0 auto; }
+.gr-pais-sec .gr-pais-body > p { margin-bottom: 16px; }
+.gr-pais-sec .gr-pais-body > p:last-child { margin-bottom: 0; }
+
+/* Listas con marca propia en vez del bullet del navegador. */
+.gr-pais-sec .srv-list { list-style: none; padding: 0; margin: 0 0 18px; }
+.gr-pais-sec .srv-list li {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 11px;
+    line-height: 1.65;
+}
+.gr-pais-sec .srv-list li:before {
+    content: "00c";
+    font-family: "Font Awesome 6 Pro", "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    top: 2px;
+    font-size: 13px;
+    color: var(--theme-color, #6d1f2b);
+}
+
+/* Tablas: mismo aire que las del tema y desplazamiento propio en móvil. */
+.gr-pais-sec .table-responsive { overflow-x: auto; margin: 0 0 20px; }
+.gr-pais-sec .gr-tabla { width: 100%; border-collapse: collapse; font-size: 15px; }
+.gr-pais-sec .gr-tabla th,
+.gr-pais-sec .gr-tabla td { padding: 13px 16px; text-align: left; border-bottom: 1px solid rgba(0,0,0,.08); }
+.gr-pais-sec .gr-tabla thead th {
+    font-size: 12px;
+    letter-spacing: .6px;
+    text-transform: uppercase;
+    opacity: .65;
+    font-weight: 700;
+}
+.gr-pais-sec .gr-tabla tbody tr:last-child td { border-bottom: 0; }
+
+/* Preguntas frecuentes: pregunta y respuesta alineadas igual, separadas por una
+   línea fina. Antes la pregunta usaba `srv-panel-title`, que está centrada. */
+.gr-pais-sec .gr-faq-item { padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,.08); }
+.gr-pais-sec .gr-faq-item:last-child { border-bottom: 0; padding-bottom: 0; }
+.gr-pais-sec .gr-faq-q { font-size: 18px; margin: 0 0 7px; text-align: left; }
+.gr-pais-sec .gr-faq-a { margin: 0; opacity: .85; }
+
+/* El cierre: centrado, porque es una llamada a la acción y no texto de lectura. */
+/* `.btn-group` viene de Bootstrap como `inline-flex`, así que `text-align` no lo
+   centraba: el botón se quedaba pegado a la izquierda del bloque. */
+.gr-pais-sec .btn-group { margin-top: 24px; display: flex; justify-content: center; }
+.gr-pais-sec .gr-pais-body .btn-group + p { margin-top: 14px; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   Secciones SEO de la página de destino (inc/destinos-secciones.php)
+   ══════════════════════════════════════════════════════════════════════════
+   Casi todo el diseño lo ponen los componentes del propio tema —`srv-card`,
+   `srv-steps`, `srv-times`, `srv-two-grid`, `srv-features-grid`—, que ya están
+   estilados. Aquí solo va lo que esos componentes no cubren. */
+
+.dest-seo-sec .srv-intro { max-width: 760px; margin: 0 auto; }
+
+/* Línea de cierre de la sección de precio: botón y frase en la misma fila. */
+.dest-seo-cta-linea {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 34px;
+    justify-content: center;
+    text-align: left;
+}
+.dest-seo-cta-linea span { font-size: 15px; max-width: 460px; }
+
+/* Tabla de plazos, dentro de su panel. */
+.dest-seo-tabla { width: 100%; border-collapse: collapse; font-size: 15px; }
+.dest-seo-tabla th,
+.dest-seo-tabla td { padding: 12px 14px; text-align: left; border-bottom: 1px solid rgba(12, 12, 12, .08); }
+.dest-seo-tabla thead th {
+    font-size: 12px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: rgba(12, 12, 12, .55);
+    font-weight: 700;
+}
+.dest-seo-tabla tbody tr:last-child td { border-bottom: 0; }
+.dest-seo-nota { margin: 16px 0 0; font-size: 14px; opacity: .85; }
+
+/* Restricciones: caja con veto, para que se lean de un vistazo. */
+.dest-seo-no {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--white-color);
+    border: 1px solid rgba(12, 12, 12, .09);
+    border-left: 3px solid var(--primary-color);
+    border-radius: 0 3px 3px 0;
+    padding: 15px 18px;
+    font-size: 15px;
+    height: 100%;
+}
+.dest-seo-no i { color: var(--primary-color); font-size: 14px; margin-top: 4px; }
+.dest-seo-pie { margin: 26px 0 0; font-size: 15px; text-align: center; }
+
+/* Documentación: pasos numerados en una sola columna, más legibles en lista. */
+.dest-seo-docs { max-width: 780px; margin-left: auto; margin-right: auto; }
+
+/* Ciudades: etiquetas, no lista. Cada una es una búsqueda propia. */
+.dest-seo-ciudades { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.dest-seo-ciudades span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--white-color);
+    border: 1px solid rgba(12, 12, 12, .10);
+    border-radius: 2px;
+    padding: 10px 16px;
+    font-size: 15px;
+    color: var(--heading-color);
+}
+.dest-seo-ciudades i { color: var(--primary-color); font-size: 13px; }
+
+/* Comparativa de modalidades. */
+.dest-seo-via-top { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+.dest-seo-via-top .srv-panel-title { margin: 0; flex-grow: 1; }
+.dest-seo-via.is-econ { border-color: rgba(94, 33, 41, .35); }
+.dest-seo-via > p { margin: 0 0 18px; font-size: 15px; }
+.dest-seo-pill {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border-radius: 2px;
+    color: var(--primary-color);
+    background: rgba(94, 33, 41, .08);
+    white-space: nowrap;
+}
+.dest-seo-pill.on { color: var(--white-color); background: var(--primary-color); }
+.dest-seo-via dl { margin: 0; }
+.dest-seo-via dl > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 11px 0;
+    border-bottom: 1px solid rgba(12, 12, 12, .07);
+    font-size: 15px;
+}
+.dest-seo-via dl > div:last-child { border-bottom: 0; padding-bottom: 0; }
+.dest-seo-via dt { margin: 0; font-weight: 400; }
+.dest-seo-via dd { margin: 0; text-align: right; color: var(--heading-color); font-weight: 600; }
+
+.dest-seo-regla {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    margin-top: 26px;
+    background: var(--white-color);
+    border-left: 3px solid var(--primary-color);
+    border-radius: 0 3px 3px 0;
+    padding: 22px 26px;
+}
+.dest-seo-regla p { margin: 0; font-size: 15px; }
+
+/* Enlaces internos: cuatro columnas con su icono, no una lista suelta. */
+.dest-seo-grupo .srv-card-ic { margin-bottom: 14px; }
+.dest-seo-grupo h3 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: rgba(12, 12, 12, .5);
+    margin: 0 0 14px;
+}
+.dest-seo-grupo ul { list-style: none; padding: 0; margin: 0; }
+.dest-seo-grupo li { margin-bottom: 10px; line-height: 1.5; }
+.dest-seo-grupo a { font-size: 15px; color: var(--heading-color); }
+.dest-seo-grupo a:hover { color: var(--primary-color); }
+
+/* Tabla comparativa con el resto de la red: la fila del país actual se destaca
+   para que se lea de un vistazo dónde queda. */
+.dest-seo-comp tr.is-actual { background: rgba(94, 33, 41, .05); }
+.dest-seo-comp tr.is-actual td { color: var(--heading-color); }
+.dest-seo-comp tr.is-actual td:first-child { box-shadow: inset 3px 0 0 var(--primary-color); }
+.dest-seo-comp a { color: var(--heading-color); }
+.dest-seo-comp a:hover { color: var(--primary-color); }
+
+/* Tarjeta de contenido: la del tema centrada funciona para una línea, pero estas
+   llevan un párrafo y a veces un enlace, y centrado no se lee. */
+.dest-seo-card { text-align: left; height: 100%; padding: 28px 24px; }
+.dest-seo-card .srv-card-ic { margin-bottom: 16px; }
+.dest-seo-card h3 { margin-bottom: 9px; }
+.dest-seo-card p { font-size: 15px; margin: 0; }
+.dest-seo-card a { font-weight: 600; }
+
+/* Checklist: el número del paso se sustituye por una marca de verificación. */
+.dest-seo-check-list .srv-step-n { font-size: 12px; }
+
+/* Glosario: término y definición, en dos columnas cuando hay sitio. */
+.dest-seo-glosario { margin: 0; max-width: 900px; margin-left: auto; margin-right: auto; }
+.dest-seo-glosario > div {
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(12, 12, 12, .09);
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: 28px;
+    align-items: start;
+}
+.dest-seo-glosario > div:last-child { border-bottom: 0; padding-bottom: 0; }
+.dest-seo-glosario dt {
+    margin: 0;
+    font-family: var(--primary-font), sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--heading-color);
+}
+.dest-seo-glosario dd { margin: 0; font-size: 15px; }
+
+@media (max-width: 767px) {
+    .dest-seo-glosario > div { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+}
+
+/* Preguntas frecuentes. */
+.dest-seo-faq { max-width: 860px; margin: 0 auto; }
+.dest-seo-faq-item { padding: 20px 0; border-bottom: 1px solid rgba(12, 12, 12, .09); }
+.dest-seo-faq-item:last-child { border-bottom: 0; padding-bottom: 0; }
+.dest-seo-faq-item h3 { font-size: 18px; margin: 0 0 8px; }
+.dest-seo-faq-item p { margin: 0; opacity: .88; }
+
+@media (max-width: 767px) {
+    .dest-seo-cta-linea { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .dest-seo-ciudades { justify-content: flex-start; }
+    .dest-seo-regla { flex-direction: column; gap: 12px; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   «Por qué elegirnos» de la página de destino (grenvios_dsec_why)
+   ══════════════════════════════════════════════════════════════════════════
+   Maqueta de referencia de la clienta, pasada a la marca: granate en vez de
+   rojo y DM Sans. Las barras son el `skill-item` del tema; lo nuevo son la
+   antesala con flechas, la imagen enmarcada y las tarjetas con número de
+   contorno que se montan sobre la imagen. */
+
+.dest-why2 { overflow: hidden; }
+
+/* Las tarjetas suben 150 px sobre la fila de arriba para montarse sobre la
+   imagen. Ese hueco se reserva bajo la columna de texto: sin él, cuando no hay
+   barras la columna es más corta y las tarjetas tapaban el párrafo. */
+@media (min-width: 1200px) {
+    .dest-why2-top > .col-lg-6:first-child { padding-bottom: 180px; }
+}
+
+.dest-why2-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--primary-color);
+    margin-bottom: 18px;
+}
+.dest-why2-eyebrow svg {
+    width: 30px;
+    height: 12px;
+    fill: none;
+    stroke: var(--primary-color);
+    stroke-width: 1.4;
+    opacity: .55;
+}
+
+.dest-why2-title {
+    font-size: 46px;
+    line-height: 1.12;
+    letter-spacing: -1px;
+    margin: 0 0 24px;
+    max-width: 560px;
+}
+.dest-why2-title span { color: var(--primary-color); }
+
+.dest-why2-text { max-width: 560px; margin: 0 0 34px; }
+
+/* Barras: el componente del tema, con el globo del porcentaje en ámbar como en
+   la referencia (el tema lo trae negro). */
+.dest-why2-barras { list-style: none; padding: 0; margin: 0; max-width: 540px; }
+.dest-why2-barras .skill-item { padding-top: 26px; }
+.dest-why2-barras .skill-item h4 { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+.dest-why2-barras .progress { height: 5px; background: rgba(12, 12, 12, .07); }
+.dest-why2-barras .progress-bar { line-height: 5px; }
+.dest-why2-barras .progress-bar span {
+    background-color: #f5b52e;
+    color: #0c0c0c;
+    font-weight: 600;
+    font-size: 12px;
+    width: 42px;
+    height: 28px;
+    top: -34px;
+    right: -21px;
+}
+
+/* Imagen con el marco desplazado de la referencia. */
+.dest-why2-media {
+    position: relative;
+    padding: 18px 0 0 18px;
+    margin-left: auto;
+    max-width: 520px;
+}
+.dest-why2-media:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 36px;
+    bottom: 60px;
+    border: 10px solid #eeeeee;
+    z-index: 0;
+}
+.dest-why2-media img {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    /* Formato vertical fijo: con una foto apaisada el marco quedaba medio vacío
+       y las tarjetas ya no llegaban a montarse sobre la imagen. */
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 42% center;
+}
+
+/* Tarjetas: cuatro en fila, montadas sobre la parte baja de la imagen. */
+.dest-why2-cards {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+    max-width: 78%;
+    margin-top: -150px;
+}
+.dest-why2-card {
+    position: relative;
+    background: var(--white-color);
+    box-shadow: 0 18px 40px rgba(12, 12, 12, .07);
+    padding: 34px 20px 30px;
+    text-align: center;
+    min-height: 206px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+.dest-why2-card i {
+    font-size: 52px;
+    line-height: 1;
+    color: var(--primary-color);
+    margin-bottom: 26px;
+    position: relative;
+    z-index: 1;
+}
+.dest-why2-card h3 {
+    font-size: 18px;
+    line-height: 1.3;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+/* El número grande de contorno detrás del título, como en la referencia. */
+.dest-why2-num {
+    position: absolute;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    font-family: var(--primary-font), sans-serif;
+    font-size: 84px;
+    font-weight: 700;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(12, 12, 12, .16);
+    z-index: 0;
+    user-select: none;
+    pointer-events: none;
+}
+
+@media (max-width: 1199px) {
+    .dest-why2-title { font-size: 38px; }
+    .dest-why2-cards { max-width: 100%; margin-top: 40px; }
+}
+@media (max-width: 991px) {
+    .dest-why2-media { margin: 40px auto 0; }
+    .dest-why2-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 575px) {
+    .dest-why2-title { font-size: 30px; }
+    .dest-why2-cards { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   DESTINO · Hero a pantalla completa + «Nuestras soluciones»
+   (inc/destinos-hero.php)
+   ════════════════════════════════════════════════════════════════ */
+.gr-dhero {
+    --gr-acc: #d8465c;
+    --gr-velo: 43, 21, 25;
+    position: relative; overflow: hidden; isolation: isolate;
+    display: flex; align-items: center;
+    min-height: calc(100vh - var(--gr-dhero-top, 106px));
+    min-height: calc(100svh - var(--gr-dhero-top, 106px));
+    padding-block: 70px;
+    background: rgb(var(--gr-velo)); color: #fff;
+}
+.gr-dhero-media { position: absolute; inset: 0 0 0 auto; width: 62%; z-index: -2; }
+.gr-dhero-media img { width: 100%; height: 100%; object-fit: cover; object-position: 78% center; display: block; }
+.gr-dhero-media { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 30%); mask-image: linear-gradient(90deg, transparent 0, #000 30%); }
+.gr-dhero::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(90deg,
+        rgba(var(--gr-velo), 1) 0%, rgba(var(--gr-velo), 1) 36%,
+        rgba(var(--gr-velo), .7) 46%, rgba(var(--gr-velo), .2) 56%, rgba(var(--gr-velo), 0) 64%);
+}
+.gr-dhero .container { position: relative; width: 100%; }
+.gr-dhero-content { max-width: 800px; }
+.gr-dhero-eyebrow {
+    display: inline-flex; align-items: center; gap: 16px; margin: 0 0 18px;
+    font-size: 18px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: #fff;
+}
+.gr-dhero-eyebrow::after { content: ""; width: 46px; height: 2px; background: var(--gr-acc); }
+.gr-dhero-title {
+    margin: 0 0 22px; color: #fff; font-weight: 700;
+    font-size: clamp(38px, 4.6vw, 72px); line-height: 1.04; letter-spacing: -.5px;
+}
+.gr-dhero-title span, .gr-dhero-title .hl { display: block; color: var(--gr-acc); }
+.gr-dhero-lead { margin: 0 0 34px; max-width: 690px; font-size: 20px; line-height: 1.5; color: rgba(255,255,255,.92); }
+.gr-dhero-feats { list-style: none; margin: 0 0 38px; padding: 0; display: flex; flex-wrap: nowrap; }
+.gr-dhero-feats li { display: flex; align-items: flex-start; gap: 14px; padding: 0 22px; border-left: 1px solid rgba(255,255,255,.18); }
+.gr-dhero-feats li:first-child { padding-left: 0; border-left: 0; }
+.gr-dhero-ic {
+    flex: 0 0 52px; width: 52px; height: 52px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--gr-acc); color: #fff; font-size: 22px;
+}
+.gr-dhero-ft { max-width: 165px; font-size: 14px; line-height: 1.45; color: rgba(255,255,255,.88); }
+.gr-dhero-ft strong { display: block; margin-bottom: 4px; font-size: 18px; font-weight: 600; color: #fff; }
+.gr-dhero-btns { display: flex; flex-wrap: wrap; gap: 24px; }
+.gr-dhero-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 17px 28px; border-radius: 8px; border: 1px solid var(--gr-acc);
+    background: var(--gr-acc); color: #fff; font-size: 16px; font-weight: 600; line-height: 1;
+    transition: background .25s ease, border-color .25s ease, transform .25s ease;
+}
+.gr-dhero-btn:hover { background: #bf3349; border-color: #bf3349; color: #fff; transform: translateY(-2px); }
+.gr-dhero-btn .gr-dhero-arrow { margin-left: 6px; transition: transform .25s ease; }
+.gr-dhero-btn:hover .gr-dhero-arrow { transform: translateX(4px); }
+.gr-dhero-btn--line { background: transparent; border-color: #fff; }
+.gr-dhero-btn--line:hover { background: #fff; border-color: #fff; color: var(--primary-color, #5e2129); }
+
+@media (min-width: 992px) and (max-width: 1499px) {
+    .gr-dhero-media { width: 56%; }
+    .gr-dhero::before { background: linear-gradient(90deg, rgba(var(--gr-velo), 1) 0%, rgba(var(--gr-velo), 1) 44%, rgba(var(--gr-velo), .8) 54%, rgba(var(--gr-velo), .3) 66%, rgba(var(--gr-velo), 0) 76%); }
+    .gr-dhero-content { max-width: 660px; }
+    .gr-dhero-lead { font-size: 18px; }
+    .gr-dhero-feats li { padding: 0 16px; }
+    .gr-dhero-ft { max-width: 150px; }
+}
+@media (max-width: 991px) {
+    .gr-dhero-media { width: 100%; -webkit-mask-image: none; mask-image: none; }
+    .gr-dhero-feats { flex-wrap: wrap; row-gap: 18px; }
+    .gr-dhero::before { background: linear-gradient(180deg, rgba(var(--gr-velo), .9) 0%, rgba(var(--gr-velo), .78) 60%, rgba(var(--gr-velo), .9) 100%); }
+    .gr-dhero-lead { font-size: 18px; }
+}
+@media (max-width: 767px) {
+    .gr-dhero { padding-block: 48px; }
+    .gr-dhero-eyebrow { font-size: 14px; }
+    .gr-dhero-feats { flex-direction: column; gap: 18px; }
+    .gr-dhero-feats li { padding: 0; border-left: 0; }
+    .gr-dhero-ft { max-width: none; }
+    .gr-dhero-btns { gap: 14px; }
+    .gr-dhero-btn { width: 100%; justify-content: center; }
+}
+
+.gr-dsol { padding-block: 70px 30px; }
+.gr-dsol + .dest-section { padding-top: 60px; }
+.gr-dsol-head { max-width: 640px; margin: 0 auto 40px; text-align: center; }
+.gr-dsol-eyebrow {
+    display: inline-flex; align-items: center; gap: 14px; margin: 0 0 10px;
+    font-size: 15px; font-weight: 500; color: var(--primary-color, #5e2129);
+}
+.gr-dsol-eyebrow::before, .gr-dsol-eyebrow::after { content: ""; width: 40px; height: 1px; background: #d8465c; }
+.gr-dsol-head h2 { margin: 0 0 10px; font-size: clamp(28px, 3vw, 38px); }
+.gr-dsol-head p { margin: 0; color: var(--body-color, #6b6b6b); line-height: 1.6; }
+.gr-dsol-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.gr-dsol-card {
+    display: block; padding: 18px 20px 26px; text-align: center; border-radius: 14px;
+    background: #fff; box-shadow: 0 10px 34px rgba(0,0,0,.07); color: inherit;
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+.gr-dsol-card:hover { transform: translateY(-6px); box-shadow: 0 20px 44px rgba(0,0,0,.11); color: inherit; }
+.gr-dsol-ic {
+    width: 52px; height: 52px; margin-bottom: 14px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(216,70,92,.13); color: var(--primary-color, #5e2129); font-size: 22px;
+}
+.gr-dsol-card h3 { margin: 0 0 6px; font-size: 16px; font-weight: 700; }
+.gr-dsol-card p { margin: 0; font-size: 14px; line-height: 1.5; color: var(--body-color, #6b6b6b); }
+@media (max-width: 991px) { .gr-dsol-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 575px) { .gr-dsol-grid { grid-template-columns: 1fr; } }
+
+/* Las columnas de grid no encogen por debajo de su contenido: una tabla ancha
+ * dentro de un panel empujaba la página 65 px fuera de la pantalla en móvil. */
+.srv-two-grid > * { min-width: 0; }
+.srv-panel .table-responsive { overflow-x: auto; }
+
+/* Guías sin imagen destacada (sección «Antes de enviar a…» de los destinos). */
+.blog-card.dest-guia-sin-img { padding-top: 26px; height: 100%; }
+.dest-guia-ic {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 52px; height: 52px; margin: 0 0 4px 26px; border-radius: 50%;
+    background: rgba(216,70,92,.13); color: var(--primary-color, #5e2129); font-size: 20px;
+}
+
+/* En las páginas interiores el título llega del campo de cada página («Hablemos
+ * de tu envío a <span>Ecuador</span>»): con el <span> en bloque, la preposición
+ * se quedaba sola en su línea. Aquí el acento va en línea. */
+.gr-dhero--pagina .gr-dhero-title span,
+.gr-dhero--pagina .gr-dhero-title .hl { display: inline; }
+
+/* ════════════════════════════════════════════════════════════════
+   Hero de la portada a pantalla completa
+   El carrusel ocupa lo que queda de pantalla bajo la cabecera, que
+   está en el flujo (no flota encima): --gr-header-h la mide en JS y
+   el valor de reserva cubre el primer pintado antes de que corra.
+   ════════════════════════════════════════════════════════════════ */
+.slider-section .slider-content-wrap {
+    height: calc(100vh - var(--gr-header-h, 150px));
+    height: calc(100svh - var(--gr-header-h, 150px));
+    min-height: 560px;
+}
+
+/* La franja de carretera y la imagen escalan con el nuevo alto. */
+.slider-section .slider-img-wrap { height: 100%; }
+.slider-section .slider-road { height: 22%; min-height: 140px; }
+.slider-section .container-img { height: 60%; min-height: 400px; }
+.slider-section .corner-shape { height: 60%; min-height: 320px; }
+
+@media (max-width: 992px) {
+    .slider-section .slider-content-wrap { min-height: 520px; }
+    .slider-section .slider-road { height: 18%; min-height: 110px; }
+}
+
+/* Pantallas bajas (portátiles pequeños, móvil apaisado): manda el alto
+ * de pantalla, sin el mínimo que obligaría a hacer scroll para leer. */
+@media (max-height: 640px) {
+    .slider-section .slider-content-wrap { min-height: 0; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   Cotizador del hero (portada)
+   La tarjeta flota sobre la mitad derecha del carrusel: está fuera de
+   las diapositivas, así que no parpadea al cambiar de una a otra. El
+   texto de la diapositiva se reduce a la mitad izquierda para no pasar
+   por debajo. En móvil la tarjeta baja al flujo, tras el carrusel.
+   ════════════════════════════════════════════════════════════════ */
+.slider-section { position: relative; }
+
+.gr-heroquote {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    pointer-events: none;           /* los clics pasan al carrusel… */
+}
+.gr-heroquote > .container { width: 100%; }
+.gr-hq {
+    pointer-events: auto;           /* …salvo sobre la tarjeta */
+    margin-left: auto;
+    width: 100%;
+    max-width: 560px;
+    background: #fff;
+    border-radius: 18px;
+    padding: clamp(22px, 2.2vw, 34px);
+    box-shadow: 0 24px 60px rgba(0,0,0,.14);
+}
+
+.gr-hq-title { margin: 0 0 2px; font-size: clamp(28px, 2.6vw, 40px); line-height: 1.1; }
+.gr-hq-sub   { margin: 0 0 18px; color: #6b7280; font-size: 17px; }
+
+.gr-hq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; }
+.gr-hq-field { min-width: 0; }   /* sin esto el placeholder largo ensancha la tarjeta */
+.gr-hq-field label {
+    display: block; margin-bottom: 6px;
+    font-size: 14px; font-weight: 700; color: #1f2937;
+}
+.gr-hq-input { position: relative; }
+.gr-hq-input > i {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    color: #9aa1ab; font-size: 15px; pointer-events: none;
+}
+.gr-hq-input input,
+.gr-hq-input select {
+    width: 100%; height: 50px;
+    padding: 0 12px 0 38px;
+    border: 1px solid #e2e5ea; border-radius: 10px;
+    background: #fff; color: #1f2937; font-size: 15px;
+    appearance: none; -webkit-appearance: none;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+.gr-hq-input select {
+    /* La flecha propia del <select> se sustituye por una que sigue el diseño. */
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239aa1ab' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 38px;
+}
+.gr-hq-input input::placeholder { color: #9aa1ab; }
+.gr-hq-input input:focus,
+.gr-hq-input select:focus {
+    outline: none;
+    border-color: var(--primary-color, #5e2129);
+    box-shadow: 0 0 0 3px rgba(94,33,41,.12);
+}
+
+.gr-hq-check {
+    display: flex; align-items: flex-start; gap: 10px;
+    margin: 16px 0 14px; font-size: 15px; color: #4b5563; cursor: pointer;
+}
+.gr-hq-check input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--primary-color, #5e2129); flex: none; }
+
+.gr-hq-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    width: 100%; height: 58px; border: 0; border-radius: 10px;
+    background: var(--primary-color, #5e2129); color: #fff;
+    font-size: 18px; font-weight: 700;
+    transition: background .25s ease, transform .2s ease;
+}
+.gr-hq-btn:hover { background: #7a2b35; transform: translateY(-2px); }
+.gr-hq-btn:disabled { opacity: .7; transform: none; }
+
+.gr-hq-note {
+    margin: 12px 0 0; text-align: center;
+    font-size: 14px; color: #6b7280;
+}
+.gr-hq-note i { margin-right: 6px; }
+.gr-hq .form-messages { margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 14px; }
+.gr-hq .form-messages.alert-success { background: #e8f5ec; color: #1d6b3a; }
+.gr-hq .form-messages.alert-danger  { background: #fdeaea; color: #a32020; }
+
+/* Escritorio: el texto de la diapositiva ocupa solo la mitad libre y el hero
+ * crece lo justo para que la tarjeta entre completa. */
+@media (min-width: 992px) {
+    .slider-section .slider-content { max-width: 50%; }
+    .slider-section .slider-content-wrap { min-height: 720px; }
+}
+
+/* Tablet y móvil: carrusel arriba, tarjeta debajo; entre los dos llenan la
+ * pantalla, así que el carrusel ya no necesita el alto completo él solo. */
+@media (max-width: 991px) {
+    .slider-section { min-height: calc(100svh - var(--gr-header-h, 120px)); }
+    .slider-section .slider-content-wrap { height: auto; min-height: 60svh; padding: 60px 0; }
+    .gr-heroquote { position: relative; inset: auto; pointer-events: auto; padding: 0 0 50px; margin-top: -40px; }
+    .gr-hq { margin: 0 auto; max-width: 620px; }
+}
+
+@media (max-width: 575px) {
+    .gr-hq-grid { grid-template-columns: 1fr; }
+    .gr-hq-title { font-size: 28px; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   Tipografía del hero — ajustada al diseño aprobado
+   DM Sans es variable (100..1000), así que los pesos altos salen del
+   mismo archivo ya cargado: no añade ninguna descarga.
+   ════════════════════════════════════════════════════════════════ */
+
+/* Antetítulo: en el diseño va en MAYÚSCULAS y con más espaciado. */
+.slider-section .slider-caption.medium {
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+}
+
+/* Titular: más grueso y con las líneas más juntas que en el tema base. */
+.slider-section .slider-caption.big {
+    font-weight: 800;
+    /* La misma escala que el H1 de las páginas de destino: el hero de la
+     * portada no tiene por qué llevar un titular más pequeño. */
+    font-size: clamp(38px, 4.6vw, 72px);
+    line-height: 1.04;
+    /* En em, no en px: Poppins compone ancho y el titular de la maqueta va muy
+     * apretado, así que el ajuste tiene que escalar con el cuerpo. */
+    letter-spacing: -.03em;
+}
+
+/* Bajada: un punto más de peso y de contraste. */
+.slider-section .slider-caption.small {
+    font-size: 19px;
+    line-height: 30px;
+    font-weight: 500;
+    color: #4b5563;
+}
+
+/* Tarjeta del cotizador. */
+.gr-hq-title {
+    font-size: clamp(30px, 2.9vw, 44px);
+    font-weight: 800;
+    letter-spacing: -1.2px;
+}
+.gr-hq-sub { font-weight: 400; }
+.gr-hq-field label { font-size: 15px; font-weight: 700; letter-spacing: -.2px; }
+.gr-hq-input input,
+.gr-hq-input select { font-size: 16px; font-weight: 500; }
+.gr-hq-input input::placeholder { font-weight: 400; }
+.gr-hq-check { font-size: 16px; font-weight: 400; }
+.gr-hq-btn { font-size: 19px; font-weight: 700; letter-spacing: -.2px; }
+.gr-hq-note { font-size: 15px; font-weight: 400; }
+
+/* ════════════════════════════════════════════════════════════════
+   Hero de la portada con foto real
+   La foto (avión de carga + camión) pasa a ser el fondo del carrusel.
+   Sobre ella va un velo blanco en degradado: sin él, el titular oscuro
+   no se lee sobre el cielo del atardecer. Los adornos del template
+   —la carretera negra, el contenedor y el camión en PNG— se ocultan:
+   duplicaban lo que ya muestra la foto.
+   ════════════════════════════════════════════════════════════════ */
+.slider-section .slider-img { z-index: 0; }
+.slider-section .slider-img img { object-position: center right; }
+
+.slider-section .slider-img-wrap::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+        100deg,
+        rgba(255,255,255,.98) 0%,
+        rgba(255,255,255,.95) 34%,
+        rgba(255,255,255,.72) 50%,
+        rgba(255,255,255,.34) 66%,
+        rgba(255,255,255,.12) 100%
+    );
+}
+
+.slider-section .slider-road,
+.slider-section .container-img,
+.slider-section .slider-truck { display: none; }
+
+/* La esquina roja de marca va POR ENCIMA del velo (es hermana de la foto). */
+.slider-section .corner-shape { z-index: 2; }
+
+/* En móvil el texto se centra sobre la foto, así que el velo cubre todo. */
+@media (max-width: 991px) {
+    .slider-section .slider-img-wrap::after {
+        background: linear-gradient(
+            180deg,
+            rgba(255,255,255,.94) 0%,
+            rgba(255,255,255,.86) 55%,
+            rgba(255,255,255,.72) 100%
+        );
+    }
+    .slider-section .slider-img img { object-position: center; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   Cotizador del hero · campos completos y desplegable propio
+   Los campos van sin etiqueta (el texto vive en el placeholder, como
+   en el diseño aprobado): con nueve campos, las etiquetas encima
+   sumaban más de 100 px y la tarjeta ya no cabía en pantalla.
+   ════════════════════════════════════════════════════════════════ */
+.gr-hq-grid { gap: 12px; }
+.gr-hq-wide { grid-column: 1 / -1; }
+
+.gr-hq-input textarea {
+    width: 100%;
+    min-height: 122px;
+    padding: 13px 12px 13px 38px;
+    border: 1px solid #e2e5ea;
+    border-radius: 10px;
+    background: #fff;
+    color: #1f2937;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.5;
+    resize: vertical;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+.gr-hq-input textarea::placeholder { color: #9aa1ab; font-weight: 400; }
+.gr-hq-input textarea:focus {
+    outline: none;
+    border-color: var(--primary-color, #5e2129);
+    box-shadow: 0 0 0 3px rgba(94,33,41,.12);
+}
+/* Con textarea el icono se alinea con la primera línea, no al centro. */
+.gr-hq-wide > i { top: 16px; transform: none; }
+
+/* ── Desplegable propio ──────────────────────────────────────────
+   El <select> real sigue dentro (transparente): es el que se envía y
+   el que enseña el aviso de «campo obligatorio» del navegador. */
+.gr-dd { position: relative; }
+.gr-dd-native {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+}
+.gr-dd-toggle {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    padding: 0 38px 0 38px;
+    border: 1px solid #e2e5ea;
+    border-radius: 10px;
+    background: #fff;
+    color: #1f2937;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: left;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+.gr-dd-toggle.is-placeholder { color: #9aa1ab; font-weight: 400; }
+.gr-dd-toggle::after {
+    content: "";
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    width: 9px;
+    height: 9px;
+    margin-top: -6px;
+    border-right: 2px solid #9aa1ab;
+    border-bottom: 2px solid #9aa1ab;
+    transform: rotate(45deg);
+    transition: transform .2s ease;
+}
+.gr-dd.is-open .gr-dd-toggle {
+    border-color: var(--primary-color, #5e2129);
+    box-shadow: 0 0 0 3px rgba(94,33,41,.12);
+}
+.gr-dd.is-open .gr-dd-toggle::after { transform: rotate(-135deg); margin-top: -2px; }
+
+.gr-dd-list {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 6px);
+    z-index: 20;
+    max-height: 244px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 6px;
+    list-style: none;
+    background: #fff;
+    border: 1px solid #e9ecf1;
+    border-radius: 12px;
+    box-shadow: 0 18px 40px rgba(0,0,0,.16);
+}
+.gr-dd-list li {
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #374151;
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+}
+.gr-dd-list li:hover { background: #f4f5f7; }
+.gr-dd-list li.is-selected {
+    background: rgba(94,33,41,.08);
+    color: var(--primary-color, #5e2129);
+    font-weight: 700;
+}
+
+/* El hero de las páginas de destino se queda como el diseño original:
+   contenido a la izquierda sobre la foto a sangre, sin tarjeta que lo
+   estreche. El cotizador vive en la portada. */
+
+/* ════════════════════════════════════════════════════════════════
+   Cotizador · cabecera con icono, botón «Enviar» y garantías
+   Ajustes al diseño aprobado: sello rojo junto al título, palabra en
+   acento, botón a lo ancho con degradado y el avión pegado al borde,
+   y la franja de tres garantías al pie de la tarjeta.
+   ════════════════════════════════════════════════════════════════ */
+.gr-hq { padding-bottom: 0; overflow: hidden; }   /* la franja llega hasta el borde */
+
+.gr-hq-head { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+.gr-hq-ic {
+    flex: none;
+    width: 52px; height: 52px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 12px;
+    background: var(--primary-color, #5e2129);
+    color: #fff; font-size: 22px;
+}
+.gr-hq-title { margin: 0; font-size: clamp(24px, 2.1vw, 32px); line-height: 1.15; }
+.gr-hq-title span { color: var(--gr-acc, #d8465c); }
+
+.gr-hq-sub { margin: -8px 0 18px; }
+.gr-hq-sub:empty { display: none; }               /* subtítulo opcional */
+
+.gr-hq-btn {
+    position: relative;
+    margin-top: 18px;
+    height: 62px;
+    border-radius: 12px;
+    background: linear-gradient(90deg, var(--primary-color, #5e2129) 0%, #b21f35 65%, #d8465c 100%);
+    font-size: 19px;
+}
+.gr-hq-btn i { position: absolute; right: 22px; font-size: 20px; }
+.gr-hq-btn:hover { background: linear-gradient(90deg, #6d2731 0%, #c42439 65%, #e05268 100%); }
+
+.gr-hq-note { margin: 12px 0 18px; font-size: 13.5px; line-height: 1.5; color: #8b9098; }
+
+.gr-hq-badges {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0 calc(-1 * clamp(22px, 2.2vw, 34px));
+    padding: 18px clamp(14px, 1.6vw, 22px);
+    list-style: none;
+    background: #f6f7f9;
+    border-top: 1px solid #ecedf0;
+}
+.gr-hq-badges li {
+    display: flex; align-items: center; gap: 10px;
+    padding: 0 12px;
+    border-left: 1px solid #e3e5e9;
+}
+.gr-hq-badges li:first-child { border-left: 0; }
+.gr-hq-badges i { flex: none; font-size: 19px; color: var(--primary-color, #5e2129); }
+.gr-hq-badges span { font-size: 12.5px; line-height: 1.35; color: #8b9098; }
+.gr-hq-badges strong { display: block; font-size: 13.5px; font-weight: 700; color: #1f2937; }
+
+@media (max-width: 575px) {
+    .gr-hq-badges { grid-template-columns: 1fr; gap: 12px; }
+    .gr-hq-badges li { border-left: 0; padding: 0; }
+}
+
+/* Pantallas de poco alto (portátiles de 768–900 px): la tarjeta se compacta
+ * para que las garantías del pie sigan entrando sin hacer scroll. */
+@media (min-width: 992px) and (max-height: 920px) {
+    .gr-hq-head { margin-bottom: 14px; }
+    .gr-hq-grid { gap: 10px; }
+    .gr-hq-input input,
+    .gr-hq-input select,
+    .gr-dd-toggle { height: 46px; }
+    .gr-hq-input textarea { min-height: 100px; }
+    .gr-hq-btn { height: 56px; margin-top: 14px; }
+    .gr-hq-note { margin: 10px 0 14px; }
+    .gr-hq-badges { padding-block: 14px; }
+}
+
+/* Barra del textarea discreta (con el aviso largo, el navegador la muestra). */
+.gr-hq-input textarea { scrollbar-width: thin; scrollbar-color: #cfd3da transparent; }
+.gr-hq-input textarea::-webkit-scrollbar { width: 8px; }
+.gr-hq-input textarea::-webkit-scrollbar-thumb { background: #cfd3da; border-radius: 8px; }
+.gr-hq-input textarea::-webkit-scrollbar-track { background: transparent; }
+
+/* ════════════════════════════════════════════════════════════════
+   Hero de la portada · maqueta aprobada
+   Columna izquierda: antesala, titular, entradilla, tres garantías,
+   botón + enlace secundario y prueba social con avatares.
+   ════════════════════════════════════════════════════════════════ */
+.slider-chips {
+    display: flex; flex-wrap: wrap; gap: 14px 28px;
+    margin: 0 0 30px; padding: 0; list-style: none;
+}
+.slider-chips li {
+    display: flex; align-items: center; gap: 12px;
+    max-width: 230px;
+    font-size: 15px; font-weight: 600; line-height: 1.3; color: #2b2b2b;
+}
+.slider-chips i {
+    flex: none; width: 44px; height: 44px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(216,70,92,.12); color: var(--primary-color, #5e2129); font-size: 17px;
+}
+
+.slider-section .slider-btn { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+.slider-section .slider-btn .default-btn { display: inline-flex; align-items: center; gap: 10px; }
+.slider-link {
+    font-size: 16px; font-weight: 700; color: var(--gr-acc, #d8465c);
+    text-decoration: underline; text-underline-offset: 5px;
+}
+.slider-link:hover { color: var(--primary-color, #5e2129); }
+
+.slider-proof { display: flex; align-items: center; gap: 14px; margin-top: 30px; }
+.slider-proof-av { display: inline-flex; }
+.slider-proof-av img {
+    width: 42px; height: 42px; border-radius: 50%; object-fit: cover;
+    border: 2px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,.12);
+}
+.slider-proof-av img + img { margin-left: -12px; }
+.slider-proof-tx { font-size: 14px; line-height: 1.35; color: #6b7280; }
+.slider-proof-tx strong { display: block; font-size: 16px; font-weight: 700; color: #1f2937; }
+
+/* La tarjeta vuelve a llevar etiqueta sobre cada campo, como en la maqueta. */
+.gr-hq-field label {
+    display: block; margin-bottom: 6px;
+    font-size: 14.5px; font-weight: 700; color: #1f2937;
+}
+.gr-hq-grid { gap: 14px 16px; }
+.gr-hq-field { min-width: 0; }
+.gr-hq-wide { grid-column: 1 / -1; }
+
+/* Datos opcionales plegados. */
+.gr-hq-mas { margin-top: 14px; }
+.gr-hq-mas > summary {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 14px; font-weight: 600; color: var(--primary-color, #5e2129);
+    cursor: pointer; list-style: none;
+}
+.gr-hq-mas > summary::-webkit-details-marker { display: none; }
+.gr-hq-mas > summary::before {
+    content: "+"; width: 20px; height: 20px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(94,33,41,.1); font-size: 14px; line-height: 1;
+}
+.gr-hq-mas[open] > summary::before { content: "–"; }
+.gr-hq-mas > .gr-hq-grid { margin-top: 14px; }
+
+/* El botón vuelve al texto con flecha; sin sello en la cabecera. */
+.gr-hq-head, .gr-hq-ic { display: none; }
+.gr-hq-btn i { font-size: 17px; }
+
+/* Las tres garantías del hero caben en una fila en escritorio. */
+@media (min-width: 992px) {
+    .slider-chips { flex-wrap: nowrap; gap: 20px; }
+    .slider-chips li { max-width: none; font-size: 14.5px; }
+    .slider-chips i { width: 40px; height: 40px; font-size: 16px; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   Tipografía del sitio — Inter
+   La maqueta está compuesta en una geométrica con «a» de UN SOLO PISO
+   —un círculo con asta—, acentos en cuña gruesa y cifras circulares.
+   Eso descarta DM Sans (la del template), Inter y Manrope, que llevan
+   «a» de dos pisos. La que coincide es Poppins, y es la que se carga
+   desde functions.php.
+   Para volver atrás basta con quitar estas dos variables.
+   ════════════════════════════════════════════════════════════════ */
+:root {
+    --primary-font: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --body-font: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* Inter compone algo más ancho que DM Sans: los titulares grandes piden un
+ * punto más de tracking negativo para leerse como en el diseño. */
+body,
+button, input, select, textarea {
+    font-family: var(--body-font);
+}
+h1, h2, h3, h4, h5, h6,
+.slider-caption.big,
+.gr-hq-title,
+.gr-dhero-title {
+    font-family: var(--primary-font);
+    letter-spacing: -.025em;
+}
+.slider-caption.big { letter-spacing: -.035em; }
+.gr-hq-title { letter-spacing: -.03em; }
+
+/* El resto del texto no lleva tracking negativo: a tamaños pequeños Inter ya
+ * va justa y apretarla resta legibilidad. */
+p, li, label, input, select, textarea, .gr-hq-sub, .gr-hq-note { letter-spacing: 0; }
+
+/* El desplegable no crece cuando la opción es larga («Documento, paquete o
+ * carga»): una línea, y si no cabe, se recorta con puntos suspensivos. */
+.gr-dd-toggle {
+    display: block;
+    line-height: 48px;
+    font-size: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   Portada · tabla de rutas y bloque de precio (inc/home-seo.php)
+   ════════════════════════════════════════════════════════════════ */
+.gr-rutas-tabla { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,.06); }
+.gr-rutas-tabla th, .gr-rutas-tabla td { padding: 14px 18px; text-align: left; font-size: 15px; border-bottom: 1px solid #eef0f3; }
+.gr-rutas-tabla thead th { background: var(--primary-color, #5e2129); color: #fff; font-weight: 700; font-size: 14px; letter-spacing: .02em; }
+.gr-rutas-tabla tbody tr:last-child th, .gr-rutas-tabla tbody tr:last-child td { border-bottom: 0; }
+.gr-rutas-tabla tbody tr:hover { background: #fbf8f7; }
+.gr-rutas-tabla tbody th { font-weight: 700; }
+.gr-rutas-tabla tbody th a { color: var(--primary-color, #5e2129); }
+.gr-rutas-tabla tbody th a:hover { text-decoration: underline; }
+.gr-rutas-pie { margin: 18px 0 0; text-align: center; font-size: 15px; color: var(--body-color, #666); }
+.gr-rutas-pie a { color: var(--primary-color, #5e2129); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+
+.gr-home-precio .gr-precio-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.gr-home-precio .gr-precio-list li {
+    padding: 16px 18px; border-radius: 12px; background: #fff;
+    box-shadow: 0 8px 24px rgba(0,0,0,.06); font-size: 15px; line-height: 1.5; color: var(--body-color, #666);
+}
+.gr-home-precio .gr-precio-list strong { display: block; margin-bottom: 2px; color: var(--heading-color, #0c0c0c); }
+.gr-link-under { font-weight: 700; color: var(--primary-color, #5e2129); text-decoration: underline; text-underline-offset: 5px; }
+
+@media (max-width: 991px) {
+    .gr-home-precio .gr-precio-list { margin-top: 26px; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   Fichas de destino · cobertura por ciudades y cotizador de cierre
+   ════════════════════════════════════════════════════════════════ */
+.dest-ciudades {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    justify-content: center;
+    margin: 0; padding: 0; list-style: none;
+}
+.dest-ciudades li {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 16px; border-radius: 999px;
+    background: #fff; border: 1px solid #ecedf0;
+    box-shadow: 0 6px 18px rgba(0,0,0,.05);
+    font-size: 15px; font-weight: 600; color: var(--heading-color, #0c0c0c);
+}
+.dest-ciudades li i { font-size: 13px; color: var(--gr-acc, #d8465c); }
+.dest-ciudades-pie {
+    margin: 22px auto 0; max-width: 760px; text-align: center;
+    font-size: 15px; line-height: 1.6; color: var(--body-color, #666);
+}
+
+.dest-cotiza .dest-cotiza-texto h2 { font-size: clamp(26px, 2.4vw, 36px); line-height: 1.15; margin-bottom: 16px; }
+.dest-cotiza .dest-cotiza-texto p:not(.sub-heading) { font-size: 16px; line-height: 1.65; color: var(--body-color, #666); }
+.dest-cotiza-list { list-style: none; margin: 20px 0 0; padding: 0; display: grid; gap: 10px; }
+.dest-cotiza-list li { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; }
+.dest-cotiza-list i {
+    flex: none; width: 24px; height: 24px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(216,70,92,.13); color: var(--primary-color, #5e2129); font-size: 11px;
+}
+.dest-cotiza-form .gr-hq { margin: 0; max-width: none; }
+
+@media (max-width: 991px) {
+    .dest-cotiza-form { margin-top: 34px; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   Contenido propio de páginas (inc/paginas-contenido-seo.php)
+   ════════════════════════════════════════════════════════════════ */
+.gr-pseo-body { max-width: 900px; }
+.gr-pseo-body p { font-size: 16px; line-height: 1.75; color: var(--body-color, #666); margin-bottom: 16px; }
+.gr-pseo-body a { color: var(--primary-color, #5e2129); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.gr-pseo-list { list-style: none; margin: 0 0 18px; padding: 0; display: grid; gap: 12px; }
+.gr-pseo-list li {
+    position: relative; padding: 14px 18px 14px 44px;
+    background: #fff; border-radius: 12px; box-shadow: 0 8px 22px rgba(0,0,0,.05);
+    font-size: 15.5px; line-height: 1.6; color: var(--body-color, #666);
+}
+.gr-pseo-list li::before {
+    content: ""; position: absolute; left: 18px; top: 22px;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--gr-acc, #d8465c);
+}
+.gr-pseo-list strong, .gr-pseo-steps strong { color: var(--heading-color, #0c0c0c); }
+
+.gr-pseo-steps { counter-reset: paso; list-style: none; margin: 0 0 18px; padding: 0; display: grid; gap: 12px; }
+.gr-pseo-steps li {
+    position: relative; padding: 16px 18px 16px 62px;
+    background: #fff; border-radius: 12px; box-shadow: 0 8px 22px rgba(0,0,0,.05);
+    font-size: 15.5px; line-height: 1.6; color: var(--body-color, #666);
+}
+.gr-pseo-steps li::before {
+    counter-increment: paso; content: counter(paso);
+    position: absolute; left: 18px; top: 16px;
+    width: 30px; height: 30px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--primary-color, #5e2129); color: #fff;
+    font-size: 14px; font-weight: 700;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   Cobertura en origen: distritos y ciudades (inc/cobertura-origen.php)
+   ════════════════════════════════════════════════════════════════ */
+.gr-cob-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; }
+.gr-cob-zona {
+    padding: 22px 24px; border-radius: 14px; background: #fff;
+    box-shadow: 0 10px 30px rgba(0,0,0,.06);
+}
+.gr-cob-zona h3 {
+    margin: 0 0 14px; font-size: 17px; font-weight: 700;
+    color: var(--primary-color, #5e2129);
+    display: flex; align-items: center; gap: 10px;
+}
+.gr-cob-zona h3::before {
+    content: ""; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gr-acc, #d8465c); flex: none;
+}
+.gr-cob-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.gr-cob-chips li {
+    padding: 7px 13px; border-radius: 999px;
+    background: #f6f7f9; border: 1px solid #ecedf0;
+    font-size: 14px; color: #4b5563;
+}
+.gr-cob-chips--ciudades { justify-content: center; gap: 10px; }
+.gr-cob-chips--ciudades li {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #fff; box-shadow: 0 6px 18px rgba(0,0,0,.05);
+    font-size: 15px; font-weight: 600; color: var(--heading-color, #0c0c0c);
+}
+.gr-cob-chips--ciudades i { font-size: 12px; color: var(--gr-acc, #d8465c); }
+.gr-cob-pie {
+    margin: 26px auto 0; max-width: 780px; text-align: center;
+    font-size: 15px; line-height: 1.65; color: var(--body-color, #666);
+}
+.gr-cob-pie a { color: var(--primary-color, #5e2129); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+
+/* ════════════════════════════════════════════════════════════════
+   Preguntas al pie de las entradas del blog
+   ════════════════════════════════════════════════════════════════ */
+.gr-post-faq { display: grid; gap: 14px; margin: 10px 0 26px; }
+.gr-post-faq-item {
+    padding: 18px 22px; border-radius: 12px; background: #fff;
+    border: 1px solid #ecedf0; box-shadow: 0 8px 22px rgba(0,0,0,.05);
+}
+.gr-post-faq-item h3 {
+    margin: 0 0 8px; font-size: 17px; font-weight: 700; line-height: 1.35;
+    color: var(--heading-color, #0c0c0c);
+}
+.gr-post-faq-item p { margin: 0; font-size: 15.5px; line-height: 1.65; color: var(--body-color, #666); }
+
+/* ════════════════════════════════════════════════════════════════
+   Calculadora de peso volumétrico (inc/herramienta-volumetrico.php)
+   ════════════════════════════════════════════════════════════════ */
+.gr-calc-box {
+    max-width: 860px; margin: 0 auto; padding: clamp(22px, 2.4vw, 34px);
+    background: #fff; border-radius: 16px; box-shadow: 0 18px 44px rgba(0,0,0,.08);
+}
+.gr-calc-campos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.gr-calc-campo label { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 700; color: #1f2937; }
+.gr-calc-campo input {
+    width: 100%; height: 50px; padding: 0 14px;
+    border: 1px solid #e2e5ea; border-radius: 10px;
+    font-size: 16px; font-weight: 600; color: #1f2937; background: #fff;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+.gr-calc-campo input:focus {
+    outline: none; border-color: var(--primary-color, #5e2129);
+    box-shadow: 0 0 0 3px rgba(94,33,41,.12);
+}
+.gr-calc-salida { display: block; margin-top: 22px; }
+.gr-calc-vacio { margin: 0; padding: 18px; border-radius: 12px; background: #f6f7f9; text-align: center; color: #8b9098; font-size: 15px; }
+.gr-calc-res { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.gr-calc-dato {
+    padding: 16px 18px; border-radius: 12px; background: #f6f7f9;
+    border: 1px solid transparent; text-align: center;
+}
+.gr-calc-dato span { display: block; font-size: 13.5px; color: #6b7280; margin-bottom: 4px; }
+.gr-calc-dato strong { font-size: 24px; font-weight: 800; color: var(--heading-color, #0c0c0c); letter-spacing: -.02em; }
+.gr-calc-dato.is-manda { background: rgba(216,70,92,.10); border-color: rgba(216,70,92,.35); }
+.gr-calc-dato--total { background: var(--primary-color, #5e2129); }
+.gr-calc-dato--total span { color: rgba(255,255,255,.75); }
+.gr-calc-dato--total strong { color: #fff; }
+.gr-calc-explica { margin: 14px 0 0; font-size: 15px; line-height: 1.6; color: var(--body-color, #666); }
+.gr-calc-nota { margin: 20px 0 0; font-size: 14.5px; line-height: 1.6; color: #8b9098; }
+.gr-calc-nota a { color: var(--primary-color, #5e2129); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+.gr-calc--nota .gr-calc-nota { max-width: 780px; margin: 0 auto; text-align: center; font-size: 15px; }
+
+@media (max-width: 767px) {
+    .gr-calc-campos { grid-template-columns: repeat(2, 1fr); }
+    .gr-calc-res { grid-template-columns: 1fr; }
+}
+
+/* ── Portada: textos que parecían encabezados y no lo son ─────────────────
+ * Antetítulos, cifras de los contadores y el teléfono junto al botón iban en
+ * <h3>/<h4>: rompían la jerarquía (un H3 antes de su H2, un H3 «00»). Ahora son
+ * párrafos; estas reglas les devuelven exactamente el aspecto que tenían. */
+p.sub-heading,
+.section-heading p.sub-heading {
+    color: var(--primary-color);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1;
+    margin: 0 0 10px;
+    letter-spacing: -0.025em;
+    -webkit-font-smoothing: antialiased;
+}
+.counter-content .gr-cnum,
+.counter-content .gr-clabel,
+.call-info .gr-call {
+    font-family: var(--primary-font), sans-serif;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.025em;
+}
+.counter-content .gr-cnum {
+    color: var(--heading-color);
+    font-size: 52px;
+    font-weight: 600;
+    line-height: 1;
+    margin: 0 0 5px;
+}
+.counter-content .gr-cnum span {
+    line-height: 1;
+}
+.counter-content .gr-clabel {
+    color: var(--body-color);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.7;
+    letter-spacing: 0;
+    text-transform: none;
+    margin: 0 0 10px;
+}
+.call-info .gr-call {
+    color: var(--heading-color);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+    margin: 0;
+}
+.call-info .gr-call span {
+    color: var(--body-color);
+    display: block;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 10px;
+}
+.grenvios-promo-banner .promo-title {
+    color: #fff;
+    margin: 6px 0 0;
+    font-family: var(--primary-font), sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+@media (max-width: 992px) {
+    .counter-content .gr-cnum { font-size: 36px; }
+}
+
+/* ── /destinos/: tarjetas de ruta y «otros destinos» ───────────────────────
+ * Las tarjetas vivían de una foto (de relleno) y solo decían el nombre y un
+ * plazo. Ahora son fichas resumidas: bandera, vía, plazo, entrega y ciudades,
+ * todo desde el gestor de destinos. La tarjeta entera es clicable. */
+.gr-dcards { --gr-dc-accent: var(--primary-color, #5e2129); }
+.gr-dcard {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 26px 26px 22px;
+    background: #fff;
+    border: 1px solid #ece7e3;
+    border-radius: 14px;
+    box-shadow: 0 1px 2px rgba(12, 12, 12, .04);
+    overflow: hidden;
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.gr-dcard::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: var(--gr-dc-accent);
+    transform: scaleX(.18);
+    transform-origin: left;
+    transition: transform .35s ease;
+}
+.gr-dcard:hover,
+.gr-dcard:focus-within {
+    transform: translateY(-4px);
+    border-color: transparent;
+    box-shadow: 0 18px 40px -18px rgba(94, 33, 41, .35);
+}
+.gr-dcard:hover::before,
+.gr-dcard:focus-within::before { transform: scaleX(1); }
+.gr-dcard-iso {
+    position: absolute;
+    right: 14px;
+    bottom: -18px;
+    font-family: var(--primary-font), sans-serif;
+    font-size: 96px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -4px;
+    color: var(--gr-dc-accent);
+    opacity: .06;
+    pointer-events: none;
+    user-select: none;
+}
+.gr-dcard-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+/* Banderas SVG 4:3 (assets/img/flags-svg). Proporción fija y recorte limpio:
+ * cada componente solo fija el ancho. */
+.gr-flag, .gr-bq-flag, .gr-lang-flag {
+    width: 20px;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 3px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .1), 0 1px 2px rgba(0, 0, 0, .08);
+    flex: none;
+}
+.gr-lang-flag { display: inline-block; width: 20px; vertical-align: -3px; margin-right: 4px; }
+.gr-dcard-head .gr-flag { width: 24px; height: auto; }
+.gr-dcard-mode {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: #f7f1ef;
+    color: var(--gr-dc-accent);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+.gr-dcard-mode i { font-size: 14px; }
+.gr-dcard-name {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    margin: 0 0 14px;
+}
+.gr-dcard-name a { color: var(--heading-color, #0c0c0c); }
+/* Enlace estirado: toda la tarjeta lleva a la ficha, con un solo enlace. */
+.gr-dcard-name a::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+.gr-dcard-name a:focus-visible { outline: none; }
+.gr-dcard:focus-within { outline: 2px solid var(--gr-dc-accent); outline-offset: 2px; }
+.gr-dcard-facts {
+    list-style: none;
+    margin: 0 0 12px;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+}
+.gr-dcard-facts li,
+.gr-dcard-ciudades {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--heading-color, #0c0c0c);
+}
+.gr-dcard-facts i,
+.gr-dcard-ciudades i {
+    width: 16px;
+    margin-top: 3px;
+    text-align: center;
+    color: var(--gr-dc-accent);
+    flex: none;
+}
+.gr-dcard-ciudades {
+    margin: 0 0 18px;
+    color: var(--body-color, #666);
+    font-size: 14px;
+}
+.gr-dcard-cta {
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid #f0ebe8;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gr-dc-accent);
+}
+.gr-dcard-cta i { transition: transform .25s ease; }
+.gr-dcard:hover .gr-dcard-cta i { transform: translateX(4px); }
+
+/* Otros destinos: cuadrícula compacta en vez de una tabla de 14 filas. */
+.gr-otros {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 12px;
+    position: relative;
+    z-index: 1;
+}
+.gr-otro a {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "flag pais btn" "flag tiempo btn";
+    align-items: center;
+    column-gap: 12px;
+    row-gap: 2px;
+    height: 100%;
+    padding: 14px 16px;
+    background: #fff;
+    border: 1px solid #ece7e3;
+    border-radius: 12px;
+    color: var(--heading-color, #0c0c0c);
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+.gr-otro a:hover,
+.gr-otro a:focus-visible {
+    border-color: var(--primary-color, #5e2129);
+    box-shadow: 0 10px 24px -16px rgba(94, 33, 41, .45);
+}
+.gr-otro .gr-flag { grid-area: flag; width: 22px; height: auto; }
+.gr-otro-pais { grid-area: pais; font-weight: 700; font-size: 16px; line-height: 1.2; }
+.gr-otro-tiempo { grid-area: tiempo; font-size: 13px; color: var(--body-color, #666); }
+.gr-otro-tiempo i { margin-right: 4px; }
+.gr-otro-btn {
+    grid-area: btn;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--primary-color, #5e2129);
+    white-space: nowrap;
+}
+.gr-otro-btn i { font-size: 11px; margin-left: 2px; }
+
+.gr-dcards { margin-top: 16px; }
+@media (max-width: 767px) {
+    .gr-dcard { padding: 22px 20px 18px; }
+    .gr-dcard-name { font-size: 23px; }
+    /* En móvil, dos columnas: la tarjeta entera ya es el enlace, así que
+     * el texto «Cotizar» sobra y se queda solo la flecha. */
+    .gr-otros { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .gr-otro a { grid-template-columns: auto 1fr; grid-template-areas: "flag pais" "flag tiempo"; padding: 12px; column-gap: 10px; }
+    .gr-otro-btn { display: none; }
+    .gr-otro-pais { font-size: 15px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .gr-dcard, .gr-dcard::before, .gr-dcard-cta i { transition: none; }
+    .gr-dcard:hover { transform: none; }
+}
+
+/* ── /destinos/ (ruta principal): filtros, comparativa, cifras y requisitos ── */
+.gr-dfilter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 26px 0 6px;
+}
+.gr-dfilter-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    border: 1px solid #e4dcd8;
+    border-radius: 999px;
+    background: #fff;
+    color: var(--heading-color, #0c0c0c);
+    font-family: var(--primary-font), sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+.gr-dfilter-btn:hover { border-color: var(--primary-color, #5e2129); }
+.gr-dfilter-btn:focus-visible { outline: 2px solid var(--primary-color, #5e2129); outline-offset: 2px; }
+.gr-dfilter-btn.is-on {
+    background: var(--primary-color, #5e2129);
+    border-color: var(--primary-color, #5e2129);
+    color: #fff;
+}
+.gr-dfilter-n {
+    min-width: 22px;
+    padding: 2px 6px;
+    border-radius: 999px;
+    background: #f5efec;
+    color: var(--primary-color, #5e2129);
+    font-size: 12px;
+    text-align: center;
+}
+.gr-dfilter-btn.is-on .gr-dfilter-n { background: rgba(255, 255, 255, .18); color: #fff; }
+.gr-dfilter-sep { width: 1px; height: 24px; background: #e4dcd8; margin: 0 6px; }
+.gr-dcards > [hidden] { display: none !important; }
+
+/* Comparativa */
+.gr-dcomp-wrap {
+    border: 1px solid #ece7e3;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+}
+.gr-dcomp-table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.gr-dcomp-table thead th {
+    background: #faf6f4;
+    color: var(--body-color, #666);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 14px 20px;
+    border-bottom: 1px solid #ece7e3;
+}
+.gr-dcomp-table tbody th,
+.gr-dcomp-table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f2ece9;
+    text-align: left;
+    vertical-align: middle;
+    color: var(--heading-color, #0c0c0c);
+}
+.gr-dcomp-table tbody tr:last-child > * { border-bottom: 0; }
+.gr-dcomp-table tbody tr { transition: background .15s ease; }
+.gr-dcomp-table tbody tr:hover { background: #fcf9f8; }
+.gr-dcomp-table tbody th a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    color: var(--heading-color, #0c0c0c);
+}
+.gr-dcomp-table tbody th a:hover span { color: var(--primary-color, #5e2129); text-decoration: underline; text-underline-offset: 3px; }
+.gr-dcomp-table tbody th .gr-flag { width: 22px; height: auto; }
+.gr-dcomp-table td i { color: var(--primary-color, #5e2129); margin-right: 4px; }
+.gr-dcomp-imp strong { display: block; font-size: 16px; }
+.gr-dcomp-imp small { display: block; color: var(--body-color, #666); font-size: 12px; }
+.gr-dcomp-na { color: var(--body-color, #666); font-size: 14px; }
+.gr-dcomp-badge {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #e9f6ee;
+    color: #1d7a45;
+    font-size: 11px;
+    font-weight: 700;
+    vertical-align: 1px;
+}
+.gr-dcomp-nota {
+    display: flex;
+    gap: 10px;
+    margin: 16px 0 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--body-color, #666);
+}
+.gr-dcomp-nota i { color: var(--primary-color, #5e2129); margin-top: 4px; }
+.gr-dcomp-nota a { color: var(--primary-color, #5e2129); font-weight: 600; text-decoration: underline; }
+
+/* Secciones de contenido con columna lateral */
+.gr-pseo-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 56px;
+    align-items: start;
+}
+.gr-pseo--aside .gr-pseo-body { max-width: none; }
+.gr-dstats {
+    position: sticky;
+    top: 110px;
+    padding: 28px;
+    border-radius: 16px;
+    background: var(--primary-color, #5e2129);
+    background-image: radial-gradient(circle at 100% 0, rgba(255, 255, 255, .10), transparent 55%);
+    color: #fff;
+}
+.gr-dstats-t {
+    margin: 0 0 14px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, .75);
+}
+.gr-dstats ul { list-style: none; margin: 0 0 22px; padding: 0; }
+.gr-dstats li {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, .14);
+}
+.gr-dstats li:last-child { border-bottom: 0; }
+.gr-dstats strong {
+    flex: none;
+    min-width: 64px;
+    font-family: var(--primary-font), sans-serif;
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -1px;
+}
+.gr-dstats span { font-size: 14px; line-height: 1.45; color: rgba(255, 255, 255, .88); }
+.gr-dstats .default-btn { width: 100%; justify-content: center; background: #fff; color: var(--primary-color, #5e2129); }
+.gr-dstats .default-btn:hover { color: #fff; }
+
+/* «Qué mirar en la ficha»: los cinco datos en fila */
+.gr-pseo--destinos .gr-pseo-body { max-width: none; }
+.gr-pseo--destinos.gr-pseo--n2 .gr-pseo-body > p { max-width: 900px; }
+.gr-pseo--destinos .gr-pseo-steps { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; margin-bottom: 24px; }
+.gr-pseo--destinos .gr-pseo-steps li { height: 100%; }
+
+/* «Lo que necesitas para enviar» */
+.gr-need {
+    list-style: none;
+    margin: 0 0 22px;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    counter-reset: need;
+}
+.gr-need li {
+    position: relative;
+    padding: 22px;
+    border: 1px solid #ece7e3;
+    border-radius: 14px;
+    background: #fff;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--body-color, #666);
+    counter-increment: need;
+}
+.gr-need li::before {
+    content: counter(need, decimal-leading-zero);
+    display: block;
+    margin-bottom: 10px;
+    font-family: var(--primary-font), sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--primary-color, #5e2129);
+    letter-spacing: .04em;
+}
+.gr-need li strong { display: block; margin-bottom: 4px; color: var(--heading-color, #0c0c0c); font-size: 16px; }
+
+@media (max-width: 1199px) {
+    .gr-pseo--destinos .gr-pseo-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 991px) {
+    .gr-pseo-grid { grid-template-columns: 1fr; gap: 32px; }
+    .gr-dstats { position: static; }
+    .gr-need { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 767px) {
+    .gr-dfilter { justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto; margin-inline: -16px; padding: 0 16px 6px; scrollbar-width: none; }
+    .gr-dfilter::-webkit-scrollbar { display: none; }
+    .gr-dfilter-btn { flex: none; }
+    .gr-pseo--destinos .gr-pseo-steps,
+    .gr-need { grid-template-columns: 1fr; }
+    /* La tabla se lee como fichas apiladas. */
+    .gr-dcomp-wrap { border: 0; background: none; overflow: visible; }
+    .gr-dcomp-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .gr-dcomp-table, .gr-dcomp-table tbody, .gr-dcomp-table tr, .gr-dcomp-table th, .gr-dcomp-table td { display: block; width: 100%; }
+    .gr-dcomp-table tbody tr { margin-bottom: 12px; border: 1px solid #ece7e3; border-radius: 12px; background: #fff; overflow: hidden; }
+    .gr-dcomp-table tbody th { background: #faf6f4; padding: 12px 16px; }
+    .gr-dcomp-table td { display: flex; align-items: baseline; gap: 6px; padding: 10px 16px; text-align: right; }
+    .gr-dcomp-table td::before { content: attr(data-label); margin-right: auto; padding-right: 10px; color: var(--body-color, #666); font-size: 13px; font-weight: 600; text-align: left; }
+    .gr-dcomp-table td i { display: none; }
+    .gr-dcomp-imp strong, .gr-dcomp-imp small { display: inline; }
+    .gr-dcomp-imp small { margin-left: 4px; }
+}
+
+/* ── Botones del tema (.default-btn) ──────────────────────────────────────
+ * Venían de la maqueta con esquinas de 2 px, texto de 14 px (13 px en móvil)
+ * y `text-transform: capitalize`, que en español da «Conoce El Servicio» o
+ * «Cotizar Mi Envío». Se alinean con los botones que ya estaban bien —el del
+ * hero de las páginas y el del cotizador—: esquinas redondeadas, texto más
+ * grande y mayúscula solo al principio, como se escribe. */
+.default-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 52px;
+    padding: 16px 30px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0;
+    text-transform: none;
+    text-align: center;
+    box-shadow: 0 10px 22px -12px rgba(94, 33, 41, .55);
+    transition: color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+.default-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 26px -12px rgba(12, 12, 12, .45);
+}
+.default-btn:focus-visible {
+    outline: 3px solid rgba(94, 33, 41, .35);
+    outline-offset: 3px;
+}
+.default-btn i { margin-right: 0; font-size: .95em; }
+/* Botones claros sobre fondos granate: sin sombra de color. */
+.grenvios-promo-banner .default-btn,
+.gr-dstats .default-btn,
+.cta-section .default-btn { box-shadow: 0 10px 22px -14px rgba(0, 0, 0, .5); }
+/* En la llamada a la acción (fondo granate) el botón granate no se veía. */
+.cta-section .default-btn { background: #fff; color: var(--primary-color, #5e2129); }
+.cta-section .default-btn:hover { color: #fff; }
+
+/* El botón «Cotizar» del menú se queda compacto: vive en la cabecera. */
+.menu-right-item .default-btn {
+    min-height: 44px;
+    padding: 12px 22px;
+    font-size: 15px;
+    border-radius: 8px;
+    box-shadow: none;
+}
+.menu-right-item .default-btn:hover { transform: none; }
+
+@media (max-width: 767px) {
+    .default-btn {
+        min-height: 50px;
+        padding: 14px 24px;
+        font-size: 16px;
+    }
+    .menu-right-item .default-btn { min-height: 40px; padding: 10px 16px; font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .default-btn, .default-btn:hover { transition: none; transform: none; }
+}
+/* «Cotizar por WhatsApp» se partía en dos líneas al crecer el texto. */
+.grenvios-quick-quote .qq-submit .default-btn { white-space: nowrap; padding-inline: 18px; }
+/* Dos botones seguidos en una llamada a la acción: separados, no pegados. */
+.cta-section .btn-wrapper { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+
+/* ── Sin esquinas rectas ───────────────────────────────────────────────────
+ * La maqueta traía cajas, tarjetas, iconos, pestañas, campos e imágenes con
+ * esquinas a 0–2 px, mezcladas con las piezas nuevas (cotizador, tarjetas de
+ * destino, botones) que ya iban redondeadas. Se unifica con tres radios:
+ *   --gr-r-lg  tarjetas, cajas y fotos
+ *   --gr-r-md  iconos, campos y pestañas
+ *   pastilla   etiquetas y redes sociales
+ * Las formas decorativas de la maqueta (esquina diagonal del hero,
+ * ilustraciones, fotos a sangre del hero) se dejan como están: son formas,
+ * no cajas. Lista sacada de una auditoría en el navegador de 13 páginas. */
+:root { --gr-r-lg: 16px; --gr-r-md: 12px; }
+
+/* Tarjetas y cajas */
+.service-item,
+.project-item,
+.promo-item,
+.process-item,
+.counter-wrap,
+.feature-tab,
+.sidebar-widget,
+.dest-why2-card,
+.dest-seo-regla,
+.testimonial-item,
+.post-card,
+.blog-item,
+.grenvios-info-card,
+.rast-state-card,
+.grenvios-promo-banner,
+.grenvios-tracking,
+.gr-table-wrap {
+    border-radius: var(--gr-r-lg);
+}
+.service-item,
+.project-item,
+.feature-tab { overflow: hidden; }
+/* La tabla necesita desplazarse en móvil (min-width 620px): con overflow:hidden
+ * se recortaba y la última columna no se veía. overflow-x:auto también
+ * respeta el borde redondeado. */
+.gr-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+/* La franja de tres tarjetas bajo la llamada a la acción: una sola pieza
+ * redondeada por fuera, sin esquinas sueltas en las juntas. */
+.promo-item-wrapper { border-radius: var(--gr-r-lg); overflow: hidden; margin-top: 16px; }
+.promo-item-wrapper .promo-item { border-radius: 0; height: 100%; }
+.cta-wrapper { border-radius: var(--gr-r-lg); }
+
+/* Fotos */
+.service-thumb img,
+.project-thumb img,
+.tab-thumb img,
+.about-img-wrap > img,
+.dest-why2-media img,
+.post-thumb img,
+.blog-thumb img {
+    border-radius: var(--gr-r-lg);
+}
+/* Dentro de una tarjeta que ya recorta, la foto solo redondea arriba. */
+.service-item .service-thumb img,
+.project-item .project-thumb img { border-radius: var(--gr-r-lg) var(--gr-r-lg) 0 0; }
+.about-img-info { border-radius: var(--gr-r-md); }
+
+/* Iconos en caja */
+.service-icon,
+.service-icon i,
+.promo-list li > i,
+.promo-item > i,
+.process-icon,
+.counter-icon,
+.contact-info i,
+.contact-item i,
+.info-icon,
+.wow > i.logis,
+.wow > i.fa-light,
+.wow > i.fa-solid {
+    border-radius: var(--gr-r-md);
+}
+
+/* Pestañas del bloque «Por qué Grenvíos» */
+.feature-tab-nav .nav-link {
+    border-radius: var(--gr-r-md) var(--gr-r-md) 0 0;
+    text-transform: none;
+}
+.feature-tab .tab-inner { border-radius: 0 0 var(--gr-r-lg) var(--gr-r-lg); }
+
+/* Campos de formulario */
+.form-control,
+.form-field input,
+.form-field textarea,
+.nice-select,
+.grenvios-quick-quote input,
+.grenvios-quick-quote select,
+.grenvios-tracking .track-form input {
+    border-radius: 10px;
+}
+.nice-select .list { border-radius: 10px; overflow: hidden; }
+
+/* Etiquetas y pastillas */
+.project-content .category,
+.dest-seo-ciudades span,
+.dest-seo-pill { border-radius: 999px; }
+.project-content .category { padding-inline: 12px; }
+
+/* Redes sociales del pie y botón de volver arriba */
+.social-share li a { border-radius: 50%; }
+.scroll-to-top { border-radius: var(--gr-r-md); }
+
+/* Segunda capa: las reglas de la maqueta con más especificidad que las de
+ * arriba (sacadas de main.css / common-style.css, una por una). */
+.about-img-wrap > img:nth-child(1),
+.about-img-wrap > img:nth-child(2),
+.company-img-wrap img:nth-child(1),
+.video-wrap img:nth-child(1),
+.team-details-thumb img,
+.service-featured-img img,
+.post-details .post-thumb,
+.post-details-gallery img,
+.feature-tab .tab-inner .tab-thumb,
+.feature-tab .tab-inner .tab-thumb img,
+.service-card .service-thumb,
+.testimonial-item .testi-thumb img,
+.thumb-post li .thumb { border-radius: var(--gr-r-lg); }
+.about-img-wrap > img:nth-child(3) { border-radius: 0; }  /* silueta recortada: no es una foto */
+.certification,
+.founder-card,
+.quote-form,
+.branch-item,
+.pricing-item,
+.info-content,
+.join-form-wrap,
+.post-content-wrap { border-radius: var(--gr-r-lg); }
+.promo-list li i,
+.service-content i,
+.process-item .process-icon,
+.testimonial-item .quote-icon,
+.contact-info-list li i,
+.img-post-navigation li,
+.img-post-navigation li a i { border-radius: var(--gr-r-md); }
+.process-item .process-icon span { border-radius: 50%; }
+.quote-form-group .form-field .form-control,
+.form-field .form-control,
+.comment-form .form-control,
+.subscribe-form .form-control,
+.sidebar-widget .search-form .form-control,
+.sidebar-widget .search-form .search-btn,
+.subscribe-form .submit,
+.pagination-wrap li a,
+.header-menu-wrap li ul { border-radius: 10px; }
+.service-content .read-more,
+.pricing-item .pricing-badge,
+.post-category,
+.tags li a { border-radius: 999px; }
+.accordion-item,
+.accordion-item:first-of-type,
+.accordion-item:last-of-type,
+.accordion-item:first-of-type .accordion-button { border-radius: var(--gr-r-md); }
+
+/* Media foto a sangre de «Por qué Grenvíos»: toca el borde derecho de la
+ * pantalla, así que solo se redondea el lado que queda a la vista. */
+.content-features .bg-half { border-radius: var(--gr-r-lg) 0 0 var(--gr-r-lg); overflow: hidden; }
+
+/* Mayúscula en cada palabra («En Tránsito», «Embala Y Registra»): es una
+ * convención del inglés que la maqueta aplicaba con CSS. En español solo va
+ * mayúscula al principio. El menú de la cabecera se deja como está porque sus
+ * textos, escritos a mano en WordPress, mezclan los dos estilos. */
+.project-content .category,
+.counter-content h4,
+.feature-tab-nav .nav-link,
+.process-item .process-content h3,
+.pricing-item .pricing-list li,
+.page-header-info h4,
+.page-header-info h2,
+.running-text ul li,
+.post-meta li,
+.post-card .post-content h3,
+.post-card .post-content .read-more,
+blockquote span,
+.comments-meta h4 span,
+.comment-area .reply,
+.thumb-post .thumb-post-info .date,
+.tags li a { text-transform: none; }
+/* El fondo beige del icono de los contadores lo pinta un ::before. */
+.counter-icon::before { border-radius: var(--gr-r-md); }
+
+/* ── Pie de página (diseño 2026) ───────────────────────────────────────────
+ * Cuatro columnas: marca, servicios, destinos y una tarjeta de contacto con
+ * iconos en círculo. Debajo, barra granate con el copyright, los enlaces
+ * legales (solo si existen las páginas) y la promesa de la marca. */
+.gr-foot { border-top: 0; background: #f8f5f1; }
+.gr-foot .footer-wrapper { padding: 72px 0 64px; background: transparent; }
+.gr-foot-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1.1fr 1fr 1.35fr;
+    align-items: stretch;
+}
+.gr-foot-col { padding: 8px 32px; }
+.gr-foot-col:first-child { padding-left: 0; }
+.gr-foot-col:nth-child(2),
+.gr-foot-col:nth-child(3) { border-left: 1px solid #e6ded8; }
+.gr-foot-col.gr-foot-contact { padding: 0 0 0 16px; }
+.gr-foot .footer-widget { text-align: left; }
+.gr-foot .footer-widget.widget-links { margin-left: 0; }
+
+/* Marca */
+.gr-foot .footer-logo img { width: 190px; margin-bottom: 0; }
+.gr-foot-rule { display: block; width: 44px; height: 3px; margin: 22px 0 20px; border-radius: 3px; background: var(--primary-color, #5e2129); }
+.gr-foot-brand p:not(.gr-foot-tagline) { font-size: 17px; line-height: 1.6; color: var(--body-color, #666); margin: 0 0 26px; }
+.gr-foot .social-share { display: flex; justify-content: flex-start; gap: 14px; margin: 0; }
+.gr-foot .social-share li a {
+    width: 50px;
+    height: 50px;
+    font-size: 19px;
+    background: transparent;
+    border: 1px solid #cdbfb9;
+    color: var(--heading-color, #0c0c0c);
+}
+.gr-foot .social-share li:hover a { background: var(--primary-color, #5e2129); border-color: var(--primary-color, #5e2129); color: #fff; }
+.gr-foot-tagline {
+    margin: 22px 0 0;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: .32em;
+    text-transform: uppercase;
+    color: #8b7f7a;
+}
+
+/* Títulos y listas */
+.gr-foot .widget-title { margin-bottom: 26px; }
+.gr-foot .widget-title h3 { font-size: 23px; font-weight: 700; letter-spacing: -0.5px; white-space: nowrap; }
+.gr-foot .footer-links li a { white-space: nowrap; }
+.gr-foot .footer-links li { padding-left: 0; }
+.gr-foot .footer-links li:before { content: none; }
+.gr-foot .footer-links li:not(:last-of-type) { margin-bottom: 16px; }
+.gr-foot .footer-links li a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    padding-left: 0;
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--heading-color, #0c0c0c);
+    transition: color .2s ease;
+}
+.gr-foot .footer-links li a::before {
+    content: "\f054";
+    font-family: "Font Awesome 6 Pro";
+    font-weight: 400;
+    font-size: 15px;
+    color: var(--primary-color, #5e2129);
+    transition: transform .2s ease;
+}
+.gr-foot .footer-links li a:hover { color: var(--primary-color, #5e2129); }
+.gr-foot .footer-links li a:hover::before { transform: translateX(3px); }
+
+/* Tarjeta de contacto */
+.gr-foot-card {
+    height: 100%;
+    padding: 30px 30px 26px;
+    background: #fbf9f7;
+    border: 1px solid #e8dfda;
+    border-radius: 18px;
+    box-shadow: 0 16px 36px -28px rgba(94, 33, 41, .35);
+}
+.gr-foot .footer-contact-info li {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.gr-foot .footer-contact-info li:not(:last-child) { margin-bottom: 20px; }
+.gr-foot-ic {
+    flex: none;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #f1e7e6;
+    color: var(--primary-color, #5e2129);
+    font-size: 21px;
+}
+.gr-foot .footer-contact-info li p {
+    display: block;
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--body-color, #555);
+    text-align: left;
+}
+.gr-foot .footer-contact-info li p span {
+    font-size: 15px;
+    letter-spacing: .02em;
+    margin-bottom: 2px;
+}
+.gr-foot .footer-contact-info li p a { color: inherit; }
+.gr-foot .footer-contact-info li p a:hover { color: var(--primary-color, #5e2129); }
+
+/* Barra inferior */
+.gr-foot-bar {
+    padding: 0;
+    background: var(--primary-color, #5e2129);
+    color: #fff;
+    text-align: left;
+}
+.gr-foot-bar-in {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: 72px;
+    padding: 14px 0;
+}
+.gr-foot-legal,
+.gr-foot-promise { display: flex; align-items: center; flex-wrap: wrap; margin: 0; font-size: 15px; color: rgba(255, 255, 255, .92); }
+.gr-foot-legal > span + span { padding-left: 16px; margin-left: 16px; border-left: 1px solid rgba(255, 255, 255, .35); }
+.gr-foot-bar .gr-foot-legal a { color: #fff; font-weight: 400; text-decoration: none; }
+.gr-foot-bar .gr-foot-legal a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.gr-foot-promise { gap: 16px; padding-left: 24px; border-left: 1px solid rgba(255, 255, 255, .35); }
+.gr-foot-promise i { font-size: 24px; }
+.gr-foot-promise strong { font-weight: 600; color: #fff; }
+.gr-foot-plane-wrap { display: inline-flex; align-items: center; padding-left: 20px; margin-left: 4px; border-left: 1px solid rgba(255, 255, 255, .35); align-self: stretch; }
+.gr-foot-plane { font-size: 22px; }
+
+@media (max-width: 1199px) {
+    .gr-foot-grid { grid-template-columns: 1fr 1fr; row-gap: 40px; }
+    .gr-foot-col { padding: 0 32px; }
+    .gr-foot-col:nth-child(odd) { padding-left: 0; border-left: 0; }
+    .gr-foot-col:nth-child(3) { border-left: 0; }
+    .gr-foot-col.gr-foot-contact { padding: 0 0 0 32px; border-left: 1px solid #e6ded8; }
+}
+@media (max-width: 767px) {
+    .gr-foot .footer-links li a, .gr-foot .widget-title h3 { white-space: normal; }
+    .gr-foot .footer-wrapper { padding: 52px 0 40px; }
+    .gr-foot-grid { grid-template-columns: 1fr; row-gap: 34px; }
+    .gr-foot-col,
+    .gr-foot-col.gr-foot-contact { padding: 0; border-left: 0; }
+    .gr-foot-col:nth-child(2),
+    .gr-foot-col:nth-child(3) { border-left: 0; padding-top: 30px; border-top: 1px solid #e6ded8; }
+    .gr-foot .widget-title h3 { font-size: 21px; }
+    .gr-foot-card { padding: 24px 20px; }
+    .gr-foot-ic { width: 50px; height: 50px; font-size: 19px; }
+    .gr-foot-bar-in { flex-direction: column; align-items: flex-start; gap: 12px; padding: 18px 0 90px; }
+    .gr-foot-promise { padding-left: 0; border-left: 0; }
+    .gr-foot-plane-wrap { display: none; }
+}
+
+/* ── Portada: «¿Listo para enviar al mundo?» ───────────────────────────────
+ * Caja granate con el repartidor apoyado abajo a la derecha: la foto mide un
+ * 115 % del alto de la caja, así que la cabeza sobresale por arriba como en
+ * el diseño. Debajo, tres tarjetas blancas que enlazan a su servicio. */
+.gr-hcta { padding: 70px 0 110px; }
+.gr-hcta-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 360px;
+    margin-top: 40px;
+    border-radius: 22px;
+    background: var(--primary-color, #5e2129);
+}
+.gr-hcta-text {
+    position: relative;
+    z-index: 2;
+    width: 56%;
+    padding: 56px 0 56px 64px;
+}
+.gr-hcta-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 0 0 14px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.3;
+    color: rgba(255, 255, 255, .9);
+}
+.gr-hcta-eyebrow::before { content: ""; width: 44px; height: 2px; border-radius: 2px; background: rgba(255, 255, 255, .85); }
+.gr-hcta-text h2 {
+    margin: 0 0 14px;
+    font-size: clamp(34px, 4.2vw, 60px);
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: -1.5px;
+    color: #fff;
+}
+.gr-hcta-text h2 span,
+.gr-hcta-text h2 .hl { color: inherit; }
+.gr-hcta-text h2 br { display: block; }
+.gr-hcta-lead { margin: 0 0 28px; font-size: 19px; line-height: 1.5; color: rgba(255, 255, 255, .9); }
+.gr-hcta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 34px;
+    padding: 20px 34px;
+    border-radius: 14px;
+    background: #f8f3ef;
+    color: var(--primary-color, #5e2129);
+    font-family: var(--primary-font), sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1;
+    box-shadow: 0 14px 28px -16px rgba(0, 0, 0, .55);
+    transition: transform .25s ease, background .25s ease;
+}
+.gr-hcta-btn i { font-size: 18px; transition: transform .25s ease; }
+.gr-hcta-btn:hover { background: #fff; color: var(--primary-color, #5e2129); transform: translateY(-2px); }
+.gr-hcta-btn:hover i { transform: translateX(4px); }
+.gr-hcta-img {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 115%;
+    width: 62%;
+    object-fit: cover;          /* manda la altura: el borde de la caja que trae
+                                   la foto coincide con el de la caja real */
+    object-position: right bottom;
+    border-radius: 0 0 22px 0;
+    pointer-events: none;
+    z-index: 1;
+    /* Si la foto se recorta por la izquierda, el fundido sigue ahí. */
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 22%);
+            mask-image: linear-gradient(to right, transparent 0, #000 22%);
+}
+
+/* Tarjetas */
+.gr-hcta-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    margin-top: 28px;
+}
+.gr-hcta-card {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    padding: 30px 28px;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 14px 34px -24px rgba(12, 12, 12, .35);
+    color: var(--heading-color, #0c0c0c);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+.gr-hcta-card:hover { transform: translateY(-4px); box-shadow: 0 22px 40px -24px rgba(94, 33, 41, .45); color: var(--heading-color, #0c0c0c); }
+.gr-hcta-ic {
+    flex: none;
+    width: 86px;
+    height: 86px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-color, #5e2129);
+    color: #fff;
+    font-size: 32px;
+}
+.gr-hcta-card-tx {
+    flex: 1;
+    min-width: 0;
+    padding-left: 22px;
+    border-left: 1px solid #ece5e1;
+}
+.gr-hcta-card-tx strong {
+    white-space: nowrap;
+    display: block;
+    margin-bottom: 6px;
+    font-family: var(--primary-font), sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -.3px;
+}
+.gr-hcta-card-tx span { display: block; font-size: 16px; line-height: 1.45; color: var(--body-color, #666); }
+.gr-hcta-go {
+    flex: none;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5ecea;
+    color: var(--primary-color, #5e2129);
+    font-size: 17px;
+    transition: background .25s ease, color .25s ease;
+}
+.gr-hcta-card:hover .gr-hcta-go { background: var(--primary-color, #5e2129); color: #fff; }
+
+@media (max-width: 1199px) {
+    .gr-hcta-text { width: 52%; padding-left: 44px; }
+    .gr-hcta-text h2 { font-size: 44px; }
+    .gr-hcta-lead { font-size: 17px; max-width: 30ch; }
+    .gr-hcta-img { width: 58%; }
+    /* Tarjetas en vertical: icono arriba, flecha en la esquina. */
+    .gr-hcta-card { position: relative; flex-direction: column; align-items: flex-start; gap: 16px; padding: 26px 24px; }
+    .gr-hcta-ic { width: 64px; height: 64px; font-size: 25px; }
+    .gr-hcta-card-tx { padding-left: 0; border-left: 0; }
+    .gr-hcta-card-tx strong { font-size: 19px; }
+    .gr-hcta-card-tx span { font-size: 15px; }
+    .gr-hcta-go { position: absolute; top: 34px; right: 24px; width: 40px; height: 40px; }
+}
+@media (max-width: 991px) {
+    .gr-hcta-box { flex-direction: column; align-items: stretch; min-height: 0; margin-top: 0; overflow: hidden; }
+    .gr-hcta-text { width: 100%; padding: 40px 32px 8px; }
+    .gr-hcta-text h2 { font-size: clamp(32px, 7vw, 44px); }
+    .gr-hcta-img { position: static; height: auto; width: 100%; max-width: none; margin-top: -8px; border-radius: 0 0 22px 22px; -webkit-mask-image: none; mask-image: none; }
+    .gr-hcta-cards { grid-template-columns: 1fr; gap: 14px; }
+    .gr-hcta-card { flex-direction: row; align-items: center; }
+    .gr-hcta-card-tx { padding-left: 18px; border-left: 1px solid #ece5e1; }
+    .gr-hcta-go { position: static; }
+}
+@media (max-width: 575px) {
+    .gr-hcta { padding: 50px 0 80px; }
+    .gr-hcta-text { padding: 32px 22px 4px; }
+    .gr-hcta-lead { font-size: 17px; }
+    .gr-hcta-btn { gap: 20px; padding: 17px 26px; }
+}
+
+/* Contenedor decorativo sobre los testimonios: su imagen es de relleno
+ * («1920X857») y se veía como un bloque gris suelto. Se oculta hasta que
+ * haya una ilustración real (Inicio → Testimonios → Imagen del contenedor). */
+.testimonial-section .cargo-container { display: none; }
+/* Enlaces dentro del texto de una cabecera de sección: que se vean como enlaces. */
+.section-heading p a { color: var(--primary-color, #5e2129); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.section-heading.white p a { color: #fff; }
+
+/* ── Portada: «Otros envíos que resolvemos desde Lima» ─────────────────────
+ * Retícula de enlaces con divisores finos, sin cajas: es una lista de
+ * servicios para escanear, no ocho objetos que compitan con las tarjetas del
+ * carrusel de arriba. */
+.gr-mas { padding-top: 90px; }
+.gr-mas-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 48px;
+    align-items: end;
+    margin-bottom: 36px;
+}
+.gr-mas-head .section-heading h2 { text-wrap: balance; }
+.gr-mas-intro { margin: 0; font-size: 17px; line-height: 1.65; color: var(--body-color, #666); max-width: 52ch; }
+.gr-mas-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-top: 1px solid #e8dfda;
+}
+.gr-mas-grid li { border-bottom: 1px solid #e8dfda; }
+.gr-mas-grid li:not(:nth-child(4n)) { border-right: 1px solid #e8dfda; }
+.gr-mas-item {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 28px 26px 30px;
+    color: var(--heading-color, #0c0c0c);
+    transition: background .25s ease;
+}
+.gr-mas-item:hover { background: #faf5f3; color: var(--heading-color, #0c0c0c); }
+.gr-mas-ic {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e3d6d2;
+    color: var(--primary-color, #5e2129);
+    font-size: 19px;
+    transition: background .25s ease, color .25s ease, border-color .25s ease;
+}
+.gr-mas-item:hover .gr-mas-ic { background: var(--primary-color, #5e2129); border-color: var(--primary-color, #5e2129); color: #fff; }
+.gr-mas-tx strong { display: block; margin-bottom: 6px; font-family: var(--primary-font), sans-serif; font-size: 18px; font-weight: 700; letter-spacing: -.3px; line-height: 1.3; }
+.gr-mas-tx span { display: block; font-size: 15px; line-height: 1.55; color: var(--body-color, #666); }
+.gr-mas-go {
+    position: absolute;
+    top: 30px;
+    right: 26px;
+    color: var(--primary-color, #5e2129);
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: opacity .25s ease, transform .25s ease;
+}
+.gr-mas-item:hover .gr-mas-go,
+.gr-mas-item:focus-visible .gr-mas-go { opacity: 1; transform: none; }
+.gr-mas-item:focus-visible { outline: 2px solid var(--primary-color, #5e2129); outline-offset: -2px; }
+
+/* ── Ejemplo de precio: una etiqueta de envío con los números ─────────────── */
+.gr-ej {
+    margin: 26px 0 28px;
+    max-width: 620px;
+    border: 1.5px dashed #cdb9b3;
+    border-radius: 14px;
+    background: #fff;
+    font-variant-numeric: tabular-nums;
+    overflow: hidden;
+}
+.gr-ej-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 10px 18px;
+    background: var(--primary-color, #5e2129);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+.gr-ej-row {
+    display: grid;
+    grid-template-columns: 130px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 18px;
+}
+.gr-ej-row + .gr-ej-row { border-top: 1px dashed #e3d6d2; }
+.gr-ej-row p { margin: 0 !important; }
+.gr-ej-name { font-size: 14px !important; font-weight: 700; color: var(--heading-color, #0c0c0c); }
+.gr-ej-calc { font-size: 15px !important; color: var(--body-color, #666); }
+.gr-ej-calc strong { color: var(--heading-color, #0c0c0c); }
+.gr-ej-cob { text-align: right; line-height: 1.2 !important; }
+.gr-ej-cob span { display: block; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--body-color, #666); }
+.gr-ej-cob strong { display: block; font-size: 22px; color: var(--primary-color, #5e2129); }
+.gr-ej-cob em { display: block; font-style: normal; font-size: 12px; color: var(--body-color, #666); }
+.gr-ej-foot { margin: 0 !important; padding: 12px 18px; background: #faf5f3; font-size: 14.5px !important; color: var(--heading-color, #0c0c0c); }
+.gr-ej-foot strong { color: var(--primary-color, #5e2129); }
+
+@media (max-width: 1199px) {
+    .gr-mas-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .gr-mas-grid li:not(:nth-child(4n)) { border-right: 0; }
+    .gr-mas-grid li:nth-child(odd) { border-right: 1px solid #e8dfda; }
+}
+@media (max-width: 767px) {
+    .gr-mas { padding-top: 60px; }
+    .gr-mas-head { grid-template-columns: 1fr; gap: 14px; }
+    .gr-mas-grid { grid-template-columns: 1fr; }
+    .gr-mas-grid li:nth-child(odd) { border-right: 0; }
+    .gr-mas-item { flex-direction: row; align-items: flex-start; padding: 20px 4px; }
+    .gr-mas-go { display: none; }
+    .gr-ej-row { grid-template-columns: 1fr auto; }
+    .gr-ej-name { grid-column: 1 / -1; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .gr-mas-item, .gr-mas-ic, .gr-mas-go { transition: none; }
+}
+
+/* Cifras de /nosotros/: eran <h2> con «00+» dentro (un H2 vacío para Google).
+ * Mismo aspecto, sin ser encabezado. */
+.counter-content .gr-cnum-nos { font-family: var(--primary-font), sans-serif; font-size: 32px; font-weight: 700; line-height: 42px; letter-spacing: -0.8px; color: var(--heading-color, #0c0c0c); margin: 0 0 10px; }
+.counter-content .gr-cnum-nos span { line-height: inherit; }
+.gr-hub-pais-intro { max-width: 78ch; margin: -6px 0 22px; font-size: 16px; line-height: 1.65; color: var(--body-color, #666); }
+/* Tablas dentro de las secciones de contenido: la primera columna es un dato, no una cabecera. */
+.gr-pseo .gr-table tbody th { text-transform: none; letter-spacing: 0; font-size: 15px; font-weight: 700; }
+.gr-pseo .gr-table tbody th a { color: var(--primary-color, #5e2129); }
+.gr-msg p { font-weight: 400 !important; font-style: normal; }
+.gr-msg p strong { font-weight: 700; }
+/* Primera columna de las tablas de datos: es un valor, no una cabecera. */
+.gr-table tbody th { text-transform: none; letter-spacing: 0; font-size: 15px; font-weight: 700; color: var(--heading-color, #0c0c0c); }

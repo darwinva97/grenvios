@@ -1,0 +1,111 @@
+<form id="gr-hero-quote" class="gr-hq" action="ARKDINURI/php/quote-form.php" method="post">
+    <h2 class="gr-hq-title">{{home_hq_title}}</h2>
+    <p class="gr-hq-sub">{{home_hq_sub}}</p>
+
+    <div class="gr-hq-grid">
+        <div class="gr-hq-field">
+            <label for="hq-origin">{{home_hq_l_origen}}</label>
+            <div class="gr-hq-input">
+                <i class="fa-solid fa-location-dot"></i>
+                <select id="hq-origin" name="origin" data-preset="{{home_hq_origen_valor}}" required>
+                    <option value="">{{home_hq_ph_desde}}</option>
+                    {{REP:home_hq_origenes}}
+                </select>
+            </div>
+        </div>
+        <div class="gr-hq-field">
+            <label for="hq-country">{{home_hq_l_destino}}</label>
+            <div class="gr-hq-input">
+                <i class="fa-solid fa-location-dot"></i>
+                <input type="text" id="hq-country" name="country" placeholder="{{home_hq_ph_destino}}" value="{{home_hq_destino_valor}}" required>
+            </div>
+        </div>
+        <div class="gr-hq-field">
+            <label for="hq-type">{{home_hq_l_tipo}}</label>
+            <div class="gr-hq-input">
+                <i class="fa-solid fa-box-open"></i>
+                <select id="hq-type" name="shipment_type" required>
+                    <option value="">{{home_hq_ph_tipo}}</option>
+                    {{REP:home_hq_tipos}}
+                </select>
+            </div>
+        </div>
+        <div class="gr-hq-field">
+            <label for="hq-weight">{{home_hq_l_peso}}</label>
+            <div class="gr-hq-input">
+                <i class="fa-solid fa-weight-hanging"></i>
+                <input type="number" id="hq-weight" name="weight" placeholder="{{home_hq_ph_peso}}" min="0" step="0.1">
+            </div>
+        </div>
+        <div class="gr-hq-field gr-hq-wide">
+            <label for="hq-name">{{home_hq_l_nombre}}</label>
+            <div class="gr-hq-input">
+                <i class="fa-regular fa-user"></i>
+                <input type="text" id="hq-name" name="name" placeholder="{{home_hq_ph_nombre}}" required>
+            </div>
+        </div>
+        <div class="gr-hq-field gr-hq-wide">
+            <label for="hq-contact">{{home_hq_l_contacto}}</label>
+            <div class="gr-hq-input">
+                <i class="fa-regular fa-envelope"></i>
+                <input type="text" id="hq-contact" name="contact" placeholder="{{home_hq_ph_contacto}}" required>
+            </div>
+        </div>
+    </div>
+
+    <!-- Los datos finos no se piden de entrada —alargaban la tarjeta y frenan el
+         envío—, pero siguen ahí para quien quiera darlos. -->
+    <details class="gr-hq-mas">
+        <summary>{{home_hq_mas}}</summary>
+        <div class="gr-hq-grid">
+            <div class="gr-hq-field">
+                <label for="hq-city">{{home_hq_l_ciudad}}</label>
+                <div class="gr-hq-input">
+                    <i class="fa-regular fa-building"></i>
+                    <input type="text" id="hq-city" name="city" placeholder="{{home_hq_ph_ciudad}}">
+                </div>
+            </div>
+            <div class="gr-hq-field">
+                <label for="hq-postal">{{home_hq_l_postal}}</label>
+                <div class="gr-hq-input">
+                    <i class="fa-solid fa-barcode"></i>
+                    <input type="text" id="hq-postal" name="postal_code" placeholder="{{home_hq_ph_postal}}">
+                </div>
+            </div>
+            <div class="gr-hq-field gr-hq-wide">
+                <label for="hq-message">{{home_hq_l_detalles}}</label>
+                <div class="gr-hq-input">
+                    <i class="fa-regular fa-file-lines"></i>
+                    <textarea id="hq-message" name="message" rows="3" placeholder="{{home_hq_ph_detalles}}"></textarea>
+                </div>
+            </div>
+        </div>
+    </details>
+
+    <label class="gr-hq-check">
+        <input type="checkbox" name="consent" value="1" required>
+        <span>{{home_hq_consent}}</span>
+    </label>
+
+    <button type="submit" class="gr-hq-btn">
+        <span>{{home_hq_btn}}</span>
+        <i class="fa-solid fa-arrow-right"></i>
+    </button>
+    <p class="gr-hq-note"><i class="fa-regular fa-clock"></i> {{home_hq_note}}</p>
+    <div class="form-messages js-form-messages"></div>
+
+    <ul class="gr-hq-badges">
+        <li>
+            <i class="fa-solid fa-shield-halved"></i>
+            <span><strong>{{home_hq_b1_t}}</strong>{{home_hq_b1_d}}</span>
+        </li>
+        <li>
+            <i class="fa-solid fa-headset"></i>
+            <span><strong>{{home_hq_b2_t}}</strong>{{home_hq_b2_d}}</span>
+        </li>
+        <li>
+            <i class="fa-solid fa-globe"></i>
+            <span><strong>{{home_hq_b3_t}}</strong>{{home_hq_b3_d}}</span>
+        </li>
+    </ul>
+</form>

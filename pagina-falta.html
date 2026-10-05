@@ -1,0 +1,1172 @@
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"MovingCompany","name":"envios.com.pe","url":"https://www.envios.com.pe","telephone":"+51916057367","email":"info@envios.com.pe","address":{"@type":"PostalAddress","streetAddress":"Jr. Huallaga 288 Int. 106","addressLocality":"Lima","addressCountry":"PE"},"openingHours":["Mo-Fr 08:00-18:00","Sa 08:00-13:00"],"areaServed":{"@type":"Place","name":"América"},"description":"Envíos internacionales aéreos desde Perú a todos los países de América. Documentos y paquetes con entrega a domicilio. Courier express Lima."}</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════════════
+ENVIOS.COM.PE → TODA AMÉRICA
+Prefijo: epam- (anti-conflicto Divi/WP)
+Colores: Rojo #C8181E oficial + Carbon + Crema
+Tipografía: Syne (display) + Outfit (body)
+═══════════════════════════════════════════════════ */
+.epam{
+--r:#C8181E; --rdk:#8A0B10; --rlt:#FEF0F0;
+--gold:#D4920A;
+--c:#111111; --c2:#1A1A1A; --c3:#222222;
+--cr:#F9F8F5; --g1:#F3F2EF; --g2:#E9E8E4;
+--t:#141414; --t2:#5A5A58; --t3:#888884;
+--bo:rgba(0,0,0,.08); --boc:rgba(0,0,0,.12);
+--sh:0 2px 16px rgba(0,0,0,.07);
+--sh2:0 8px 40px rgba(0,0,0,.14);
+--fh:'Syne',sans-serif;
+--fb:'Outfit',sans-serif;
+font-family:var(--fb); color:var(--t);
+line-height:1.65; margin:0; padding:0; overflow-x:hidden;
+}
+.epam *,.epam *::before,.epam *::after{box-sizing:border-box}
+.epam a{text-decoration:none;color:inherit}
+.epam img{max-width:100%;display:block;height:auto}
+.epam h1,.epam h2,.epam h3,.epam h4{margin:0;padding:0}
+.epam p,.epam ul{margin:0;padding:0;list-style:none}
+
+/* ── LAYOUT ── */
+.epam-w{max-width:1180px;margin:0 auto;padding:0 2rem}
+.epam-sec{padding:5rem 0}
+.epam-sec-cr{background:var(--cr)}
+.epam-sec-g1{background:var(--g1)}
+.epam-sec-g2{background:var(--g2)}
+.epam-sec-c{background:var(--c)}
+.epam-sec-r{background:var(--r)}
+
+/* ── TIPOGRAFÍA ── */
+.epam-eyebrow{
+display:inline-flex;align-items:center;gap:9px;
+font-family:var(--fb);font-size:.65rem;font-weight:700;
+letter-spacing:.18em;text-transform:uppercase;color:var(--r);
+margin-bottom:.55rem;
+}
+.epam-eyebrow-w{color:rgba(255,255,255,.45)}
+.epam-eyebrow-bar{width:20px;height:2px;background:currentColor;flex-shrink:0}
+.epam-h2{
+font-family:var(--fh);font-weight:800;
+font-size:clamp(1.9rem,3.2vw,2.8rem);
+line-height:1.1;color:var(--t);margin-bottom:.65rem;
+letter-spacing:-.3px;
+}
+.epam-h2-w{color:#fff}
+.epam-sub{
+font-size:.97rem;color:var(--t2);
+max-width:580px;margin-bottom:2.5rem;line-height:1.82;
+}
+.epam-sub-w{color:rgba(255,255,255,.5)}
+
+/* ══════════════════════════════════════════════════
+TOPBAR
+══════════════════════════════════════════════════ */
+.epam-top{
+background:var(--c);border-bottom:3px solid var(--r);
+padding:.48rem 2rem;display:flex;align-items:center;
+justify-content:space-between;flex-wrap:wrap;gap:.4rem;
+}
+.epam-top-g{display:flex;gap:1.6rem;align-items:center;flex-wrap:wrap}
+.epam-top a,.epam-top span{
+font-size:.72rem;font-weight:600;color:rgba(255,255,255,.65);
+display:inline-flex;align-items:center;gap:4px;
+transition:color .2s;text-decoration:none;
+}
+.epam-top a:hover{color:#fff}
+.epam-top .hi{color:var(--r);font-weight:700}
+
+/* ══════════════════════════════════════════════════
+HERO — Impacto máximo con mapa implícito
+══════════════════════════════════════════════════ */
+.epam-hero{
+background-color:var(--c);
+background-image:
+linear-gradient(110deg,
+rgba(17,17,17,1) 0%,
+rgba(17,17,17,.97) 40%,
+rgba(17,17,17,.75) 65%,
+rgba(17,17,17,.25) 100%),
+url('https://images.unsplash.com/photo-1585208798174-6cedd86e019a?w=1400&q=80&auto=format&fit=crop');
+background-size:cover,cover;
+background-position:center,center right;
+padding:5.5rem 0 4.5rem;
+position:relative;overflow:hidden;
+}
+/* Línea diagonal decorativa roja */
+.epam-hero::after{
+content:'';position:absolute;
+top:0;right:0;bottom:0;width:5px;
+background:linear-gradient(to bottom,var(--r),transparent);
+}
+.epam-hero-inner{
+display:grid;grid-template-columns:55% 45%;
+gap:3rem;align-items:center;
+}
+/* Etiqueta de ruta */
+.epam-ruta-tag{
+display:inline-flex;align-items:center;gap:8px;
+background:rgba(200,24,30,.18);border:1px solid rgba(200,24,30,.4);
+border-radius:4px;padding:.4rem 1rem;
+font-family:var(--fb);font-size:.65rem;font-weight:700;
+letter-spacing:.15em;text-transform:uppercase;color:#ff9090;
+margin-bottom:1.8rem;width:fit-content;
+}
+.epam-ruta-dot{
+width:6px;height:6px;border-radius:50%;background:#ff5555;flex-shrink:0;
+animation:epam-blink 1.8s ease-in-out infinite;
+}
+@keyframes epam-blink{0%,100%{opacity:1}50%{opacity:.3}}
+.epam-h1{
+font-family:var(--fh);font-weight:800;
+font-size:clamp(2.4rem,5vw,4.2rem);
+line-height:1.05;color:#fff;margin-bottom:1.2rem;
+letter-spacing:-.5px;
+}
+.epam-h1 .epam-h1-dest{
+display:block;color:var(--r);font-size:90%;
+}
+.epam-hdesc{
+font-size:1rem;color:rgba(255,255,255,.58);
+margin-bottom:2.2rem;line-height:1.82;max-width:460px;
+}
+.epam-htags{
+display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2.2rem;
+}
+.epam-htag{
+background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);
+border-radius:4px;padding:.38rem .85rem;
+font-size:.76rem;font-weight:600;color:rgba(255,255,255,.82);
+display:inline-flex;align-items:center;gap:5px;
+}
+.epam-hbtns{display:flex;gap:.75rem;flex-wrap:wrap}
+
+/* Panel derecho hero — stats en grid */
+.epam-hero-panel{
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.09);
+border-radius:14px;overflow:hidden;
+}
+.epam-hero-panel-img{
+background-image:url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=600&q=80&auto=format&fit=crop');
+background-size:cover;background-position:center;
+aspect-ratio:16/9;position:relative;
+}
+.epam-hero-panel-img::after{
+content:'';position:absolute;inset:0;
+background:linear-gradient(to bottom,transparent 40%,rgba(17,17,17,.9) 100%);
+}
+.epam-hero-panel-txt{
+position:absolute;bottom:1rem;left:1rem;right:1rem;z-index:1;
+font-size:.78rem;font-weight:600;color:#fff;
+}
+.epam-hero-panel-txt span{color:#6ee7b7;font-weight:700}
+.epam-stats-row{
+display:grid;grid-template-columns:repeat(4,1fr);
+gap:1px;background:rgba(255,255,255,.08);
+}
+.epam-stat{background:rgba(10,10,10,.85);padding:1rem;text-align:center}
+.epam-stat-n{
+font-family:var(--fh);font-size:1.5rem;font-weight:800;
+color:var(--r);line-height:1;margin-bottom:3px;
+}
+.epam-stat-l{font-size:.62rem;color:rgba(255,255,255,.42);font-weight:500}
+
+/* ══════════════════════════════════════════════════
+BOTONES (usados en toda la página)
+══════════════════════════════════════════════════ */
+.epam-btn-r{
+background:var(--r);color:#fff!important;border:2px solid var(--r);
+font-family:var(--fb);font-weight:700;font-size:.9rem;
+padding:.75rem 1.55rem;border-radius:5px;
+display:inline-flex;align-items:center;gap:7px;
+transition:all .22s;text-decoration:none!important;line-height:1;
+}
+.epam-btn-r:hover{background:var(--rdk);border-color:var(--rdk);transform:translateY(-2px);box-shadow:0 8px 24px rgba(200,24,30,.32)}
+.epam-btn-wp{
+background:#25D366;color:#fff!important;border:2px solid #25D366;
+font-family:var(--fb);font-weight:700;font-size:.9rem;
+padding:.75rem 1.55rem;border-radius:5px;
+display:inline-flex;align-items:center;gap:7px;
+transition:all .22s;text-decoration:none!important;line-height:1;
+}
+.epam-btn-wp:hover{background:#1ebe5d;transform:translateY(-2px)}
+.epam-btn-ghost{
+background:transparent;color:rgba(255,255,255,.82)!important;
+border:1.5px solid rgba(255,255,255,.28);
+font-family:var(--fb);font-weight:600;font-size:.9rem;
+padding:.75rem 1.55rem;border-radius:5px;
+display:inline-flex;align-items:center;gap:7px;
+transition:all .22s;text-decoration:none!important;line-height:1;
+}
+.epam-btn-ghost:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.55)}
+.epam-btn-c{
+background:var(--c);color:#fff!important;border:2px solid var(--c);
+font-family:var(--fb);font-weight:700;font-size:.9rem;
+padding:.75rem 1.55rem;border-radius:5px;
+display:inline-flex;align-items:center;gap:7px;
+transition:all .22s;text-decoration:none!important;line-height:1;
+}
+.epam-btn-c:hover{background:var(--c3);transform:translateY(-2px)}
+/* Blanco para CTA oscuro */
+.epam-btn-w{
+background:#fff;color:var(--r)!important;border:2px solid #fff;
+font-family:var(--fb);font-weight:700;font-size:.9rem;
+padding:.75rem 1.55rem;border-radius:5px;
+display:inline-flex;align-items:center;gap:7px;
+transition:all .22s;text-decoration:none!important;line-height:1;
+}
+.epam-btn-w:hover{background:rgba(255,255,255,.9);transform:translateY(-2px)}
+.epam-btn-wb{
+background:rgba(0,0,0,.2);color:#fff!important;
+border:1.5px solid rgba(255,255,255,.3);
+font-family:var(--fb);font-weight:600;font-size:.9rem;
+padding:.75rem 1.55rem;border-radius:5px;
+display:inline-flex;align-items:center;gap:7px;
+transition:all .22s;text-decoration:none!important;line-height:1;
+}
+.epam-btn-wb:hover{background:rgba(0,0,0,.35);border-color:rgba(255,255,255,.6)}
+
+/* ══════════════════════════════════════════════════
+STRIP ROJO
+══════════════════════════════════════════════════ */
+.epam-strip{
+background:var(--r);padding:.85rem 2rem;
+display:flex;align-items:center;justify-content:center;
+gap:1.8rem;flex-wrap:wrap;
+}
+.epam-strip-i{
+font-size:.84rem;font-weight:700;color:#fff!important;
+display:inline-flex;align-items:center;gap:5px;
+text-decoration:none!important;transition:opacity .2s;
+}
+.epam-strip-i:hover{opacity:.85}
+.epam-strip-d{color:rgba(255,255,255,.3);font-size:1.1rem}
+
+/* ══════════════════════════════════════════════════
+INTRO — LOGO + TEXTO
+══════════════════════════════════════════════════ */
+.epam-intro-g{
+display:grid;grid-template-columns:1fr 1fr;
+gap:4rem;align-items:center;
+}
+.epam-logo-box{margin-bottom:1.5rem}
+.epam-img-box{
+border-radius:12px;overflow:hidden;
+position:relative;height:380px;
+}
+.epam-img-box img{width:100%;height:100%;object-fit:cover}
+.epam-img-pill{
+position:absolute;bottom:1.2rem;left:1.2rem;
+background:rgba(0,0,0,.75);backdrop-filter:blur(8px);
+border:1px solid rgba(255,255,255,.14);border-radius:6px;
+padding:.6rem 1rem;color:#fff;font-size:.79rem;font-weight:600;
+}
+.epam-img-pill span{color:#6ee7b7;font-weight:700}
+.epam-intro-btns{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.8rem}
+
+/* ══════════════════════════════════════════════════
+PAÍSES DE AMERICA — CARDS CON BANDERA + ENLACE
+══════════════════════════════════════════════════ */
+.epam-countries-intro{
+display:grid;grid-template-columns:280px 1fr;
+gap:3rem;align-items:start;
+}
+.epam-countries-promo{
+background:var(--r);border-radius:14px;
+padding:2rem 1.6rem;
+position:sticky;top:2rem;
+}
+.epam-countries-promo h3{
+font-family:var(--fh);font-size:1.4rem;font-weight:800;
+color:#fff;margin-bottom:.6rem;line-height:1.2;
+}
+.epam-countries-promo p{font-size:.84rem;color:rgba(255,255,255,.7);margin-bottom:1.4rem;line-height:1.7}
+.epam-countries-promo a{
+display:block;width:100%;text-align:center;
+}
+.epam-region-title{
+font-family:var(--fh);font-size:.7rem;font-weight:800;
+letter-spacing:.15em;text-transform:uppercase;
+color:var(--t3);margin:1.8rem 0 .9rem;
+display:flex;align-items:center;gap:.7rem;
+}
+.epam-region-title::after{content:'';flex:1;height:1px;background:var(--bo)}
+.epam-countries-grid{
+display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+gap:.65rem;
+}
+.epam-ccard{
+background:#fff;border:1px solid var(--bo);border-radius:10px;
+padding:.9rem 1rem;
+display:flex;align-items:center;gap:.75rem;
+transition:all .22s;text-decoration:none!important;
+color:var(--t)!important;
+}
+.epam-ccard:hover{
+border-color:var(--r);background:var(--rlt);
+transform:translateY(-3px);box-shadow:var(--sh2);
+}
+.epam-ccard-flag{font-size:1.5rem;flex-shrink:0;line-height:1}
+.epam-ccard-info{}
+.epam-ccard-n{font-family:var(--fh);font-size:.82rem;font-weight:700;color:var(--t);margin-bottom:1px}
+.epam-ccard-sub{font-size:.68rem;color:var(--t3)}
+/* Card "ver más" */
+.epam-ccard-more{
+background:var(--r);border:1px solid var(--r);border-radius:10px;
+padding:.9rem 1rem;display:flex;align-items:center;gap:.75rem;
+transition:all .22s;text-decoration:none!important;color:#fff!important;
+}
+.epam-ccard-more:hover{background:var(--rdk);border-color:var(--rdk);transform:translateY(-3px)}
+
+/* ══════════════════════════════════════════════════
+GALERÍA FOTOS
+══════════════════════════════════════════════════ */
+.epam-gal{
+display:grid;
+grid-template-columns:1.3fr 1fr 1fr;
+grid-template-rows:230px 230px;
+gap:.75rem;
+}
+.epam-gi{border-radius:10px;overflow:hidden;background:var(--g2)}
+.epam-gi img{width:100%;height:100%;object-fit:cover;transition:transform .55s}
+.epam-gi:hover img{transform:scale(1.06)}
+.epam-gi-tall{grid-row:1/3}
+
+/* ══════════════════════════════════════════════════
+QUÉ ENVIAMOS — productos
+══════════════════════════════════════════════════ */
+.epam-prod-grid{
+display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));
+gap:1rem;
+}
+.epam-prod{
+background:#fff;border:1px solid var(--bo);
+border-radius:11px;padding:1.6rem 1.1rem 1.3rem;
+text-align:center;transition:all .25s;
+border-top:3px solid transparent;
+}
+.epam-prod:hover{
+transform:translateY(-6px);box-shadow:var(--sh2);
+border-top-color:var(--r);
+}
+.epam-prod-ic{font-size:2.3rem;margin-bottom:.65rem;display:block;line-height:1}
+.epam-prod-n{font-family:var(--fh);font-size:.82rem;font-weight:700;color:var(--t);margin-bottom:3px}
+.epam-prod-d{font-size:.74rem;color:var(--t2);line-height:1.5}
+
+/* ══════════════════════════════════════════════════
+PASOS
+══════════════════════════════════════════════════ */
+.epam-pasos{
+display:grid;grid-template-columns:repeat(4,1fr);
+border:1px solid var(--bo);border-radius:12px;overflow:hidden;
+}
+.epam-paso{
+padding:2.2rem 1.4rem;text-align:center;
+border-right:1px solid var(--bo);background:#fff;
+}
+.epam-paso:last-child{border-right:none}
+.epam-paso-n{
+width:42px;height:42px;border-radius:50%;
+background:var(--r);color:#fff;
+font-family:var(--fh);font-weight:700;font-size:1rem;
+display:flex;align-items:center;justify-content:center;
+margin:0 auto .9rem;box-shadow:0 4px 14px rgba(200,24,30,.3);
+}
+.epam-paso-ic{font-size:1.75rem;display:block;margin-bottom:.5rem;line-height:1}
+.epam-paso h4{font-family:var(--fh);font-size:.82rem;font-weight:700;color:var(--t);margin-bottom:.3rem}
+.epam-paso p{font-size:.78rem;color:var(--t2)}
+
+/* ══════════════════════════════════════════════════
+VENTAJAS — fondo oscuro
+══════════════════════════════════════════════════ */
+.epam-vent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
+.epam-vent{
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+border-radius:11px;padding:1.5rem 1.3rem;transition:all .22s;
+}
+.epam-vent:hover{background:rgba(255,255,255,.09);transform:translateY(-3px)}
+.epam-v-ic{font-size:1.9rem;margin-bottom:.75rem;display:block;line-height:1}
+.epam-v-h{font-family:var(--fh);font-size:.88rem;font-weight:700;color:#fff;margin-bottom:.3rem}
+.epam-v-p{font-size:.79rem;color:rgba(255,255,255,.46);line-height:1.65}
+
+/* ══════════════════════════════════════════════════
+BANNER DIVISOR
+══════════════════════════════════════════════════ */
+.epam-banner{
+background-image:
+linear-gradient(135deg,rgba(138,11,16,.93) 0%,rgba(20,20,20,.88) 100%),
+url('https://images.unsplash.com/photo-1553413077-190dd305871c?w=1400&q=75&auto=format&fit=crop');
+background-size:cover;background-position:center;
+padding:4.5rem 2rem;text-align:center;
+}
+.epam-banner h3{
+font-family:var(--fh);font-weight:800;
+font-size:clamp(1.9rem,4vw,3.2rem);
+color:#fff;margin-bottom:.6rem;line-height:1.1;
+}
+.epam-banner p{color:rgba(255,255,255,.62);font-size:1rem;margin-bottom:2rem}
+.epam-banner-btns{display:flex;justify-content:center;gap:.9rem;flex-wrap:wrap}
+
+/* ══════════════════════════════════════════════════
+ENLACES INTERNOS — sección de páginas del sitio
+══════════════════════════════════════════════════ */
+.epam-links-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1rem}
+.epam-link-card{
+background:#fff;border:1px solid var(--bo);border-radius:11px;
+padding:1.4rem;display:flex;align-items:flex-start;gap:.9rem;
+transition:all .22s;text-decoration:none!important;color:var(--t)!important;
+}
+.epam-link-card:hover{
+border-color:var(--r);box-shadow:var(--sh2);transform:translateY(-3px);
+}
+.epam-link-ic{
+font-size:1.6rem;flex-shrink:0;margin-top:2px;
+width:42px;height:42px;border-radius:8px;
+background:var(--rlt);display:flex;align-items:center;
+justify-content:center;line-height:1;
+}
+.epam-link-n{font-family:var(--fh);font-size:.88rem;font-weight:700;color:var(--t);margin-bottom:3px}
+.epam-link-d{font-size:.74rem;color:var(--t2);line-height:1.5}
+.epam-link-arr{
+margin-top:.6rem;font-size:.72rem;font-weight:700;
+color:var(--r);display:inline-flex;align-items:center;gap:4px;
+}
+
+/* ══════════════════════════════════════════════════
+FORMULARIO + CONTACTO
+══════════════════════════════════════════════════ */
+.epam-cform-g{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.epam-cinfo h3{font-family:var(--fh);font-weight:700;font-size:1.6rem;color:var(--t);margin-bottom:.6rem}
+.epam-clead{font-size:.95rem;color:var(--t2);margin-bottom:1.8rem;line-height:1.78}
+.epam-clist{display:flex;flex-direction:column;gap:.9rem;margin-bottom:1.8rem}
+.epam-clist li{display:flex;gap:.78rem;align-items:flex-start;font-size:.88rem;color:var(--t)}
+.epam-ci{font-size:1.1rem;flex-shrink:0;margin-top:1px;line-height:1}
+.epam-clist strong{display:block;font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;color:var(--t2);margin-bottom:1px;font-weight:700}
+.epam-clist a{color:var(--r)!important;font-weight:700;text-decoration:none!important}
+.epam-clist a:hover{text-decoration:underline!important}
+.epam-mapa{border-radius:10px;overflow:hidden;border:1px solid var(--bo);height:255px;margin-top:1.4rem}
+.epam-mapa iframe{width:100%;height:100%;border:none;display:block}
+/* FORM */
+.epam-fcard{
+background:var(--cr);border:1px solid var(--bo);
+border-top:4px solid var(--r);border-radius:12px;padding:2rem 1.8rem;
+}
+.epam-fcard h4{font-family:var(--fh);font-weight:700;font-size:1.05rem;color:var(--t);margin-bottom:1.4rem}
+.epam-fg{margin-bottom:1rem}
+.epam-fg label{display:block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--t2);margin-bottom:.35rem}
+.epam-fg input,.epam-fg select,.epam-fg textarea{
+width:100%;background:#fff;border:1.5px solid var(--bo);
+border-radius:6px;padding:.7rem .9rem;
+font-family:var(--fb);font-size:.9rem;color:var(--t);
+transition:border-color .2s,box-shadow .2s;
+-webkit-appearance:none;appearance:none;line-height:1.4;
+}
+.epam-fg input:focus,.epam-fg select:focus,.epam-fg textarea:focus{
+outline:none;border-color:var(--r);box-shadow:0 0 0 3px rgba(200,24,30,.1);
+}
+.epam-fg textarea{resize:vertical;min-height:88px}
+.epam-frow{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.epam-fsub{
+width:100%;background:var(--r);color:#fff;
+font-family:var(--fb);font-weight:700;font-size:.95rem;
+padding:.9rem;border-radius:6px;border:none;cursor:pointer;
+transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:.4rem;
+}
+.epam-fsub:hover{background:var(--rdk);transform:translateY(-1px);box-shadow:0 6px 20px rgba(200,24,30,.3)}
+.epam-fnota{font-size:.69rem;color:var(--t2);text-align:center;margin:.6rem 0 0}
+
+/* ══════════════════════════════════════════════════
+CTA FINAL
+══════════════════════════════════════════════════ */
+.epam-cta{
+background-image:linear-gradient(135deg,#8A0B10 0%,#C8181E 50%,#7A0910 100%);
+padding:5rem 2rem;text-align:center;
+position:relative;overflow:hidden;
+}
+.epam-cta::before,.epam-cta::after{
+content:'';position:absolute;border-radius:50%;pointer-events:none;
+}
+.epam-cta::before{width:450px;height:450px;background:rgba(0,0,0,.1);top:-150px;right:-100px}
+.epam-cta::after{width:300px;height:300px;background:rgba(255,255,255,.04);bottom:-100px;left:-80px}
+.epam-cta h2{
+font-family:var(--fh);font-weight:800;
+font-size:clamp(2rem,5vw,3.4rem);color:#fff;
+margin-bottom:.65rem;position:relative;z-index:1;
+}
+.epam-cta p{color:rgba(255,255,255,.65);font-size:1.02rem;margin-bottom:1.7rem;position:relative;z-index:1}
+.epam-cta-tel{
+display:block;font-family:var(--fh);font-size:1.75rem;font-weight:800;
+color:#fff!important;letter-spacing:.8px;
+margin-bottom:1.8rem;text-decoration:none!important;
+position:relative;z-index:1;
+}
+.epam-cta-tel:hover{opacity:.88}
+.epam-cta-btns{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;position:relative;z-index:1}
+
+/* ══════════════════════════════════════════════════
+RESPONSIVE — TABLET 768–1023px
+══════════════════════════════════════════════════ */
+@media(max-width:1023px){
+.epam-w{padding:0 1.5rem}
+.epam-hero{padding:4rem 0 3.5rem}
+.epam-hero-inner{grid-template-columns:1fr;gap:2.5rem}
+.epam-hero-panel{display:grid;grid-template-columns:1fr 1fr}
+.epam-hero-panel-img{aspect-ratio:4/3}
+.epam-stats-row{grid-template-columns:repeat(4,1fr)}
+.epam-intro-g{grid-template-columns:1fr;gap:2rem}
+.epam-img-box{height:280px}
+.epam-countries-intro{grid-template-columns:1fr;gap:2rem}
+.epam-countries-promo{position:static}
+.epam-gal{grid-template-columns:1fr 1fr;grid-template-rows:210px 210px}
+.epam-gi-tall{grid-row:auto}
+.epam-pasos{grid-template-columns:1fr 1fr}
+.epam-paso:nth-child(2){border-right:none}
+.epam-paso:nth-child(3){border-top:1px solid var(--bo);border-right:1px solid var(--bo)}
+.epam-paso:nth-child(4){border-top:1px solid var(--bo);border-right:none}
+.epam-vent-grid{grid-template-columns:1fr 1fr}
+.epam-cform-g{grid-template-columns:1fr;gap:2.5rem}
+.epam-sec{padding:3.5rem 0}
+.epam-cta-btns{flex-direction:column;align-items:center}
+.epam-cta-btns a{width:100%;max-width:340px;justify-content:center}
+}
+/* ── MOBILE L 480–767px ── */
+@media(max-width:767px){
+.epam-top{display:none}
+.epam-hero{padding:3rem 0 2.8rem}
+.epam-hero-inner{padding:0 1.2rem}
+.epam-h1{font-size:clamp(2rem,9vw,2.8rem)}
+.epam-hdesc{font-size:.92rem;max-width:100%}
+.epam-htags{flex-direction:column;gap:.4rem}
+.epam-htag{width:100%}
+.epam-hbtns{flex-direction:column}
+.epam-hbtns a{width:100%;justify-content:center}
+.epam-hero-panel{grid-template-columns:1fr}
+.epam-stats-row{grid-template-columns:1fr 1fr}
+.epam-stat-n{font-size:1.3rem}
+.epam-strip{flex-direction:column;gap:.5rem;padding:.8rem 1.2rem;text-align:center}
+.epam-strip-d{display:none}
+.epam-w{padding:0 1rem}
+.epam-sec{padding:2.8rem 0}
+.epam-intro-g{grid-template-columns:1fr}
+.epam-img-box{height:240px}
+.epam-intro-btns{flex-direction:column}
+.epam-intro-btns a{width:100%;justify-content:center}
+.epam-countries-intro{grid-template-columns:1fr}
+.epam-countries-grid{grid-template-columns:repeat(2,1fr)}
+.epam-gal{grid-template-columns:1fr;grid-template-rows:auto}
+.epam-gi img{aspect-ratio:16/9;height:auto}
+.epam-prod-grid{grid-template-columns:repeat(2,1fr);gap:.7rem}
+.epam-prod{padding:1.2rem .8rem 1rem}
+.epam-banner{padding:3.2rem 1.2rem}
+.epam-banner-btns{flex-direction:column;align-items:center}
+.epam-banner-btns a{width:100%;max-width:320px;justify-content:center}
+.epam-links-grid{grid-template-columns:1fr}
+.epam-pasos{grid-template-columns:1fr 1fr;border-radius:10px}
+.epam-paso{padding:1.7rem 1rem}
+.epam-vent-grid{grid-template-columns:1fr}
+.epam-cform-g{grid-template-columns:1fr;gap:2rem}
+.epam-frow{grid-template-columns:1fr}
+.epam-fcard{padding:1.4rem 1.1rem}
+.epam-fg input,.epam-fg select,.epam-fg textarea{font-size:1rem;padding:.8rem .9rem}
+.epam-mapa{height:230px}
+.epam-cta{padding:3.5rem 1.2rem}
+.epam-cta-tel{font-size:1.35rem}
+.epam-cta-btns{flex-direction:column;align-items:center}
+.epam-cta-btns a{width:100%;max-width:320px;justify-content:center}
+}
+/* ── MOBILE S < 480px ── */
+@media(max-width:479px){
+.epam-hero{padding:2.5rem 0 2.2rem}
+.epam-hero-inner{padding:0 .9rem}
+.epam-h1{font-size:clamp(1.85rem,10.5vw,2.4rem)}
+.epam-w{padding:0 .9rem}
+.epam-sec{padding:2.2rem 0}
+.epam-stats-row{grid-template-columns:1fr 1fr}
+.epam-stat-n{font-size:1.1rem}
+.epam-prod-grid{grid-template-columns:repeat(2,1fr);gap:.55rem}
+.epam-prod-ic{font-size:2rem}
+.epam-countries-grid{grid-template-columns:repeat(2,1fr)}
+.epam-pasos{grid-template-columns:1fr}
+.epam-paso{border-right:none!important;border-bottom:1px solid var(--bo)!important}
+.epam-paso:last-child{border-bottom:none!important}
+.epam-paso{padding:1.4rem .9rem}
+.epam-banner h3{font-size:1.6rem}
+.epam-cta h2{font-size:1.85rem}
+.epam-cta-tel{font-size:1.15rem}
+.epam-fcard{padding:1.2rem .9rem}
+.epam-mapa{height:210px}
+}
+
+/* ══════════════════════════════════════════════════
+BOTÓN FLOTANTE WHATSAPP
+══════════════════════════════════════════════════ */
+.epam-wp-float{
+position:fixed;bottom:1.6rem;right:1.6rem;z-index:9999;
+display:flex;flex-direction:column;align-items:flex-end;gap:.5rem;
+}
+.epam-wp-float-btn{
+width:58px;height:58px;border-radius:50%;
+background:#25D366;color:#fff;
+display:flex;align-items:center;justify-content:center;
+box-shadow:0 4px 20px rgba(37,211,102,.45);
+text-decoration:none!important;
+transition:transform .22s,box-shadow .22s;
+position:relative;
+}
+.epam-wp-float-btn:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(37,211,102,.6)}
+.epam-wp-float-btn svg{flex-shrink:0}
+.epam-wp-float-pulse{
+position:absolute;inset:-4px;border-radius:50%;
+border:2px solid rgba(37,211,102,.5);
+animation:epam-pulse 2s ease-out infinite;
+}
+@keyframes epam-pulse{
+0%{transform:scale(1);opacity:1}
+100%{transform:scale(1.55);opacity:0}
+}
+.epam-wp-float-label{
+background:#fff;color:#111;font-size:.72rem;font-weight:700;
+padding:.3rem .75rem;border-radius:12px;
+box-shadow:0 2px 10px rgba(0,0,0,.12);
+white-space:nowrap;pointer-events:none;
+animation:epam-fadein .4s ease .8s both;
+}
+@keyframes epam-fadein{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:translateX(0)}}
+
+/* ══════════════════════════════════════════════════
+REDES SOCIALES — BARRA
+══════════════════════════════════════════════════ */
+.epam-social-bar{
+background:var(--c2);border-top:1px solid rgba(255,255,255,.06);
+padding:.7rem 2rem;display:flex;align-items:center;
+justify-content:center;gap:1.2rem;flex-wrap:wrap;
+}
+.epam-social-btn{
+display:inline-flex;align-items:center;gap:6px;
+font-size:.76rem;font-weight:700;color:rgba(255,255,255,.65)!important;
+padding:.38rem .85rem;border-radius:4px;
+border:1px solid rgba(255,255,255,.1);
+transition:all .2s;text-decoration:none!important;
+}
+.epam-social-btn:hover{color:#fff!important;border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.07)}
+.epam-social-btn.fb:hover{border-color:#1877F2;color:#1877F2!important}
+.epam-social-btn.ig:hover{border-color:#E1306C;color:#E1306C!important}
+.epam-social-btn.yt:hover{border-color:#FF0000;color:#FF0000!important}
+.epam-social-btn.tk:hover{border-color:#69C9D0;color:#69C9D0!important}
+
+/* ══════════════════════════════════════════════════
+ENLACES DE PAÍSES — badge "Página dedicada"
+══════════════════════════════════════════════════ */
+.epam-ccard-badge{
+display:inline-block;font-size:.58rem;font-weight:700;
+text-transform:uppercase;letter-spacing:.08em;
+background:var(--r);color:#fff;
+padding:1px 6px;border-radius:2px;margin-top:2px;
+}
+.epam-link-card-feat{
+border:2px solid var(--r)!important;
+background:var(--rlt)!important;
+}
+.epam-link-card-feat .epam-link-n{color:var(--r)!important}
+</style>
+
+<!-- ══════════════════════════════════════════════════════
+PÁGINA: ENVÍOS PERÚ → TODA AMÉRICA | envios.com.pe
+══════════════════════════════════════════════════════ -->
+<div class="epam">
+
+<!-- BOTÓN FLOTANTE WHATSAPP -->
+<a class="epam-wp-float" href="https://wa.me/51916057367?text=Hola,%20quiero%20cotizar%20un%20env%C3%ADo%20internacional%20a%20Am%C3%A9rica" target="_blank" rel="noopener" aria-label="Chatear por WhatsApp">
+<span class="epam-wp-float-label">💬 Cotizar por WhatsApp</span>
+<span class="epam-wp-float-btn">
+<span class="epam-wp-float-pulse"></span>
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</span>
+</a>
+
+<!-- HERO -->
+<div class="epam-hero">
+<div class="epam-hero-inner epam-w">
+<div>
+<div class="epam-ruta-tag">
+<span class="epam-ruta-dot"></span>
+Courier Internacional desde Lima, Perú
+</div>
+<h1 class="epam-h1">
+Enviamos desde Perú
+<span class="epam-h1-dest">a toda América 🌎</span>
+</h1>
+<p class="epam-hdesc">
+Documentos y paquetes con entrega a domicilio en <strong style="color:rgba(255,255,255,.9)">todos los países de América</strong>. Vía <strong style="color:rgba(255,255,255,.9)">aérea express</strong> — seguimiento en tiempo real, aduana incluida.
+</p>
+<div class="epam-htags">
+<span class="epam-htag">📄 Documentos</span>
+<span class="epam-htag">📦 Paquetes</span>
+<span class="epam-htag">✈️ Envío aéreo</span>
+<span class="epam-htag">🏠 A domicilio</span>
+<span class="epam-htag">📡 Rastreo online</span>
+<span class="epam-htag">🔒 Asegurado</span>
+</div>
+<div class="epam-hbtns">
+<a href="#epam-cotizar" class="epam-btn-r">📦 Cotizar gratis</a>
+<a href="https://wa.me/51916057367?text=Hola,%20quiero%20cotizar%20un%20envío%20internacional" class="epam-btn-wp" target="_blank" rel="noopener">
+<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+WhatsApp
+</a>
+<a href="tel:+51916057367" class="epam-btn-ghost">📞 +51 916 057 367</a>
+</div>
+</div>
+<!-- Panel stats -->
+<div class="epam-hero-panel">
+<div class="epam-hero-panel-img">
+<div class="epam-hero-panel-txt">✅ <span>+11,500 envíos</span> internacionales realizados</div>
+</div>
+<div class="epam-stats-row">
+<div class="epam-stat"><div class="epam-stat-n">18+</div><div class="epam-stat-l">Países América</div></div>
+<div class="epam-stat"><div class="epam-stat-n">8+</div><div class="epam-stat-l">Años de exp.</div></div>
+<div class="epam-stat"><div class="epam-stat-n">11K+</div><div class="epam-stat-l">Envíos</div></div>
+<div class="epam-stat"><div class="epam-stat-n">100%</div><div class="epam-stat-l">A domicilio</div></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- STRIP -->
+<div class="epam-strip">
+<a href="tel:+51916057367" class="epam-strip-i">📞 +51 916 057 367</a>
+<span class="epam-strip-d">·</span>
+<a href="mailto:info@envios.com.pe" class="epam-strip-i">✉️ info@envios.com.pe</a>
+<span class="epam-strip-d">·</span>
+<span class="epam-strip-i">📍 Jr. Huallaga 288 Int. 106, Lima</span>
+<span class="epam-strip-d">·</span>
+<a href="https://envios.com.pe/rastreo/" class="epam-strip-i" target="_blank" rel="noopener">🔍 Rastrear envío</a>
+<span class="epam-strip-d">·</span>
+<a href="https://wa.me/51916057367?text=Hola,%20quiero%20cotizar%20un%20env%C3%ADo%20internacional" class="epam-strip-i" target="_blank" rel="noopener">💬 Cotizar ahora →</a>
+</div>
+
+<!-- INTRO + LOGO -->
+<div class="epam-sec">
+<div class="epam-w">
+<div class="epam-intro-g">
+<div>
+<div class="epam-logo-box">
+<a href="https://www.envios.com.pe" target="_blank" rel="noopener">
+<img src="https://envios.com.pe/wp-content/uploads/2020/08/logo-envios.png"
+alt="envios.com.pe — Envíos internacionales desde Perú a América" width="185" height="50" loading="lazy"/>
+</a>
+</div>
+<div class="epam-eyebrow"><span class="epam-eyebrow-bar"></span>Courier express desde Lima</div>
+<h2 class="epam-h2">Tu puerta de acceso<br>a toda América</h2>
+<p class="epam-sub" style="margin-bottom:0">Más de 8 años conectando personas y empresas desde Perú con el continente americano. Enviamos documentos y paquetes por vía aérea a Argentina, Chile, Colombia, Uruguay, México, Estados Unidos, Canadá y más — con entrega a domicilio, gestión aduanera y seguimiento incluidos.</p>
+<div class="epam-intro-btns">
+<a href="#epam-cotizar" class="epam-btn-r">Cotizar mi envío →</a>
+<a href="https://www.envios.com.pe/envios-internacionales" class="epam-btn-c" target="_blank" rel="noopener">🌐 Ver destinos</a>
+</div>
+</div>
+<div>
+<div class="epam-img-box">
+<img src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=700&q=80&auto=format&fit=crop"
+alt="Almacén de envios.com.pe preparando envíos internacionales desde Lima Perú" loading="lazy"/>
+<div class="epam-img-pill">✅ <span>+11,500 envíos</span> realizados internacionalmente</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- PAÍSES DE AMERICA — CARDS CON ENLACE INTERNO -->
+<div class="epam-sec epam-sec-g1" id="epam-paises">
+<div class="epam-w">
+<div class="epam-countries-intro">
+<!-- Promo lateral -->
+<div class="epam-countries-promo">
+<div class="epam-eyebrow epam-eyebrow-w"><span class="epam-eyebrow-bar"></span>Cobertura continental</div>
+<h3>Llegamos a todos los países de América</h3>
+<p>Desde Canadá hasta Argentina — si tiene dirección postal, envios.com.pe llega. Haz clic en tu destino para ver más detalles.</p>
+<a href="#epam-cotizar" class="epam-btn-w" style="width:100%;justify-content:center;margin-bottom:.7rem">📦 Cotizar gratis</a>
+<a href="https://wa.me/51916057367?text=Hola,%20quiero%20cotizar%20un%20envío%20a%20America" class="epam-btn-wb" style="width:100%;justify-content:center" target="_blank" rel="noopener">💬 WhatsApp</a>
+</div>
+<!-- Grid de países -->
+<div>
+<!-- América del Sur -->
+<div class="epam-region-title">🌎 América del Sur</div>
+<div class="epam-countries-grid">
+<a href="https://envios.com.pe/envios-a-argentina-envios-peru-argentina-envios-expres-envios-a-buenos-aires-envios-rapidos-envios-internacionales/" class="epam-ccard" target="_blank" rel="noopener">
+<span class="epam-ccard-flag">🇦🇷</span>
+<div class="epam-ccard-info"><div class="epam-ccard-n">Argentina</div><div class="epam-ccard-sub">Aéreo · Terrestre</div><div class="epam-ccard-badge">Página dedicada</div></div>
+</a>
+<a href="https://envios.com.pe/envios-a-chile/" class="epam-ccard" target="_blank" rel="noopener">
+<span class="epam-ccard-flag">🇨🇱</span>
+<div class="epam-ccard-info"><div class="epam-ccard-n">Chile</div><div class="epam-ccard-sub">Aéreo · Terrestre</div><div class="epam-ccard-badge">Página dedicada</div></div>
+</a>
+<a href="https://envios.com.pe/envios-a-colombia/" class="epam-ccard" target="_blank" rel="noopener">
+<span class="epam-ccard-flag">🇨🇴</span>
+<div class="epam-ccard-info"><div class="epam-ccard-n">Colombia</div><div class="epam-ccard-sub">Aéreo · Terrestre</div></div>
+</a>
+<a href="https://envios.com.pe/envios-a-ecuador/" class="epam-ccard" target="_blank" rel="noopener">
+<span class="epam-ccard-flag">🇪🇨</span>
+<div class="epam-ccard-info"><div class="epam-ccard-n">Ecuador</div><div class="epam-ccard-sub">Aéreo · Terrestre</div><div class="epam-ccard-badge">Página dedicada</div></div>
+</a>
+<a href="https://envios.com.pe/envios-a-bolivia/" class="epam-ccard" target="_blank" rel="noopener">
+<span class="epam-ccard-flag">🇧🇴</span>
+<div class="epam-ccard-info"><div class="epam-ccard-n">Bolivia</div><div class="epam-ccard-sub">Aéreo · Terrestre</div></div>
+</a>
+<a href="https://envios.com.pe/envios-a-brasil/" class="epam-ccard" target="_blank" rel="noopener">
+<span class="epam-ccard-flag">🇧🇷</span>
+<div class="epam-ccard-info"><div class="epam-ccard-n">Brasil</div><div class="epam-ccard-sub">Envío aéreo</div></div>
+</a>
+<a href="https://envios.com.pe/envios-a-uruguay/" class="epam-ccard" target="_blank" rel="noopener">
+<span class="epam-ccard-flag">🇺🇾</span>
+<div class="epam-ccard-info"><div class="epam-ccard-n">Uruguay</div><div class="epam-ccard-sub">Envío aéreo</div></div>
+</a>
+<a href="https://envios.com.pe/envios-a-paraguay/" class="epam-ccard" target="_blank" rel="noopener">
+<span class="epam-ccard-flag">🇵🇾</span>
+<div class="epam-ccard-info"><div class="epam-ccard-n">Paraguay</div><div class="epam-ccard-sub">Envío aéreo</div></div>
+</a>
+<a href="https://envios.com.pe/envios-a-venezuela/" class="epam-ccard" target="_blank" rel="noopener">
+<span class="epam-ccard-flag">🇻🇪</span>
+<div class="epam-ccard-info"><div class="epam-ccard-n">Venezuela</div><div class="epam-ccard-sub">Envío aéreo</div></div>
+</a>
+<a href="https://envios.com.pe/envios-internacionales" class="epam-ccard" target="_blank" rel="noopener">
+<span class="epam-ccard-flag">🇬🇾</span>
+<div class="epam-ccard-info"><div class="epam-ccard-n">Guyana</div><div class="epam-ccard-sub">Envío aéreo</div></div>
+</a>
+</div>
+<!-- América Central y El Caribe -->
+<div class="epam-region-title">🌎 América Central & Caribe</div>
+<div class="epam-countries-grid">
+<a href="https://envios.com.pe/envios-mexico/" class="epam-ccard" target="_blank" rel="noopener">
+<span class="epam-ccard-flag">🇲🇽</span>
+<div class="epam-ccard-info"><div class="epam-ccard-n">México</div><div class="epam-ccard-sub">Envío aéreo</div><div class="epam-ccard-badge">Página dedicada</div></div>
+</a>
+<a href="https://envios.com.pe/envios-a-costa-rica/" class="epam-ccard" target="_blank" rel="noopener">
+<span class="epam-ccard-flag">🇨🇷</span>
+<div class="epam-ccard-info"><div class="epam-ccard-n">Costa Rica</div><div class="epam-ccard-sub">Envío aéreo</div></div>
+</a>
+<a href="https://envios.com.pe/envios-a-panama/" class="epam-ccard" target="_blank" rel="noopener">
+<span class="epam-ccard-flag">🇵🇦</span>
+<div class="epam-ccard-info"><div class="epam-ccard-n">Panamá</div><div class="epam-ccard-sub">Envío aéreo</div></div>
+</a>
+<a href="https://envios.com.pe/envios-internacionales" class="epam-ccard" target="_blank" rel="noopener">
+<span class="epam-ccard-flag">🇨🇺</span>
+<div class="epam-ccard-info"><div class="epam-ccard-n">Cuba</div><div class="epam-ccard-sub">Envío aéreo</div></div>
+</a>
+<a href="https://envios.com.pe/envios-internacionales" class="epam-ccard" target="_blank" rel="noopener">
+<span class="epam-ccard-flag">🇩🇴</span>
+<div class="epam-ccard-info"><div class="epam-ccard-n">Rep. Dominicana</div><div class="epam-ccard-sub">Envío aéreo</div></div>
+</a>
+<a href="https://envios.com.pe/envios-internacionales" class="epam-ccard" target="_blank" rel="noopener">
+<span class="epam-ccard-flag">🇬🇹</span>
+<div class="epam-ccard-info"><div class="epam-ccard-n">Guatemala</div><div class="epam-ccard-sub">Envío aéreo</div></div>
+</a>
+<a href="https://envios.com.pe/envios-internacionales" class="epam-ccard" target="_blank" rel="noopener">
+<span class="epam-ccard-flag">🇭🇳</span>
+<div class="epam-ccard-info"><div class="epam-ccard-n">Honduras</div><div class="epam-ccard-sub">Envío aéreo</div></div>
+</a>
+<a href="https://envios.com.pe/envios-internacionales" class="epam-ccard" target="_blank" rel="noopener">
+<span class="epam-ccard-flag">🇸🇻</span>
+<div class="epam-ccard-info"><div class="epam-ccard-n">El Salvador</div><div class="epam-ccard-sub">Envío aéreo</div></div>
+</a>
+<a href="https://envios.com.pe/envios-internacionales" class="epam-ccard" target="_blank" rel="noopener">
+<span class="epam-ccard-flag">🇳🇮</span>
+<div class="epam-ccard-info"><div class="epam-ccard-n">Nicaragua</div><div class="epam-ccard-sub">Envío aéreo</div></div>
+</a>
+<a href="https://envios.com.pe/envios-internacionales" class="epam-ccard" target="_blank" rel="noopener">
+<span class="epam-ccard-flag">🇯🇲</span>
+<div class="epam-ccard-info"><div class="epam-ccard-n">Jamaica</div><div class="epam-ccard-sub">Envío aéreo</div></div>
+</a>
+</div>
+<!-- América del Norte -->
+<div class="epam-region-title">🌎 América del Norte</div>
+<div class="epam-countries-grid">
+<a href="https://envios.com.pe/envios-a-estados-unidos/" class="epam-ccard" target="_blank" rel="noopener">
+<span class="epam-ccard-flag">🇺🇸</span>
+<div class="epam-ccard-info"><div class="epam-ccard-n">Estados Unidos</div><div class="epam-ccard-sub">Envío aéreo</div><div class="epam-ccard-badge">Página dedicada</div></div>
+</a>
+<a href="https://envios.com.pe/envios-a-canada/" class="epam-ccard" target="_blank" rel="noopener">
+<span class="epam-ccard-flag">🇨🇦</span>
+<div class="epam-ccard-info"><div class="epam-ccard-n">Canadá</div><div class="epam-ccard-sub">Envío aéreo</div><div class="epam-ccard-badge">Página dedicada</div></div>
+</a>
+<a href="#epam-cotizar" class="epam-ccard-more">
+<span style="font-size:1.4rem">🌎</span>
+<div><div style="font-family:var(--fh);font-size:.82rem;font-weight:700;margin-bottom:2px">¿Otro país?</div><div style="font-size:.68rem;opacity:.8">Consúltanos →</div></div>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- GALERÍA -->
+<div class="epam-sec" style="padding-bottom:0">
+<div class="epam-w">
+<div class="epam-gal">
+<div class="epam-gi epam-gi-tall">
+<img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&q=80&auto=format&fit=crop"
+alt="Operador logístico preparando envío internacional desde Lima Perú" loading="lazy"/>
+</div>
+<div class="epam-gi">
+<img src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=500&q=80&auto=format&fit=crop"
+alt="Avión de carga vuelo internacional Lima América" loading="lazy"/>
+</div>
+<div class="epam-gi">
+<img src="https://images.unsplash.com/photo-1596524430615-b46475ddff6e?w=500&q=80&auto=format&fit=crop"
+alt="Paquetes y documentos listos para envío internacional desde Perú" loading="lazy"/>
+</div>
+</div>
+</div>
+</div>
+
+<!-- QUÉ ENVIAMOS -->
+<div class="epam-sec" id="epam-productos">
+<div class="epam-w">
+<div class="epam-eyebrow"><span class="epam-eyebrow-bar"></span>Tipos de carga aceptados</div>
+<h2 class="epam-h2">¿Qué puedes enviar<br>desde Perú a América?</h2>
+<p class="epam-sub">Aceptamos todo tipo de carga personal y comercial. Consulta restricciones por país sin costo.</p>
+<div class="epam-prod-grid">
+<div class="epam-prod"><span class="epam-prod-ic">📄</span><div class="epam-prod-n">Documentos</div><div class="epam-prod-d">Contratos, títulos, cartas notariales</div></div>
+<div class="epam-prod"><span class="epam-prod-ic">📦</span><div class="epam-prod-n">Paquetes</div><div class="epam-prod-d">Bultos y encomiendas de todo tipo</div></div>
+<div class="epam-prod"><span class="epam-prod-ic">🛍️</span><div class="epam-prod-n">Compras online</div><div class="epam-prod-d">Shopping, regalos y productos</div></div>
+<div class="epam-prod"><span class="epam-prod-ic">👗</span><div class="epam-prod-n">Ropa y textiles</div><div class="epam-prod-d">Prendas, telas, moda peruana</div></div>
+<div class="epam-prod"><span class="epam-prod-ic">🥫</span><div class="epam-prod-n">Alimentos</div><div class="epam-prod-d">No perecibles, conservas andinas</div></div>
+<div class="epam-prod"><span class="epam-prod-ic">🎨</span><div class="epam-prod-n">Artesanía</div><div class="epam-prod-d">Arte peruano, tejidos, cerámicas</div></div>
+<div class="epam-prod"><span class="epam-prod-ic">📱</span><div class="epam-prod-n">Electrónicos</div><div class="epam-prod-d">Celulares, laptops, accesorios</div></div>
+</div>
+</div>
+</div>
+
+<!-- BANNER -->
+<div class="epam-banner">
+<h3>Entrega a domicilio en toda América 🌎</h3>
+<p>Lima → Buenos Aires · Santiago · Bogotá · Montevideo · Ciudad de México · Miami y más</p>
+<div class="epam-banner-btns">
+<a href="#epam-cotizar" class="epam-btn-w">📦 Cotizar mi envío gratis</a>
+<a href="https://wa.me/51916057367?text=Hola,%20quiero%20cotizar%20un%20envío%20a%20America" class="epam-btn-wp" target="_blank" rel="noopener">💬 WhatsApp</a>
+</div>
+</div>
+
+<!-- PASOS -->
+<div class="epam-sec epam-sec-g2" id="epam-proceso">
+<div class="epam-w">
+<div class="epam-eyebrow"><span class="epam-eyebrow-bar"></span>Proceso de envío</div>
+<h2 class="epam-h2">4 pasos para enviar a América</h2>
+<p class="epam-sub">Simple y sin complicaciones — te acompañamos desde Lima hasta el domicilio de tu destinatario.</p>
+<div class="epam-pasos">
+<div class="epam-paso">
+<div class="epam-paso-n">1</div><span class="epam-paso-ic">💬</span>
+<h4>Cotiza gratis</h4>
+<p>WhatsApp, teléfono o formulario. Respondemos en minutos con precio exacto.</p>
+</div>
+<div class="epam-paso">
+<div class="epam-paso-n">2</div><span class="epam-paso-ic">📦</span>
+<h4>Entrega tu envío</h4>
+<p>Trae tu paquete a nuestra oficina en Lima o coordina el recojo.</p>
+</div>
+<div class="epam-paso">
+<div class="epam-paso-n">3</div><span class="epam-paso-ic">🛫</span>
+<h4>Enviamos</h4>
+<p>Gestionamos aduana y vuelo. Recibes tu código de rastreo al instante.</p>
+</div>
+<div class="epam-paso">
+<div class="epam-paso-n">4</div><span class="epam-paso-ic">🏠</span>
+<h4>Entrega a domicilio</h4>
+<p>Tu destinatario recibe en su puerta en cualquier país de América.</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- VENTAJAS -->
+<div class="epam-sec epam-sec-c">
+<div class="epam-w">
+<div class="epam-eyebrow epam-eyebrow-w"><span class="epam-eyebrow-bar"></span>Garantías</div>
+<h2 class="epam-h2 epam-h2-w">Por qué elegir envios.com.pe</h2>
+<p class="epam-sub epam-sub-w">8 años, +11,500 envíos y cero sorpresas — tu confianza es nuestra trayectoria.</p>
+<div class="epam-vent-grid">
+<div class="epam-vent"><span class="epam-v-ic">🔒</span><div class="epam-v-h">Envíos asegurados</div><p class="epam-v-p">Carga protegida contra pérdida o daño desde Lima hasta destino.</p></div>
+<div class="epam-vent"><span class="epam-v-ic">📡</span><div class="epam-v-h">Rastreo en tiempo real</div><p class="epam-v-p">Código personalizado para ti y tu destinatario en América.</p></div>
+<div class="epam-vent"><span class="epam-v-ic">📋</span><div class="epam-v-h">Aduana incluida</div><p class="epam-v-p">Exportación Perú e importación en destino. Sin cargos ocultos.</p></div>
+<div class="epam-vent"><span class="epam-v-ic">🏠</span><div class="epam-v-h">Entrega a domicilio</div><p class="epam-v-p">Puerta a puerta en todos los países de América.</p></div>
+<div class="epam-vent"><span class="epam-v-ic">💰</span><div class="epam-v-h">Precio transparente</div><p class="epam-v-p">Cotización gratuita. Tarifas justas sin sorpresas al final.</p></div>
+<div class="epam-vent"><span class="epam-v-ic">🏢</span><div class="epam-v-h">Empresa formal Lima</div><p class="epam-v-p">Jr. Huallaga 288 Int. 106 — 8+ años de trayectoria.</p></div>
+</div>
+</div>
+</div>
+
+<!-- ENLACES INTERNOS -->
+<div class="epam-sec epam-sec-cr" id="epam-destinos">
+<div class="epam-w">
+<div class="epam-eyebrow"><span class="epam-eyebrow-bar"></span>Páginas de destino</div>
+<h2 class="epam-h2">Explora nuestros servicios por país</h2>
+<p class="epam-sub">Cada destino tiene su propia página con información detallada, ciudades de entrega y tarifas.</p>
+<div class="epam-links-grid">
+<a href="https://envios.com.pe/envios-a-argentina-envios-peru-argentina-envios-expres-envios-a-buenos-aires-envios-rapidos-envios-internacionales/" class="epam-link-card epam-link-card-feat" target="_blank" rel="noopener">
+<div class="epam-link-ic">🇦🇷</div>
+<div><div class="epam-link-n">Envíos a Argentina</div><div class="epam-link-d">Buenos Aires, Córdoba, Rosario y +50 ciudades</div><div class="epam-link-arr">Ver página →</div></div>
+</a>
+<a href="https://envios.com.pe/envios-a-chile/" class="epam-link-card" target="_blank" rel="noopener">
+<div class="epam-link-ic">🇨🇱</div>
+<div><div class="epam-link-n">Envíos a Chile</div><div class="epam-link-d">Santiago, Valparaíso, Antofagasta y más</div><div class="epam-link-arr">Ver página →</div></div>
+</a>
+<a href="https://envios.com.pe/envios-a-ecuador/" class="epam-link-card" target="_blank" rel="noopener">
+<div class="epam-link-ic">🇪🇨</div>
+<div><div class="epam-link-n">Envíos a Ecuador</div><div class="epam-link-d">Quito, Guayaquil, Cuenca y más ciudades</div><div class="epam-link-arr">Ver página →</div></div>
+</a>
+<a href="https://envios.com.pe/envios-a-colombia/" class="epam-link-card" target="_blank" rel="noopener">
+<div class="epam-link-ic">🇨🇴</div>
+<div><div class="epam-link-n">Envíos a Colombia</div><div class="epam-link-d">Bogotá, Medellín, Cali y más ciudades</div><div class="epam-link-arr">Ver página →</div></div>
+</a>
+<a href="https://envios.com.pe/envios-a-bolivia/" class="epam-link-card" target="_blank" rel="noopener">
+<div class="epam-link-ic">🇧🇴</div>
+<div><div class="epam-link-n">Envíos a Bolivia</div><div class="epam-link-d">La Paz, Santa Cruz, Cochabamba y más</div><div class="epam-link-arr">Ver página →</div></div>
+</a>
+<a href="https://envios.com.pe/envios-a-estados-unidos/" class="epam-link-card" target="_blank" rel="noopener">
+<div class="epam-link-ic">🇺🇸</div>
+<div><div class="epam-link-n">Envíos a EE.UU.</div><div class="epam-link-d">Miami, Nueva York, Los Ángeles y más</div><div class="epam-link-arr">Ver página →</div></div>
+</a>
+<a href="https://envios.com.pe/envios-a-canada/" class="epam-link-card" target="_blank" rel="noopener">
+<div class="epam-link-ic">🇨🇦</div>
+<div><div class="epam-link-n">Envíos a Canadá</div><div class="epam-link-d">Toronto, Vancouver, Montreal y más</div><div class="epam-link-arr">Ver página →</div></div>
+</a>
+<a href="https://envios.com.pe/envios-mexico/" class="epam-link-card" target="_blank" rel="noopener">
+<div class="epam-link-ic">🇲🇽</div>
+<div><div class="epam-link-n">Envíos a México</div><div class="epam-link-d">CDMX, Guadalajara, Monterrey y más</div><div class="epam-link-arr">Ver página →</div></div>
+</a>
+<a href="https://envios.com.pe/envios-a-uruguay/" class="epam-link-card" target="_blank" rel="noopener">
+<div class="epam-link-ic">🇺🇾</div>
+<div><div class="epam-link-n">Envíos a Uruguay</div><div class="epam-link-d">Montevideo, Salto, Paysandú y más</div><div class="epam-link-arr">Ver página →</div></div>
+</a>
+<a href="https://envios.com.pe/envios-a-brasil/" class="epam-link-card" target="_blank" rel="noopener">
+<div class="epam-link-ic">🇧🇷</div>
+<div><div class="epam-link-n">Envíos a Brasil</div><div class="epam-link-d">São Paulo, Río de Janeiro, Brasilia y más</div><div class="epam-link-arr">Ver página →</div></div>
+</a>
+<a href="https://envios.com.pe/envios-a-paraguay/" class="epam-link-card" target="_blank" rel="noopener">
+<div class="epam-link-ic">🇵🇾</div>
+<div><div class="epam-link-n">Envíos a Paraguay</div><div class="epam-link-d">Asunción, Ciudad del Este y más</div><div class="epam-link-arr">Ver página →</div></div>
+</a>
+<a href="https://envios.com.pe/envios-a-america/" class="epam-link-card" target="_blank" rel="noopener">
+<div class="epam-link-ic">🌎</div>
+<div><div class="epam-link-n">Todos los destinos</div><div class="epam-link-d">Ver todos los países disponibles en América</div><div class="epam-link-arr">Ver todos →</div></div>
+</a>
+<a href="https://envios.com.pe/rastreo/" class="epam-link-card" target="_blank" rel="noopener">
+<div class="epam-link-ic">📡</div>
+<div><div class="epam-link-n">Rastrear mi envío</div><div class="epam-link-d">Ingresa tu código de seguimiento aquí</div><div class="epam-link-arr">Rastrear →</div></div>
+</a>
+</div>
+</div>
+</div>
+
+<!-- CONTACTO + FORMULARIO -->
+<div class="epam-sec" id="epam-cotizar">
+<div class="epam-w">
+<div class="epam-eyebrow"><span class="epam-eyebrow-bar"></span>Solicita tu cotización</div>
+<h2 class="epam-h2">Cotiza gratis tu envío<br>Perú → América</h2>
+<div class="epam-cform-g">
+<!-- INFO -->
+<div class="epam-cinfo">
+<h3>Contáctanos ahora</h3>
+<p class="epam-clead">Respondemos en menos de 10 minutos. WhatsApp, teléfono o formulario.</p>
+<ul class="epam-clist">
+<li><span class="epam-ci">📞</span><div><strong>Teléfono / WhatsApp</strong><a href="tel:+51916057367">+51 916 057 367</a></div></li>
+<li><span class="epam-ci">💬</span><div><strong>WhatsApp directo</strong><a href="https://wa.me/51916057367?text=Hola,%20quiero%20cotizar%20un%20envío%20a%20America" target="_blank" rel="noopener">Chatear ahora →</a></div></li>
+<li><span class="epam-ci">✉️</span><div><strong>Correo electrónico</strong><a href="mailto:info@envios.com.pe">info@envios.com.pe</a></div></li>
+<li><span class="epam-ci">🌐</span><div><strong>Sitio web</strong><a href="https://www.envios.com.pe" target="_blank" rel="noopener">www.envios.com.pe</a></div></li>
+<li><span class="epam-ci">📍</span><div><strong>Oficina Lima, Perú</strong><span>Jr. Huallaga 288 Int. 106, Cercado de Lima</span></div></li>
+<li><span class="epam-ci">🕐</span><div><strong>Horario de atención</strong><span>Lun–Vie 9:00am–6:00pm · Sáb 9:00am–1:00pm</span></div></li>
+</ul>
+<div class="epam-mapa">
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.8!2d-77.0282!3d-12.0534!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8b8e5a9ab8d%3A0x0!2sJr.+Huallaga+288%2C+Lima+Peru!5e0!3m2!1ses!2spe!4v1716000000003!5m2!1ses!2spe"
+allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+title="Oficina envios.com.pe — Jr. Huallaga 288 Int. 106, Lima, Perú">
+</iframe>
+</div>
+</div>
+<!-- FORM -->
+<div>
+<div class="epam-fcard">
+<h4>✈️ Cotización — Envío Perú a América</h4>
+<form id="epam-form" action="https://formsubmit.co/info@envios.com.pe" method="POST">
+<input type="hidden" name="_subject" value="Nueva cotización — Envío Perú a América">
+<input type="hidden" name="_captcha" value="false">
+<input type="hidden" name="_template" value="table">
+<input type="text" name="_honey" style="display:none" tabindex="-1">
+<div class="epam-frow">
+<div class="epam-fg"><label>Nombre completo *</label><input type="text" name="nombre" placeholder="Tu nombre completo" required></div>
+<div class="epam-fg"><label>Teléfono / WhatsApp *</label><input type="tel" name="telefono" placeholder="+51 999 999 999" required></div>
+</div>
+<div class="epam-fg"><label>Correo electrónico *</label><input type="email" name="email" placeholder="tu@correo.com" required></div>
+<div class="epam-frow">
+<div class="epam-fg"><label>Ciudad origen</label><input type="text" name="ciudad_origen" value="Lima, Perú"></div>
+<div class="epam-fg"><label>País y ciudad destino *</label><input type="text" name="destino" placeholder="Ej: Bogotá, Colombia" required></div>
+</div>
+<div class="epam-frow">
+<div class="epam-fg"><label>Tipo de envío</label>
+<select name="tipo_envio">
+<option value="">Selecciona...</option>
+<option>Documentos</option>
+<option>Paquetes / Encomiendas</option>
+<option>Compras / Shopping</option>
+<option>Ropa / Textiles</option>
+<option>Alimentos no perecibles</option>
+<option>Electrónicos</option>
+<option>Medicina</option>
+<option>Artesanía</option>
+<option>Otros</option>
+</select>
+</div>
+<div class="epam-fg"><label>Peso aprox. (kg)</label><input type="text" name="peso_kg" placeholder="Ej: 3 kg"></div>
+</div>
+<div class="epam-fg"><label>Dimensiones del paquete</label><input type="text" name="dimensiones" placeholder="Ej: 30×20×10 cm"></div>
+<div class="epam-fg"><label>Mensaje / Detalles</label><textarea name="mensaje" placeholder="Cuéntanos más: contenido, valor declarado, fecha estimada de envío..."></textarea></div>
+<button type="submit" class="epam-fsub" id="epam-sub"><span id="epam-btxt">✈️ Solicitar cotización gratuita</span></button>
+<p class="epam-fnota">📧 Respondemos a tu correo y WhatsApp en menos de 10 minutos</p>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- CTA FINAL -->
+<div class="epam-cta">
+<h2>¿Listo para enviar a América? 🌎</h2>
+<p>Cotiza gratis — respuesta inmediata. Entrega a domicilio en todo el continente.</p>
+<a href="tel:+51916057367" class="epam-cta-tel">📞 +51 916 057 367</a>
+<div class="epam-cta-btns">
+<a href="https://wa.me/51916057367?text=Hola,%20quiero%20cotizar%20un%20env%C3%ADo%20a%20America" class="epam-btn-w" target="_blank" rel="noopener">
+<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+WhatsApp
+</a>
+<a href="mailto:info@envios.com.pe" class="epam-btn-wb">✉️ info@envios.com.pe</a>
+<a href="https://envios.com.pe/envios-internacionales" class="epam-btn-wb" target="_blank" rel="noopener">🌐 Ver todos los destinos</a>
+</div>
+</div>
+
+<!--
+
+</div><!-- /epam -->
+
+<script>
+(function(){
+var f=document.getElementById('epam-form');
+var b=document.getElementById('epam-sub');
+var t=document.getElementById('epam-btxt');
+if(!f)return;
+f.addEventListener('submit',function(e){
+var req=f.querySelectorAll('[required]'),ok=true;
+req.forEach(function(i){
+if(!i.value.trim()){i.style.borderColor='#C8181E';i.style.boxShadow='0 0 0 3px rgba(200,24,30,.12)';ok=false;}
+else{i.style.borderColor='';i.style.boxShadow='';}
+});
+if(!ok){e.preventDefault();req[0].focus();return;}
+b.disabled=true;t.textContent='⏳ Enviando...';
+});
+f.querySelectorAll('input,select,textarea').forEach(function(i){
+i.addEventListener('input',function(){this.style.borderColor='';this.style.boxShadow='';});
+});
+})();
+</script>

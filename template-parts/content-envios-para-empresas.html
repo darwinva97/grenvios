@@ -1,0 +1,100 @@
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-info text-center">
+                <h4>{{emp_hero_subtitle}}</h4>
+                <h1>{{emp_hero_title}}</h1>
+                <nav class="breadcrumbs" aria-label="Breadcrumb">
+                    <ul class="breadcrumb-list">
+                        <li><a href="HOMEURL/">{{emp_hero_bc_inicio}}</a></li>
+                        <li><span aria-current="page">{{emp_hero_bc_current}}</span></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+    <!--page-header-->
+
+    <section class="srv-intro padding-top">
+        <div class="container">
+            <div class="srv-lead text-center">
+                <h2>{{emp_main_title}}</h2>
+                <p>{{emp_main_intro}}</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Qué resolvemos para una empresa -->
+    <section class="srv-section padding">
+        <div class="container">
+            <div class="srv-head text-center">
+                <h2>{{emp_soluciones_title}}</h2>
+                <p>{{emp_soluciones_intro}}</p>
+            </div>
+            <div class="row">
+                {{REP:emp_soluciones}}
+            </div>
+        </div>
+    </section>
+
+    <!-- Cuenta corporativa: dos paneles -->
+    <section class="srv-section bg-grey padding">
+        <div class="container">
+            <div class="srv-two-grid">
+                <div class="srv-panel">
+                    <h3 class="srv-panel-title">{{emp_cuenta_title}}</h3>
+                    <p>{{emp_cuenta_intro}}</p>
+                    <div class="service-features">
+                        <ul class="check-list">
+                            {{REP:emp_cuenta}}
+                        </ul>
+                    </div>
+                </div>
+                <div class="srv-panel">
+                    <h3 class="srv-panel-title">{{emp_sectores_title}}</h3>
+                    <p>{{emp_sectores_intro}}</p>
+                    <div class="service-details">
+                        <ul class="check-list">
+                            {{REP:emp_sectores}}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cómo funciona (pasos) -->
+    <section class="srv-trio padding">
+        <div class="container">
+            <div class="srv-head text-center">
+                <h2>{{emp_pasos_title}}</h2>
+                <p>{{emp_pasos_intro}}</p>
+            </div>
+            <div class="row">
+                {{REP:emp_pasos}}
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentación de exportación -->
+    <section class="srv-section bg-grey padding">
+        <div class="container">
+            <div class="srv-two-grid">
+                <div class="srv-panel">
+                    <h3 class="srv-panel-title">{{emp_docs_title}}</h3>
+                    <p>{{emp_docs_intro}}</p>
+                    <div class="service-details">
+                        <ul class="check-list">
+                            {{REP:emp_docs}}
+                        </ul>
+                    </div>
+                    <p>{{emp_docs_nota}}</p>
+                </div>
+                <div class="srv-panel">
+                    <h3 class="srv-panel-title">{{emp_volumen_title}}</h3>
+                    <p>{{emp_volumen_intro}}</p>
+                    <p>{{emp_volumen_texto}}</p>
+                    <a href="HOMEURL/cotizar/" class="default-btn">{{emp_volumen_btn}}</a>
+                </div>
+            </div>
+        </div>
+    </section>

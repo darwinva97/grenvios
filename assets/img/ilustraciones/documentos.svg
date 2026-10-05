@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" role="img" aria-labelledby="t">
+  <title id="t">Documentos listos para enviar al extranjero</title>
+  <defs>
+    <linearGradient id="fondo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8f5f1"/>
+      <stop offset="1" stop-color="#efe6e0"/>
+    </linearGradient>
+    <linearGradient id="vino" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7a2a35"/>
+      <stop offset="1" stop-color="#5e2129"/>
+    </linearGradient>
+    <filter id="sombra" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#5e2129" flood-opacity=".18"/>
+    </filter>
+  </defs>
+  <rect width="600" height="450" rx="28" fill="url(#fondo)"/>
+  <!-- rutas punteadas -->
+  <path d="M60 360 C 160 250, 260 330, 350 220 S 520 120, 560 70" fill="none" stroke="#d8465c" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round" opacity=".55"/>
+  <circle cx="60" cy="360" r="9" fill="#d8465c"/>
+  <!-- avión -->
+  <g transform="translate(520 64) rotate(-28)">
+    <path d="M-34 0 L34 -6 L40 0 L34 6 Z" fill="#5e2129"/>
+    <path d="M-2 -3 L-18 -28 L-8 -28 L14 -3 Z M-2 3 L-18 28 L-8 28 L14 3 Z" fill="#7a2a35"/>
+    <path d="M-30 -2 L-40 -14 L-34 -14 L-24 -2 Z M-30 2 L-40 14 L-34 14 L-24 2 Z" fill="#7a2a35"/>
+  </g>
+  <!-- sobre -->
+  <g filter="url(#sombra)" transform="translate(96 150) rotate(-7)">
+    <rect width="250" height="168" rx="14" fill="#fff"/>
+    <path d="M0 14 L125 100 L250 14" fill="none" stroke="#e6dcd6" stroke-width="4"/>
+    <rect x="178" y="112" width="52" height="36" rx="6" fill="#d8465c" opacity=".9"/>
+  </g>
+  <!-- documento con sello -->
+  <g filter="url(#sombra)" transform="translate(292 96) rotate(5)">
+    <rect width="212" height="272" rx="14" fill="#fff"/>
+    <rect x="26" y="34" width="120" height="12" rx="6" fill="#5e2129"/>
+    <rect x="26" y="66" width="160" height="8" rx="4" fill="#e6dcd6"/>
+    <rect x="26" y="86" width="150" height="8" rx="4" fill="#e6dcd6"/>
+    <rect x="26" y="106" width="160" height="8" rx="4" fill="#e6dcd6"/>
+    <rect x="26" y="126" width="110" height="8" rx="4" fill="#e6dcd6"/>
+    <rect x="26" y="160" width="160" height="8" rx="4" fill="#e6dcd6"/>
+    <rect x="26" y="180" width="130" height="8" rx="4" fill="#e6dcd6"/>
+    <!-- sello -->
+    <g transform="translate(150 222)">
+      <circle r="36" fill="url(#vino)"/>
+      <circle r="27" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="3 5"/>
+      <path d="M-12 1 L-3 10 L14 -9" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <path d="M26 236 C 46 220, 62 250, 86 232" fill="none" stroke="#5e2129" stroke-width="3" stroke-linecap="round"/>
+  </g>
+</svg>

@@ -1,0 +1,72 @@
+
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-info text-center">
+                <h4>{{dest_hero_eyebrow}}</h4>
+                <h1>{{dest_hero_title}}</h1>
+                <nav class="breadcrumbs" aria-label="Breadcrumb">
+                    <ul class="breadcrumb-list">
+                        <li><a href="HOMEURL/">{{dest_hero_bc_home}}</a></li>
+                        <li><span aria-current="page">{{dest_hero_bc_current}}</span></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+    <!--page-header-->
+
+    <section class="projects-section padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center sm-padding">
+                    <div class="section-heading">
+                        <p class="sub-heading">{{dest_intro_sub}}</p>
+                        <h2>{{dest_intro_title}}</h2>
+                        <p>{{dest_intro_text}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row gy-4 gr-dcards">
+                {{REP:dest_cards}}
+            </div>
+        </div>
+    </section>
+    <!--/.destinos-section-->
+
+    <section class="pricing-section padding-bottom">
+        <div class="map-pattern"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center sm-padding">
+                    <div class="section-heading">
+                        <p class="sub-heading">{{dest_otros_sub}}</p>
+                        <h2>{{dest_otros_title}}</h2>
+                        <p>{{dest_otros_text}}</p>
+                    </div>
+                </div>
+            </div>
+            <ul class="gr-otros" aria-label="{{dest_otros_th_pais}}">
+                {{REP:dest_otros}}
+            </ul>
+        </div>
+    </section>
+    <!--/.otros-destinos-section-->
+
+    <section class="cta-section padding-bottom">
+        <div class="container">
+            <div class="row cta-wrapper gx-0">
+                <div class="col-lg-8 mx-auto">
+                    <div class="section-heading white text-center">
+                        <h3 class="sub-heading is-border border-anim">{{dest_cta_sub}}<span class="sh-underline"><img class="sh-truck" src="ARKDINURI/assets/img/truck.svg" alt="truck"></span></h3>
+                        <h2>{{dest_cta_title}}</h2>
+                        <p>{{dest_cta_text}}</p>
+                        <div class="btn-wrapper">
+                            <a href="https://wa.me/{{contacto_wa}}" class="default-btn" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> {{dest_cta_wa}}</a>
+                            <a href="HOMEURL/cotizar/" class="default-btn">{{dest_cta_btn}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/.cta-section-->

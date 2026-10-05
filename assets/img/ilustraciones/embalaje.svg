@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" role="img" aria-labelledby="t">
+  <title id="t">Caja embalada y etiquetada para un envío internacional</title>
+  <defs>
+    <linearGradient id="fondo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8f5f1"/>
+      <stop offset="1" stop-color="#efe6e0"/>
+    </linearGradient>
+    <linearGradient id="carton" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d9b48c"/>
+      <stop offset="1" stop-color="#c49a6c"/>
+    </linearGradient>
+    <linearGradient id="lado" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#b48656"/>
+      <stop offset="1" stop-color="#a37548"/>
+    </linearGradient>
+    <filter id="sombra" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#5e2129" flood-opacity=".18"/>
+    </filter>
+  </defs>
+  <rect width="600" height="450" rx="28" fill="url(#fondo)"/>
+  <!-- globo de fondo -->
+  <g opacity=".5" fill="none" stroke="#d8465c" stroke-width="2">
+    <circle cx="460" cy="120" r="70"/>
+    <ellipse cx="460" cy="120" rx="30" ry="70"/>
+    <path d="M390 120 H530 M400 85 H520 M400 155 H520"/>
+  </g>
+  <!-- caja isométrica -->
+  <g filter="url(#sombra)">
+    <path d="M150 170 L300 110 L450 170 L300 230 Z" fill="#e3c39f"/>
+    <path d="M150 170 L300 230 L300 390 L150 330 Z" fill="url(#carton)"/>
+    <path d="M300 230 L450 170 L450 330 L300 390 Z" fill="url(#lado)"/>
+    <!-- cinta en H -->
+    <path d="M225 140 L375 200" stroke="#5e2129" stroke-width="16" opacity=".85"/>
+    <path d="M225 200 L225 360" stroke="#5e2129" stroke-width="14" opacity=".7" transform="translate(0 -30)"/>
+    <path d="M375 200 L375 360" stroke="#5e2129" stroke-width="14" opacity=".75" transform="translate(0 -30)"/>
+    <!-- etiqueta -->
+    <g transform="translate(168 250) skewY(22)">
+      <rect width="96" height="62" rx="6" fill="#fff"/>
+      <rect x="10" y="10" width="54" height="8" rx="4" fill="#5e2129"/>
+      <rect x="10" y="26" width="76" height="6" rx="3" fill="#e6dcd6"/>
+      <rect x="10" y="38" width="64" height="6" rx="3" fill="#e6dcd6"/>
+      <rect x="10" y="50" width="40" height="5" rx="2.5" fill="#d8465c"/>
+    </g>
+    <!-- flecha frágil -->
+    <g transform="translate(372 262) skewY(-22)" fill="#fff" opacity=".9">
+      <path d="M0 22 L14 0 L28 22 H19 V42 H9 V22 Z"/>
+    </g>
+  </g>
+  <!-- cinta métrica -->
+  <path d="M120 400 H330" stroke="#d8465c" stroke-width="10" stroke-linecap="round"/>
+  <g stroke="#fff" stroke-width="2">
+    <path d="M140 396 V404 M165 396 V404 M190 396 V404 M215 396 V404 M240 396 V404 M265 396 V404 M290 396 V404 M315 396 V404"/>
+  </g>
+</svg>

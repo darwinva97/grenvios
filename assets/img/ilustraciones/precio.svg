@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" role="img" aria-labelledby="t">
+  <title id="t">Caja sobre una balanza con cinta métrica: peso y medidas deciden el precio</title>
+  <defs>
+    <linearGradient id="fondo" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8f5f1"/>
+      <stop offset="1" stop-color="#efe6e0"/>
+    </linearGradient>
+    <linearGradient id="carton" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d9b48c"/>
+      <stop offset="1" stop-color="#c49a6c"/>
+    </linearGradient>
+    <linearGradient id="lado" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#b48656"/>
+      <stop offset="1" stop-color="#a37548"/>
+    </linearGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f4f1ef"/>
+      <stop offset="1" stop-color="#cfc6c2"/>
+    </linearGradient>
+    <filter id="sombra" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#5e2129" flood-opacity=".18"/>
+    </filter>
+  </defs>
+  <rect width="600" height="400" rx="28" fill="url(#fondo)"/>
+  <!-- ruta punteada de fondo -->
+  <path d="M40 70 C140 20 220 110 320 60 S500 40 560 90" fill="none" stroke="#d8465c" stroke-width="2" stroke-dasharray="6 9" opacity=".45"/>
+  <circle cx="560" cy="90" r="6" fill="#d8465c" opacity=".7"/>
+  <g id="dibujo" transform="translate(40 -18) scale(.94)">
+  <!-- balanza -->
+  <g filter="url(#sombra)">
+    <!-- columna y pantalla -->
+    <rect x="508" y="170" width="18" height="170" rx="6" fill="#bfb4af"/>
+    <rect x="470" y="120" width="96" height="66" rx="12" fill="#3a2a2d"/>
+    <rect x="482" y="132" width="72" height="30" rx="5" fill="#b9d6c4"/>
+    <rect x="490" y="141" width="34" height="12" rx="3" fill="#2f4a3b" opacity=".75"/>
+    <rect x="530" y="141" width="16" height="12" rx="3" fill="#2f4a3b" opacity=".45"/>
+    <circle cx="492" cy="174" r="4" fill="#d8465c"/>
+    <circle cx="506" cy="174" r="4" fill="#fff" opacity=".6"/>
+    <!-- base y plato -->
+    <path d="M230 318 H540 L560 350 H210 Z" fill="#9d918c"/>
+    <rect x="210" y="350" width="350" height="16" rx="6" fill="#857874"/>
+    <path d="M250 300 H520 L534 318 H236 Z" fill="url(#metal)"/>
+  </g>
+  <!-- caja sobre la balanza -->
+  <g filter="url(#sombra)">
+    <path d="M280 150 L330 118 L470 118 L420 150 Z" fill="#e3c39f"/>
+    <rect x="280" y="150" width="140" height="150" fill="url(#carton)"/>
+    <path d="M420 150 L470 118 L470 268 L420 300 Z" fill="url(#lado)"/>
+    <!-- cinta de embalaje -->
+    <path d="M350 150 V300" stroke="#5e2129" stroke-width="14" opacity=".75"/>
+    <path d="M305 134 L445 134" stroke="#5e2129" stroke-width="12" opacity=".8" transform="translate(0 0)"/>
+    <!-- etiqueta -->
+    <rect x="292" y="232" width="48" height="40" rx="5" fill="#fff"/>
+    <rect x="299" y="240" width="28" height="6" rx="3" fill="#5e2129"/>
+    <rect x="299" y="252" width="34" height="4" rx="2" fill="#e6dcd6"/>
+    <rect x="299" y="261" width="22" height="4" rx="2" fill="#d8465c"/>
+  </g>
+  <!-- cinta métrica sobre la caja -->
+  <g>
+    <path d="M262 104 H440" stroke="#f2c94c" stroke-width="12" stroke-linecap="round"/>
+    <g stroke="#5e2129" stroke-width="2" opacity=".7">
+      <path d="M280 99 V106 M300 99 V104 M320 99 V106 M340 99 V104 M360 99 V106 M380 99 V104 M400 99 V106 M420 99 V104"/>
+    </g>
+    <rect x="228" y="84" width="44" height="40" rx="10" fill="#5e2129"/>
+    <circle cx="250" cy="104" r="9" fill="#7a2a35"/>
+    <path d="M280 150 V300" stroke="#fff" stroke-width="2" stroke-dasharray="4 6" opacity=".6" transform="translate(-14 0)"/>
+    <path d="M262 150 L272 150 M262 300 L272 300" stroke="#fff" stroke-width="2" opacity=".6"/>
+  </g>
+  </g>
+</svg>

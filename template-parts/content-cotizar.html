@@ -1,0 +1,185 @@
+
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-info text-center">
+                <h4>{{cot_hero_subtitle}}</h4>
+                <h1>{{cot_hero_title}}</h1>
+                <nav class="breadcrumbs" aria-label="Breadcrumb">
+                    <ul class="breadcrumb-list">
+                        <li><a href="HOMEURL/">{{cot_hero_breadcrumb_home}}</a></li>
+                        <li><span aria-current="page">{{cot_hero_breadcrumb_current}}</span></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+    <!--page-header-->
+
+    <section class="quote-section padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center sm-padding">
+                    <div class="section-heading">
+                        <h3 class="sub-heading">{{cot_form_heading}}</h3>
+                        <p>{{cot_form_intro}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row align-items-start">
+                <div class="col-lg-7 sm-padding">
+                    <div class="quote-form-wrap">
+                        <form id="ajax_quote_form" action="ARKDINURI/php/quote-form.php" method="post" class="quote-form">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-field">
+                                        <label for="q-name">{{cot_form_label_name}}</label>
+                                        <input type="text" id="q-name" name="name" class="form-control" placeholder="{{cot_form_ph_name}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-field">
+                                        <label for="q-phone">{{cot_form_label_phone}}</label>
+                                        <input type="tel" id="q-phone" name="phone" class="form-control" placeholder="{{cot_form_ph_phone}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-field">
+                                        <label for="q-email">{{cot_form_label_email}}</label>
+                                        <input type="email" id="q-email" name="email" class="form-control" placeholder="{{cot_form_ph_email}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-field">
+                                        <label for="q-origin">{{cot_form_label_origin}}</label>
+                                        <input type="text" id="q-origin" name="origin" class="form-control" value="{{cot_form_origin_value}}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-field">
+                                        <label for="q-country">{{cot_form_label_country}}</label>
+                                        <select id="q-country" name="country" class="form-control" required>
+                                            <option value="">{{cot_form_country_placeholder}}</option>
+                                            {{REP:cot_countries}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-field">
+                                        <label for="q-type">{{cot_form_label_type}}</label>
+                                        <select id="q-type" name="shipment_type" class="form-control" required>
+                                            <option value="">{{cot_form_type_placeholder}}</option>
+                                            {{REP:cot_types}}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-field">
+                                        <label for="q-city">{{cot_form_label_city}}</label>
+                                        <input type="text" id="q-city" name="city" class="form-control" placeholder="{{cot_form_ph_city}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-field">
+                                        <label for="q-postal">{{cot_form_label_postal}}</label>
+                                        <input type="text" id="q-postal" name="postal_code" class="form-control" placeholder="{{cot_form_ph_postal}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-field">
+                                        <label for="q-weight">{{cot_form_label_weight}}</label>
+                                        <input type="number" id="q-weight" name="weight" class="form-control" placeholder="{{cot_form_ph_weight}}" min="0" step="0.1" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-field">
+                                        <label for="q-value">{{cot_form_label_value}}</label>
+                                        <input type="text" id="q-value" name="declared_value" class="form-control" placeholder="{{cot_form_ph_value}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-field">
+                                        <label>{{cot_form_label_measures}}</label>
+                                        <div class="row">
+                                            <div class="col-4"><input type="number" id="q-height" name="height" class="form-control" placeholder="{{cot_form_ph_height}}" min="0" step="0.1"></div>
+                                            <div class="col-4"><input type="number" id="q-length" name="length" class="form-control" placeholder="{{cot_form_ph_length}}" min="0" step="0.1"></div>
+                                            <div class="col-4"><input type="number" id="q-width" name="width" class="form-control" placeholder="{{cot_form_ph_width}}" min="0" step="0.1"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-field">
+                                        <label for="q-message">{{cot_form_label_message}}</label>
+                                        <textarea id="q-message" name="message" class="form-control" rows="4" placeholder="{{cot_form_ph_message}}"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="submit" class="default-btn">{{cot_form_submit}}</button>
+                                </div>
+                            </div>
+                            <div id="q-form-messages" class="form-messages"></div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-5 sm-padding">
+                    <div class="quote-aside">
+                        <div class="service-details">
+                            <h2>{{cot_aside_title}}</h2>
+                            <p>{{cot_aside_p1}}</p>
+                            <div class="volumetric-formula">
+                                <p><strong>{{cot_aside_formula}}</strong></p>
+                            </div>
+                            <ul class="check-list">
+                                <li><i class="fa-solid fa-thumbs-up"></i>{{cot_aside_check_1}}</li>
+                                <li><i class="fa-solid fa-thumbs-up"></i>{{cot_aside_check_2}}</li>
+                                <li><i class="fa-solid fa-thumbs-up"></i>{{cot_aside_check_3}}</li>
+                                <li><i class="fa-solid fa-thumbs-up"></i>{{cot_aside_check_4}}</li>
+                            </ul>
+                            <p>{{cot_aside_services}}</p>
+                        </div>
+                        <div class="call-info">
+                            <div class="call-icon">
+                                <i class="logis logis-telephone"></i>
+                            </div>
+                            <div class="call-text">
+                                <span>{{cot_call_label}}</span>
+                                <h3><a href="tel:{{contacto_tel}}">{{cot_call_phone}}</a></h3>
+                                <a href="https://wa.me/{{contacto_wa}}" class="default-btn" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> {{cot_shared_whatsapp_btn}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/.quote-section-->
+
+    <section class="blog-section bg-grey padding">
+        <div class="container">
+            <div class="section-heading text-center mb-40">
+                <h3 class="sub-heading is-border">{{cot_steps_subheading}}<span class="sh-underline"><img class="sh-truck" src="ARKDINURI/assets/img/truck.svg" alt="camión"></span></h3>
+                <h2>{{cot_steps_title}}</h2>
+            </div>
+            <div class="grenvios-info-grid">
+                {{REP:cot_steps}}
+            </div>
+        </div>
+    </section>
+    <!--/.proceso-cotizar-->
+
+    <section class="cta-section padding-bottom">
+        <div class="container">
+            <div class="row cta-wrapper gx-0">
+                <div class="col-lg-8 mx-auto">
+                    <div class="section-heading white text-center">
+                        <h3 class="sub-heading is-border border-anim">{{cot_cta_subheading}}<span class="sh-underline"><img class="sh-truck" src="ARKDINURI/assets/img/truck.svg" alt="truck"></span></h3>
+                        <h2>{{cot_cta_title}}</h2>
+                        <p>{{cot_cta_text}}</p>
+                        <div class="btn-wrapper">
+                            <a href="https://wa.me/{{contacto_wa}}" class="default-btn" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> {{cot_shared_whatsapp_btn}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/.cta-section-->

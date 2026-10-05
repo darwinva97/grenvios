@@ -1,0 +1,82 @@
+
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-info text-center">
+                <h4>{{serv_hero_eyebrow}}</h4>
+                <h1>{{serv_hero_title}}</h1>
+                <nav class="breadcrumbs" aria-label="Breadcrumb">
+                    <ul class="breadcrumb-list">
+                        <li><a href="HOMEURL/">{{serv_hero_breadcrumb_home}}</a></li>
+                        <li><span aria-current="page">{{serv_hero_breadcrumb_current}}</span></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+    <!--page-header-->
+
+    <section class="service-section bg-grey padding">
+        <div class="map-pattern"></div>
+        <div class="container">
+            <div class="section-heading text-center mb-40">
+                <h3 class="sub-heading is-border border-anim">{{serv_services_eyebrow}}<span class="sh-underline"><img class="sh-truck" src="ARKDINURI/assets/img/truck.svg" alt="truck"></span></h3>
+                <h2 class="text-anim" data-effect="fade-in-right" data-split="char" data-delay="0.3" data-duration="1">{{serv_services_title}}</h2>
+                <p class="text-anim" data-effect="fade-in-bottom" data-ease="power4.out">{{serv_services_subtitle}}</p>
+            </div>
+            <div class="row gy-lg-0 gy-4">
+                {{REP:serv_cards}}
+            </div>
+        </div>
+    </section>
+    <!--/.service-section-->
+
+    <section class="quote-section padding">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="section-heading mb-40">
+                        <h3 class="sub-heading is-border border-anim">{{serv_destinos_eyebrow}}<span class="sh-underline"><img class="sh-truck" src="ARKDINURI/assets/img/truck.svg" alt="truck"></span></h3>
+                        <h2 class="text-anim" data-effect="fade-in-right" data-split="char" data-delay="0.3" data-duration="1">{{serv_destinos_title}}</h2>
+                        <p class="text-anim" data-effect="fade-in-bottom" data-ease="power4.out">{{serv_destinos_subtitle}}</p>
+                    </div>
+                    <ul class="check-list mb-30 wow fade-in-bottom" data-wow-delay="100ms">
+                        <li><i class="fa-solid fa-check"></i>{{serv_destinos_item1}}</li>
+                        <li><i class="fa-solid fa-check"></i>{{serv_destinos_item2}}</li>
+                        <li><i class="fa-solid fa-check"></i>{{serv_destinos_item3}}</li>
+                    </ul>
+                    <div class="btn-group wow fade-in-bottom" data-wow-delay="200ms">
+                        <a href="HOMEURL/destinos/" class="default-btn">{{serv_destinos_btn}}</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 position-relative">
+                    <div class="about-img-wrap wow fade-in-bottom" data-wow-delay="100ms">
+                        <img src="{{serv_img_5}}" alt="Destinos de envío internacional Grenvíos">
+                        <img src="{{serv_img_6}}" alt="Carga internacional">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/.quote-section-->
+
+    <section class="cta-section padding-bottom">
+        <div class="container">
+            <div class="row cta-wrapper gx-0">
+                <div class="col-lg-6">
+                    <div class="section-heading white">
+                        <h3 class="sub-heading is-border border-anim">{{serv_cta_eyebrow}}<span class="sh-underline"><img class="sh-truck" src="ARKDINURI/assets/img/truck.svg" alt="truck"></span></h3>
+                        <h2 class="text-anim" data-effect="fade-in-right" data-split="char" data-delay="0.3" data-duration="1">{{serv_cta_title}}</h2>
+                        <div class="btn-group">
+                            <a href="HOMEURL/cotizar/" class="default-btn wow fade-in-bottom" data-wow-delay="200ms">{{serv_cta_btn_primary}}</a>
+                            <a href="https://wa.me/{{contacto_wa}}" class="default-btn wow fade-in-bottom" data-wow-delay="300ms"><i class="fa-brands fa-whatsapp"></i> {{serv_cta_btn_whatsapp}}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="cta-men wow fade-in-bottom" data-wow-delay="200ms" style="background-image:url({{serv_cta_men}})"></div>
+            </div>
+            <div class="row promo-item-wrapper gx-0">
+                {{REP:serv_promos}}
+            </div>
+        </div>
+    </section>
+    <!--/.cta-section-->

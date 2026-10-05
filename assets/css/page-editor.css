@@ -1,0 +1,254 @@
+/* ═══════════════════════════════════════════════
+   Grenvíos — Editor de Página (Sidebar + Acordeones)
+   Paleta: vino #5e2129 · negro #0c0c0c · blanco
+═══════════════════════════════════════════════ */
+
+/* ── FAB: botón fijo ── */
+#nep-fab {
+  position: fixed; bottom: 150px; right: 0;
+  background: #5e2129; color: #fff; border: none;
+  border-radius: 8px 0 0 8px;
+  padding: 12px 10px 12px 14px;
+  display: flex; align-items: center; gap: 7px;
+  font-size: .78rem; font-weight: 700; letter-spacing: .04em;
+  cursor: pointer; box-shadow: -3px 3px 16px rgba(12,12,12,.32);
+  z-index: 99990; transition: background .2s, padding .2s;
+}
+#nep-fab:hover  { background: #481920; padding-left: 18px; }
+#nep-fab.active { background: #481920; }
+#nep-fab i { font-size: .88rem; }
+
+/* ── Panel: sidebar derecha ── */
+#nep-panel {
+  position: fixed; top: 0; right: 0;
+  width: 380px; height: 100vh; max-width: 100vw;
+  background: #fff; border-left: 3px solid #5e2129;
+  box-shadow: -6px 0 40px rgba(12,12,12,.18);
+  z-index: 99991; display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform .3s cubic-bezier(.4,0,.2,1);
+  overflow: hidden;
+}
+#nep-panel.open { transform: translateX(0); }
+.admin-bar #nep-panel { top: 32px; height: calc(100vh - 32px); }
+@media screen and (max-width: 782px) {
+  .admin-bar #nep-panel { top: 46px; height: calc(100vh - 46px); }
+}
+
+/* ── Header ── */
+#nep-header {
+  display: flex; align-items: center; justify-content: space-between;
+  background: #0c0c0c; padding: 0 14px; min-height: 52px; flex-shrink: 0;
+}
+#nep-title {
+  color: #d98a93; font-size: .78rem; font-weight: 800;
+  letter-spacing: .05em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 7px;
+}
+#nep-header-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+#nep-status { font-size: .68rem; font-weight: 700; white-space: nowrap; }
+#nep-status.success { color: #4ade80; }
+#nep-status.error   { color: #f87171; }
+#nep-status.saving  { color: rgba(255,255,255,.45); }
+#nep-save {
+  background: #5e2129; color: #fff; border: none;
+  padding: 6px 12px; border-radius: 5px;
+  font-weight: 800; font-size: .72rem; cursor: pointer; white-space: nowrap;
+  transition: background .15s;
+}
+#nep-save:hover    { background: #481920; }
+#nep-save:disabled { opacity: .55; cursor: not-allowed; }
+#nep-save i        { margin-right: 3px; }
+#nep-close {
+  background: none; border: none; color: rgba(255,255,255,.5);
+  font-size: 1.3rem; cursor: pointer; line-height: 1; padding: 2px 4px;
+  transition: color .15s;
+}
+#nep-close:hover { color: #fff; }
+
+/* ── Body ── */
+#nep-body { flex: 1; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: #e7d6d8 transparent; }
+/* Con el editor abierto, la PÁGINA no se desplaza: solo el sidebar tiene scroll. */
+html.nep-lock, html.nep-lock body { overflow: hidden !important; }
+#nep-body::-webkit-scrollbar { width: 4px; }
+#nep-body::-webkit-scrollbar-thumb { background: #e7d6d8; border-radius: 3px; }
+
+/* ── Acordeones ── */
+.nep-accordion { border-bottom: 1px solid #eef0f5; }
+.nep-acc-header {
+  width: 100%; background: #faf6f6; border: none; padding: 13px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer; font-size: .75rem; font-weight: 700; color: #5e2129;
+  text-transform: uppercase; letter-spacing: .05em; text-align: left; gap: 8px;
+  transition: background .15s, color .15s;
+}
+.nep-acc-header:hover { background: #f3e9ea; }
+.nep-acc-header.open  { background: #0c0c0c; color: #d98a93; }
+.nep-acc-header i { font-size: .65rem; flex-shrink: 0; transition: transform .25s ease; opacity: .65; }
+.nep-acc-header.open i { transform: rotate(180deg); opacity: 1; }
+.nep-acc-body { display: none; padding: 14px 16px 18px; }
+.nep-acc-body.open { display: block; }
+
+/* ── Campos ── */
+.nep-grid { display: flex; flex-direction: column; gap: 13px; }
+.nep-field label {
+  display: block; font-size: .68rem; font-weight: 800; color: #5e2129;
+  text-transform: uppercase; letter-spacing: .06em; margin-bottom: 3px;
+}
+.nep-hint { display: block; font-size: .63rem; color: #8a96a8; margin-top: 1px; margin-bottom: 5px; }
+.nep-field input[type=text],
+.nep-field textarea {
+  width: 100%; border: 1.5px solid #e0d4d6; border-radius: 6px; padding: 8px 10px;
+  font-size: .82rem; font-family: inherit; color: #1a1a2e; box-sizing: border-box;
+  resize: vertical; background: #fafbfd; transition: border-color .15s, box-shadow .15s;
+}
+.nep-field input[type=text]:focus,
+.nep-field textarea:focus {
+  outline: none; border-color: #5e2129; box-shadow: 0 0 0 3px rgba(94,33,41,.12); background: #fff;
+}
+.nep-field textarea { min-height: 65px; }
+
+/* ── Campo de imagen ── */
+.nep-img-wrap { display: flex; flex-direction: column; gap: 7px; }
+.nep-img-preview {
+  width: 100%; height: 80px; background: #f0f2f6 center/cover no-repeat;
+  border: 1.5px dashed #c8cedb; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center; color: #b0b8c8; font-size: 1.5rem;
+}
+.nep-img-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.nep-img-pick {
+  background: #5e2129; color: #fff; border: none; padding: 6px 12px; border-radius: 5px;
+  font-size: .72rem; font-weight: 600; cursor: pointer;
+}
+.nep-img-pick:hover { background: #481920; }
+.nep-img-remove {
+  background: #fee2e2; color: #dc2626; border: none; padding: 6px 10px; border-radius: 5px;
+  font-size: .72rem; font-weight: 600; cursor: pointer;
+}
+.nep-img-remove:hover { background: #fecaca; }
+
+/* ── Anclas de sección: el scroll deja la sección visible bajo la cabecera fija ── */
+[id^="ged-"] { scroll-margin-top: 120px; }
+
+/* ── Resaltado de la sección en la página ── */
+.nep-section-hl {
+  outline: 2px solid #5e2129 !important; outline-offset: 3px;
+  position: relative !important; scroll-margin-top: 80px;
+}
+.nep-section-hl::after {
+  content: attr(data-nep-label);
+  position: absolute; top: 0; right: 0;
+  background: #5e2129; color: #fff; font-size: 9px; font-weight: 800;
+  letter-spacing: .07em; text-transform: uppercase; padding: 3px 10px;
+  border-radius: 0 0 0 6px; z-index: 9999; pointer-events: none;
+}
+
+/* ── Repeaters (ítems dinámicos: añadir/quitar/reordenar) ── */
+/* Bloque de lista dentro del acordeón de su sección (texto+imagen+lista juntos) */
+.nep-rep { margin-top: 16px; padding-top: 14px; border-top: 1px dashed #e0d4d6; }
+.nep-rep-head {
+  font-size: .7rem; font-weight: 800; color: #5e2129; text-transform: uppercase;
+  letter-spacing: .05em; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+}
+.nep-rep-head i { opacity: .7; }
+.nep-rep-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
+.nep-rep-item { border: 1.5px solid #ead9db; border-radius: 8px; background: #fffdfd; overflow: hidden; }
+.nep-rep-item-head {
+  display: flex; align-items: center; justify-content: space-between;
+  background: #f3e9ea; padding: 7px 10px; border-bottom: 1px solid #ead9db;
+}
+.nep-rep-item-title {
+  font-size: .68rem; font-weight: 800; color: #5e2129;
+  text-transform: uppercase; letter-spacing: .05em;
+}
+.nep-rep-item-tools { display: flex; gap: 4px; }
+.nep-rep-item-tools button {
+  background: #fff; border: 1px solid #e0d4d6; color: #5e2129;
+  width: 26px; height: 26px; border-radius: 5px; cursor: pointer;
+  font-size: .68rem; display: flex; align-items: center; justify-content: center;
+  transition: background .15s, color .15s;
+}
+.nep-rep-item-tools button:hover { background: #5e2129; color: #fff; border-color: #5e2129; }
+.nep-rep-item-tools .nep-rep-remove:hover { background: #dc2626; border-color: #dc2626; }
+.nep-rep-item .nep-grid { padding: 12px; }
+.nep-rep-add {
+  width: 100%; background: #0c0c0c; color: #fff; border: none;
+  padding: 9px 12px; border-radius: 6px; font-size: .74rem; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
+  transition: background .15s;
+}
+.nep-rep-add:hover { background: #5e2129; }
+
+/* ── Móvil ── */
+@media (max-width: 600px) {
+  #nep-panel { width: 100vw; }
+  #nep-fab   { bottom: 120px; }
+  #nep-fab span { display: none; }
+}
+
+/* ═══════════════════════════════════════════════
+   Ajustes globales del sitio (colores, redes, header, footer)
+═══════════════════════════════════════════════ */
+.nep-global-note {
+  margin: 18px 0 8px; padding: 9px 12px;
+  background: #f6efe0; color: #5e2129;
+  border-radius: 6px; font-size: .74rem; font-weight: 700;
+  display: flex; align-items: center; gap: 7px;
+}
+.nep-accordion--global .nep-acc-header { background: #faf6ef; }
+.nep-color {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 40px; padding: 2px;
+  border: 1px solid #ddd; border-radius: 6px; cursor: pointer; background: #fff;
+}
+.nep-color::-webkit-color-swatch-wrapper { padding: 0; }
+.nep-color::-webkit-color-swatch { border: none; border-radius: 4px; }
+
+/* ═══════════════════════════════════════════════
+   Modal de confirmación (eliminar) — paleta Grenvíos
+═══════════════════════════════════════════════ */
+.nep-confirm-overlay {
+  position: fixed; inset: 0; z-index: 100000;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  background: rgba(12,12,12,.55);
+  opacity: 0; visibility: hidden;
+  transition: opacity .2s ease, visibility .2s ease;
+}
+.nep-confirm-overlay.show { opacity: 1; visibility: visible; }
+.nep-confirm {
+  background: #fff; width: 100%; max-width: 360px;
+  border-radius: 14px; padding: 26px 24px 22px;
+  text-align: center;
+  border-top: 4px solid #5e2129;
+  box-shadow: 0 24px 60px rgba(12,12,12,.35);
+  transform: translateY(14px) scale(.96);
+  transition: transform .22s cubic-bezier(.4,0,.2,1);
+}
+.nep-confirm-overlay.show .nep-confirm { transform: translateY(0) scale(1); }
+.nep-confirm-icon {
+  width: 56px; height: 56px; margin: 0 auto 14px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: rgba(94,33,41,.10); color: #5e2129;
+  font-size: 22px;
+}
+.nep-confirm-title {
+  margin: 0 0 6px; font-size: 1.12rem; font-weight: 800; color: #0c0c0c; line-height: 1.25;
+}
+.nep-confirm-msg {
+  margin: 0 0 20px; font-size: .92rem; line-height: 1.5; color: #555;
+}
+.nep-confirm-actions { display: flex; gap: 10px; justify-content: center; }
+.nep-confirm-actions button {
+  flex: 1 1 0; border: none; cursor: pointer;
+  padding: 11px 14px; border-radius: 8px;
+  font-size: .9rem; font-weight: 700;
+  transition: background .18s, color .18s, box-shadow .18s;
+}
+.nep-confirm-cancel { background: #efecec; color: #0c0c0c; }
+.nep-confirm-cancel:hover { background: #e2dede; }
+.nep-confirm-ok { background: #5e2129; color: #fff; }
+.nep-confirm-ok:hover { background: #481920; }
+.nep-confirm-ok:focus-visible,
+.nep-confirm-cancel:focus-visible { outline: 2px solid #5e2129; outline-offset: 2px; }

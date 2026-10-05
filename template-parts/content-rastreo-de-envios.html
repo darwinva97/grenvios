@@ -1,0 +1,80 @@
+
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-info text-center">
+                <h4>{{rast_hero_subtitle}}</h4>
+                <h1>{{rast_hero_title}}</h1>
+                <nav class="breadcrumbs" aria-label="Breadcrumb">
+                    <ul class="breadcrumb-list">
+                        <li><a href="HOMEURL/">{{rast_hero_breadcrumb_home}}</a></li>
+                        <li><span aria-current="page">{{rast_hero_breadcrumb_current}}</span></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+    <!--/.page-header-->
+
+    <section class="blog-section padding">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="grenvios-tracking text-center">
+                        <h2>{{rast_form_title}}</h2>
+                        <p>{{rast_form_text}}</p>
+                        <form class="track-form" action="https://wa.me/{{contacto_wa}}" method="get">
+                            <input type="text" name="guia" placeholder="{{rast_form_placeholder}}" required>
+                            <button type="submit" class="default-btn"><i class="fa-solid fa-magnifying-glass"></i> {{rast_form_button}}</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/.tracking-section-->
+
+    <section class="blog-section padding-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="service-details text-center mb-40">
+                        <h2>{{rast_info_title}}</h2>
+                        <p>{{rast_info_text}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="grenvios-info-grid">
+                {{REP:rast_info_cards}}
+            </div>
+        </div>
+    </section>
+    <!--/.tracking-info-->
+
+    <section class="process-section padding">
+        <div class="container">
+            <div class="section-heading text-center mb-40">
+                <h3 class="sub-heading is-border border-anim">{{rast_estados_subtitle}}<span class="sh-underline"><img class="sh-truck" src="ARKDINURI/assets/img/truck.svg" alt="camión"></span></h3>
+                <h2 class="text-anim" data-effect="fade-in-right" data-split="char" data-delay="0.3" data-duration="1">{{rast_estados_title}}</h2>
+                <p class="text-anim" data-effect="fade-in-bottom" data-ease="power4.out">{{rast_estados_text}}</p>
+            </div>
+            <div class="row gy-4">
+                {{REP:rast_estados}}
+            </div>
+        </div>
+    </section>
+    <!--/.process-section-->
+
+    <section class="cta-section padding">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="grenvios-tracking text-center">
+                        <h2>{{rast_cta_title}}</h2>
+                        <p>{{rast_cta_text}}</p>
+                        <a href="https://wa.me/{{contacto_wa}}" class="default-btn" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> {{rast_cta_button}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/.cta-section-->

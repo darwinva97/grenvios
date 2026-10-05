@@ -1,0 +1,172 @@
+/* ════════════════════════════════════════════════════════════════
+   Grenvíos · Estilo v2 (maquetas del cliente, 2026-09-28)
+   Solo con body.gr-v2 (inc/estilo-v2.php). Cada página puede volver al
+   diseño clásico desde el panel. Skill: .claude/skills/grenvios-v2
+   ════════════════════════════════════════════════════════════════ */
+
+body.gr-v2 {
+    --v2-rosa: #f7eaec;          /* círculos y cuadrados de icono */
+    --v2-rosa-2: #fbf3f4;        /* tarjetas destacadas */
+    --v2-borde: #efe7e8;         /* borde de tarjetas */
+    --v2-borde-h: #e3c9cd;       /* borde al pasar el ratón */
+    --v2-num: #d9a9b1;           /* números 01–04 */
+    --v2-fondo: linear-gradient(135deg, #faf6f4 0%, #f7eeee 100%);
+    --v2-vino: linear-gradient(135deg, var(--primary-color, #5e2129), #7a2a35);
+    --v2-sombra: 0 10px 30px rgba(94, 33, 41, .05);
+    --v2-sombra-h: 0 22px 46px rgba(94, 33, 41, .12);
+}
+
+/* ── 1. Cabeceras de sección: antetítulo con raya + título grande ── */
+body.gr-v2 .srv-head .sub-heading,
+body.gr-v2 .gr-bq-head .sub-heading,
+body.gr-v2 .gr-pseo .section-heading .sub-heading,
+body.gr-v2 .gr-bep .section-heading .sub-heading {
+    display: flex; align-items: center; gap: 14px;
+    font-size: 13px; font-weight: 700; line-height: 1.2; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--primary-color, #5e2129); margin: 0 0 14px;
+}
+body.gr-v2 .srv-head .sub-heading::before,
+body.gr-v2 .gr-bq-head .sub-heading::before,
+body.gr-v2 .gr-pseo .section-heading .sub-heading::before,
+body.gr-v2 .gr-bep .section-heading .sub-heading::before {
+    content: ""; flex: 0 0 36px; height: 2px; border-radius: 2px; background: currentColor; opacity: .8;
+}
+/* Centradas: raya a los dos lados («— Envíos a Ecuador —»). */
+body.gr-v2 .srv-head.text-center .sub-heading,
+body.gr-v2 .gr-bq-head.text-center .sub-heading,
+body.gr-v2 .gr-pseo .section-heading.text-center .sub-heading { justify-content: center; }
+body.gr-v2 .srv-head.text-center .sub-heading::after,
+body.gr-v2 .gr-bq-head.text-center .sub-heading::after,
+body.gr-v2 .gr-pseo .section-heading.text-center .sub-heading::after {
+    content: ""; flex: 0 0 36px; height: 2px; border-radius: 2px; background: currentColor; opacity: .8;
+}
+body.gr-v2 .srv-head h2,
+body.gr-v2 .gr-bq-head h2,
+body.gr-v2 .gr-pseo .section-heading h2 {
+    font-size: clamp(28px, 3.1vw, 42px); font-weight: 700; line-height: 1.14; letter-spacing: -.03em;
+}
+body.gr-v2 .srv-head p:not(.sub-heading),
+body.gr-v2 .gr-bq-sub { font-size: 16.5px; line-height: 1.75; }
+
+/* ── 2. Fondos alternos: rosado suave en vez de gris ── */
+body.gr-v2 section.bg-grey.srv-section,
+body.gr-v2 section.bg-grey.gr-bq,
+body.gr-v2 section.bg-grey.gr-pseo,
+body.gr-v2 section.bg-grey.dest-seo-sec,
+body.gr-v2 section.bg-grey.dest-proc-section { background: var(--v2-fondo); }
+
+/* ── 3. Tarjetas: blancas, borde rosado, icono en cuadrado rosa ── */
+body.gr-v2 .srv-card,
+body.gr-v2 .gr-bq-card,
+body.gr-v2 .srv-panel {
+    border: 1px solid var(--v2-borde); border-radius: 18px; box-shadow: var(--v2-sombra);
+    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+}
+body.gr-v2 .srv-card:hover,
+body.gr-v2 .gr-bq-card:hover { transform: translateY(-5px); border-color: var(--v2-borde-h); box-shadow: var(--v2-sombra-h); }
+body.gr-v2 .gr-bq-card::before { display: none; }
+body.gr-v2 .srv-card-ic,
+body.gr-v2 .gr-bq-ic {
+    width: 64px; height: 64px; border-radius: 16px; font-size: 26px;
+    background: var(--v2-rosa); color: var(--primary-color, #5e2129);
+    transition: background .3s ease, color .3s ease;
+}
+body.gr-v2 .srv-card:hover .srv-card-ic,
+body.gr-v2 .gr-bq-card:hover .gr-bq-ic { background: var(--primary-color, #5e2129); color: #fff; transform: none; }
+body.gr-v2 .srv-card h3,
+body.gr-v2 .gr-bq-card h3,
+body.gr-v2 .srv-panel-title { font-weight: 700; letter-spacing: -.02em; }
+
+/* Numeración 01–04 en las rejillas de tarjetas (como la maqueta de precio). */
+body.gr-v2 .gr-bq-cards,
+body.gr-v2 .dest-seo-sec .row.gy-4 { counter-reset: v2-card; }
+body.gr-v2 .gr-bq-cards .gr-bq-card,
+body.gr-v2 .dest-seo-sec .row.gy-4 .dest-seo-card { position: relative; counter-increment: v2-card; }
+body.gr-v2 .gr-bq-cards .gr-bq-card::after,
+body.gr-v2 .dest-seo-sec .row.gy-4 .dest-seo-card::after {
+    content: counter(v2-card, decimal-leading-zero);
+    position: absolute; top: 26px; right: 24px;
+    font-size: 24px; font-weight: 700; line-height: 1; color: var(--v2-num); letter-spacing: -.02em;
+}
+/* Tarjetas pares con fondo rosado muy suave (ritmo de la maqueta). */
+body.gr-v2 .dest-seo-sec .row.gy-4 > div:nth-child(4n+2) .dest-seo-card,
+body.gr-v2 .dest-seo-sec .row.gy-4 > div:nth-child(4n+3) .dest-seo-card,
+body.gr-v2 .gr-bq-cards > div:nth-child(4n+2) .gr-bq-card,
+body.gr-v2 .gr-bq-cards > div:nth-child(4n+3) .gr-bq-card { background: linear-gradient(160deg, var(--v2-rosa-2) 0%, #fff 100%); }
+
+/* ── 4. Avisos: rosado con borde vino ── */
+body.gr-v2 p.gr-nota,
+body.gr-v2 .dest-seo-nota,
+body.gr-v2 .dest-ciudades-pie {
+    background: linear-gradient(160deg, #f8ecee 0%, #fbf6f6 100%);
+    border-left: 4px solid var(--primary-color, #5e2129); border-radius: 14px;
+}
+body.gr-v2 .dest-ciudades-pie { padding: 16px 20px; }
+body.gr-v2 .dest-seo-nota { padding: 12px 16px; margin-top: 16px; font-size: 14px; line-height: 1.6; }
+body.gr-v2 .dest-note { background: linear-gradient(160deg, #f8ecee 0%, #fbf6f6 100%); border-radius: 18px; }
+
+/* ── 5. Franjas de cierre: vino con botón blanco ── */
+body.gr-v2 .dest-seo-cta-linea:not(.dest-precio-cta) {
+    max-width: 1000px; margin: 34px auto 0; padding: 22px 36px; gap: 18px 28px;
+    background: var(--v2-vino); border-radius: 18px; box-shadow: 0 18px 40px rgba(94, 33, 41, .22);
+}
+body.gr-v2 .dest-seo-cta-linea:not(.dest-precio-cta) .default-btn { background: #fff; color: var(--primary-color, #5e2129); border-radius: 8px; }
+body.gr-v2 .dest-seo-cta-linea:not(.dest-precio-cta) .default-btn:hover { background: var(--v2-rosa); }
+body.gr-v2 .dest-seo-cta-linea:not(.dest-precio-cta) span,
+body.gr-v2 .dest-seo-cta-linea:not(.dest-precio-cta) p { color: rgba(255, 255, 255, .92); margin: 0; }
+body.gr-v2 .dest-seo-cta-linea:not(.dest-precio-cta) a:not(.default-btn) { color: #fff; }
+
+/* ── 6. Intro dividida: distintivo vino como el de la maqueta ── */
+body.gr-v2 .gr-bq-badge { background: var(--v2-vino); color: #fff; box-shadow: 0 14px 30px rgba(94, 33, 41, .35); }
+body.gr-v2 .gr-bq-badge i { color: #fff; }
+body.gr-v2 .gr-bq-media::before { opacity: .16; }
+
+/* ── 7. Vistos, pasos y tablas con los tonos v2 ── */
+body.gr-v2 .gr-bq-checks li { border: 1px solid var(--v2-borde); box-shadow: var(--v2-sombra); }
+body.gr-v2 .gr-bq-check-ic { background: var(--v2-rosa); color: var(--primary-color, #5e2129); }
+body.gr-v2 .gr-table thead th,
+body.gr-v2 .dest-seo-tabla thead th,
+body.gr-v2 .grenvios-rate-table thead th { background: var(--v2-rosa); color: var(--primary-color, #5e2129); }
+
+@media (max-width: 575px) {
+    body.gr-v2 .dest-seo-cta-linea:not(.dest-precio-cta) { padding: 22px; }
+    body.gr-v2 .dest-seo-cta-linea:not(.dest-precio-cta) .default-btn { width: 100%; text-align: center; }
+    body.gr-v2 .gr-bq-cards .gr-bq-card::after,
+    body.gr-v2 .dest-seo-sec .row.gy-4 .dest-seo-card::after { top: 20px; right: 18px; font-size: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    body.gr-v2 .srv-card, body.gr-v2 .gr-bq-card { transition: none; }
+    body.gr-v2 .srv-card:hover, body.gr-v2 .gr-bq-card:hover { transform: none; }
+}
+
+/* ── 8. Tira de garantías (srv-features) → franja blanca con separadores,
+ *       como los datos rápidos de la ficha de destino ── */
+body.gr-v2 .srv-features-grid {
+    background: #fff; border: 1px solid var(--v2-borde); border-radius: 22px;
+    box-shadow: 0 18px 48px rgba(94, 33, 41, .07); padding: 28px 12px; gap: 0;
+}
+body.gr-v2 .srv-feature { padding: 4px 24px; align-items: center; gap: 18px; }
+body.gr-v2 .srv-feature + .srv-feature { border-left: 1px solid #eadcdd; }
+body.gr-v2 .srv-feature > i {
+    flex: 0 0 auto; width: 64px; height: 64px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--v2-rosa); color: var(--primary-color, #5e2129); font-size: 24px; margin: 0;
+}
+body.gr-v2 .srv-feature h4 { font-size: 17px; font-weight: 700; letter-spacing: -.02em; margin-bottom: 4px; }
+body.gr-v2 .srv-feature p { font-size: 14px; line-height: 1.5; margin: 0; }
+@media (max-width: 991px) {
+    body.gr-v2 .srv-feature { padding: 16px 18px; }
+    body.gr-v2 .srv-feature + .srv-feature { border-left: 0; }
+    body.gr-v2 .srv-features-grid > .srv-feature:nth-child(n+3) { border-top: 1px solid #eadcdd; }
+}
+@media (max-width: 575px) {
+    body.gr-v2 .srv-features-grid > .srv-feature + .srv-feature { border-top: 1px solid #eadcdd; }
+}
+
+/* ── 9. Avatares de la prueba social (sustituyen a los rellenos grises) ── */
+.gr-ej-avatar {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 38px; height: 38px; border-radius: 50%; border: 2px solid #fff; margin-left: -10px;
+    background: linear-gradient(135deg, var(--primary-color, #5e2129), #7a2a35); color: #fff; font-size: 14px;
+}
+.gr-ej-avatar:first-child { margin-left: 0; }
