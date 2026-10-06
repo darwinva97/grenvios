@@ -1986,6 +1986,19 @@ add_action( 'pre_get_posts', function ( $q ) {
 
 function grenvios_ensure_page( $slug, $title, $parent_id ) {
 	$ex = get_page_by_path( $slug );
+	/* Una hija (servicios/x, destinos/x) no aparece buscando «x» suelto: sin esto
+	 * cada subida de GRENVIOS_PAGES_V creaba otra copia (x-2, x-3, x-4). */
+	if ( ! $ex && $parent_id ) {
+		$hit = get_posts( array(
+			'post_type'        => 'page',
+			'name'             => $slug,
+			'post_parent'      => (int) $parent_id,
+			'post_status'      => array( 'publish', 'draft', 'pending', 'private' ),
+			'numberposts'      => 1,
+			'suppress_filters' => true,
+		) );
+		if ( $hit ) $ex = $hit[0];
+	}
 	if ( $ex ) {
 		if ( $parent_id && (int) $ex->post_parent !== (int) $parent_id ) {
 			wp_update_post( array( 'ID' => $ex->ID, 'post_parent' => $parent_id ) );
