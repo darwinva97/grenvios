@@ -43,7 +43,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /* ¿Estamos en la portada principal (no en la de una ruta de país)? */
 function grenvios_home_seo_activa() {
 	if ( is_admin() || ! function_exists( 'grenvios_current_slug' ) ) return false;
-	if ( grenvios_current_slug() !== 'home' ) return false;
+	/* También en la portada de cada país: mismo diseño que la de Perú. */
+	return grenvios_current_slug() === 'home';
+}
+
+/* Portada principal (Perú), no la de una ruta de país. */
+function grenvios_home_es_principal() {
 	return ! function_exists( 'grenvios_hq_pais' ) || grenvios_hq_pais() === '';
 }
 
@@ -311,7 +316,9 @@ function grenvios_home_seo_render() {
  * 4) Más preguntas en la portada principal (también van al FAQPage)
  * ═════════════════════════════════════════════════════════════════ */
 add_filter( 'grenvios_page_faqs', function ( $faqs, $slug ) {
-	if ( $slug !== 'home' || ! grenvios_home_seo_activa() ) return $faqs;
+	/* Preguntas generales: solo en Perú. Las rutas tienen sus FAQ por país y
+	 * estas se repetirían igual en las nueve portadas. */
+	if ( $slug !== 'home' || ! grenvios_home_seo_activa() || ! grenvios_home_es_principal() ) return $faqs;
 
 	$extra = array(
 		array(

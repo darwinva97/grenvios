@@ -17,16 +17,15 @@ if ( ! grenvios_render_editable() ) {
 	logisko_render_content( 'home' );
 }
 if ( function_exists( 'grenvios_ent_render' ) ) grenvios_ent_render( 'home' );
-if ( function_exists( 'grenvios_pais_render' ) ) grenvios_pais_render();
 
-/* Secciones propias de la portada principal: precio y tabla de rutas
- * (inc/home-seo.php). En las rutas de país no se pintan: allí ese trabajo
- * lo hace el bloque por país. */
+/* Secciones de la maqueta (precio, tabla de rutas, destinos uno por uno y
+ * cómo elegir): en todas las portadas, la de Perú y la de cada país, para que
+ * tengan el mismo diseño (inc/home-seo.php, inc/home-destinos.php). */
 if ( function_exists( 'grenvios_home_seo_render' ) ) grenvios_home_seo_render();
-
-/* Destinos: una ficha por país y cómo elegir entre ellos
- * (inc/home-destinos.php). */
 if ( function_exists( 'grenvios_hd_render' ) ) grenvios_hd_render();
+
+/* Después, el contenido propio de cada país (en Perú no hay bloque). */
+if ( function_exists( 'grenvios_pais_render' ) ) grenvios_pais_render();
 
 grenvios_render_cluster_guides();
 

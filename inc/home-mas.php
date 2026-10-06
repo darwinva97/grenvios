@@ -23,8 +23,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 function grenvios_hm_activa() {
 	if ( is_admin() ) return false;
-	if ( ! function_exists( 'grenvios_current_slug' ) || grenvios_current_slug() !== 'home' ) return false;
-	return ! function_exists( 'grenvios_hq_pais' ) || grenvios_hq_pais() === '';
+	/* También en la portada de cada país: mismo diseño que la de Perú. */
+	return function_exists( 'grenvios_current_slug' ) && grenvios_current_slug() === 'home';
 }
 
 function grenvios_hm_servicios() {

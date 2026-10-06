@@ -37,8 +37,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 /* Solo la ruta principal, igual que el resto de secciones de la portada. */
 function grenvios_hd_activa() {
-	if ( is_admin() ) return false;
-	return ! function_exists( 'grenvios_hq_pais' ) || grenvios_hq_pais() === '';
+	/* También en la portada de cada país: mismo diseño que la de Perú. */
+	return ! is_admin();
 }
 
 function grenvios_hd_textos() {
@@ -382,7 +382,7 @@ add_action( 'wp_head', function () {
  *  datos del gestor: si mañana cambia un plazo, cambia la respuesta.
  * ───────────────────────────────────────────────────────────────────────── */
 add_filter( 'grenvios_page_faqs', function ( $faqs, $slug ) {
-	if ( $slug !== 'home' || ! grenvios_hd_activa() ) return $faqs;
+	if ( $slug !== 'home' || ! grenvios_hd_activa() || ( function_exists( 'grenvios_home_es_principal' ) && ! grenvios_home_es_principal() ) ) return $faqs;   // solo Perú
 
 	$dest = function_exists( 'grenvios_destinos' ) ? grenvios_destinos() : array();
 	if ( ! $dest ) return $faqs;
