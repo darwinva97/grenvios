@@ -316,7 +316,13 @@ function grenvios_i18n_switcher_html() {
 	if ( ! empty( $me['flag'] ) ) $h .= '<img class="gr-lang-flag" src="' . esc_url( $me['flag'] ) . '" alt="" width="20" height="15"> ';
 	// En su propio <span> para que el CSS pueda ocultarlo cuando el ancho aprieta
 	// y quede solo la bandera (ver .gr-lang-nombre en assets/css/main.css).
-	$h .= '<span class="gr-lang-nombre">' . esc_html( $nombre( $cur, strtoupper( $cur ) ) ) . '</span>'
+	/* En la cabecera, el nombre corto: así «Estados Unidos» ocupa lo mismo que
+	 * «Perú» o «Bolivia» y la cabecera es igual en todos los países. En el
+	 * desplegable va el nombre completo. */
+	$corto = array( 'Estados Unidos' => 'EE. UU.' );
+	$visible = $nombre( $cur, strtoupper( $cur ) );
+	if ( isset( $corto[ $visible ] ) ) $visible = $corto[ $visible ];
+	$h .= '<span class="gr-lang-nombre">' . esc_html( $visible ) . '</span>'
 		. '</a><ul class="sub-menu">';
 	/* Un país, una fila: la ruta principal y la ruta «pe» de Polylang se llaman
 	 * las dos «Perú» y salían repetidas. Se queda la primera, o la actual. */
