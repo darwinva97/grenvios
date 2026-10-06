@@ -870,13 +870,9 @@ add_action( 'grenvios_destino_antes_cta', function ( $slug, $d0 ) {
 		'Sí. Al despachar recibes un número de seguimiento que muestra el estado del envío en cada etapa, incluido el paso por aduana.' );
 
 	if ( $faq ) {
-		grenvios_dsec_open( 'bg-grey', 'Dudas', 'Preguntas frecuentes sobre ' . $p );
-		echo '<div class="dest-seo-faq">';
-		foreach ( $faq as $q ) {
-			echo '<div class="dest-seo-faq-item"><h3>' . esc_html( $q[0] ) . '</h3><p>' . wp_kses_post( $q[1] ) . '</p></div>';
-		}
-		echo '</div>';
-		grenvios_dsec_close();
+		/* Ya no se pintan aquí: eran un segundo bloque de preguntas en la misma
+		 * página. Van al principio del acordeón final (grenvios_render_page_faqs). */
+		$GLOBALS['grenvios_dsec_faq_visibles'] = $faq;
 
 		/* Un solo FAQPage por página. La sección genérica del tema («Resolvemos tus
 		 * dudas») también emitía el suyo, y dos bloques FAQPage en la misma URL
