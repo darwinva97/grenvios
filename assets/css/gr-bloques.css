@@ -236,13 +236,15 @@
 @media (max-width: 767px) { .gr-ent .gr-ent-p { padding: 18px 18px 18px 54px; font-size: 16px; } .gr-ent .gr-ent-p::before { left: 18px; top: 18px; font-size: 18px; } }
 
 /* ── Notas al pie de bloque: aviso con icono ── */
+/* Icono posicionado, no flex: con flex el texto y cada enlace eran columnas
+ * separadas y el enlace salía suelto a la derecha del párrafo. */
 p.gr-nota {
-    display: flex; align-items: flex-start; gap: 12px; max-width: 780px; margin: 28px auto 0; padding: 14px 20px;
+    position: relative; display: block; max-width: 780px; margin: 28px auto 0; padding: 14px 20px 14px 48px;
     border-radius: 14px; background: rgba(94, 33, 41, .05); border: 1px solid rgba(94, 33, 41, .08);
     font-size: 14.5px; line-height: 1.6; color: var(--body-color, #666); text-align: left;
 }
 p.gr-nota::before {
-    content: "\f05a"; flex: 0 0 auto; font-family: "Font Awesome 6 Free", "Font Awesome 6 Pro"; font-weight: 900;
+    content: "\f05a"; position: absolute; left: 20px; top: 14px; font-family: "Font Awesome 6 Free", "Font Awesome 6 Pro"; font-weight: 900;
     font-size: 16px; line-height: 1.45; color: var(--primary-color, #5e2129);
 }
 p.gr-nota a { color: var(--primary-color, #5e2129); font-weight: 600; }

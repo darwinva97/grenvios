@@ -127,3 +127,15 @@
 	.gr-bh-cifras strong{font-size:24px}
 }
 @media (prefers-reduced-motion:reduce){.gr-bh-dest,.gr-bh-dest:hover,.gr-lf-wa,.gr-lf-wa:hover{transition:none;transform:none}.gr-bh-dest-img img{transition:none}}
+
+/* ════ Secciones de solo texto en diseño v3 (inc/secciones-visuales.php, skill grenvios-secciones) ════
+ * Misma rejilla que los bloques del país: cabecera con icono a la izquierda, cuerpo a la derecha. */
+.gr-sv .gr-pv3-body>.gr-bq-checks,.gr-sv .gr-pv3-body>.srv-steps,.gr-sv .gr-pv3-body>.gr-bq-glos,.gr-sv .gr-pv3-body>.dest-seo-glosario{max-width:none;margin:0}
+.gr-sv .gr-pv3-body .gr-bq-checks li{box-shadow:none;border:0;background:#f8f5f1}
+.gr-sv .gr-pv3-body .gr-nota{max-width:none;margin:18px 0 0}
+.gr-sv .gr-pv3-body>p:not(.gr-nota)+.gr-bq-checks,.gr-sv .gr-pv3-body>p:not(.gr-nota)+.srv-steps,.gr-sv .gr-pv3-body>p:not(.gr-nota)+dl{margin-top:18px}
+.gr-sv-body--libre{background:none;border:0;box-shadow:none;padding:0}
+.gr-sv-body--libre .gr-bq-checks li{background:#fff;border:1px solid #efe6e0}
+.gr-sv .gr-pv3-head h2{text-align:left}
+.gr-sv--no .gr-bq-check-ic{background:#fbe9ec;color:var(--gr-acc,#d8465c)}
+@media (max-width:575px){.gr-sv .gr-pv3-body .gr-bq-checks{grid-template-columns:minmax(0,1fr)}}

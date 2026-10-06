@@ -18,6 +18,7 @@ const candidatos = [
   'C:/Program Files/Google/Chrome/Application/chrome.exe',
   'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
   'C:/Program Files/Microsoft/Edge/Application/msedge.exe',
+  '/usr/bin/chromium', '/usr/bin/google-chrome', '/usr/bin/microsoft-edge',
 ];
 const exe = candidatos.find(existsSync);
 if (!exe) { console.error('No encuentro Chrome ni Edge'); process.exit(1); }
@@ -27,7 +28,7 @@ if (!exe) { console.error('No encuentro Chrome ni Edge'); process.exit(1); }
 const perfil = join(out, '.perfil');
 try { rmSync(join(perfil, 'DevToolsActivePort'), { force: true }); } catch {}
 const nav = spawn(exe, ['--headless=new', '--remote-debugging-port=0', '--remote-allow-origins=*', '--no-first-run',
-  '--hide-scrollbars', `--user-data-dir=${perfil}`, 'about:blank'], { stdio: 'ignore' });
+  '--hide-scrollbars', `--user-data-dir=${perfil}`, ...(process.platform === 'linux' ? ['--no-sandbox'] : []), 'about:blank'], { stdio: 'ignore' });
 let port = 0;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
