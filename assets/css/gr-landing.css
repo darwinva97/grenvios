@@ -874,15 +874,24 @@ body.gr-v2 .dest-seo-glosario dd { font-size: 15px; line-height: 1.65; margin: 0
 .gr-og-cot i { margin-left: 3px; font-size: 11px; }
 .gr-og-vacio { text-align: center; color: var(--body-color, #666); margin: 18px 0 0; }
 
-/* Franja «¿No encuentras tu país?»: vino con el repartidor a la derecha. */
-.cta-section .cta-wrapper { background: linear-gradient(100deg, #4a161c 0%, var(--primary-color, #5e2129) 55%, #7a2a35 100%); border-radius: 22px; overflow: hidden; padding: 42px 48px; min-height: 300px; box-shadow: 0 22px 50px -26px rgba(94, 33, 41, .55); }
+/* Franja CTA de todas las páginas: foto bajo velo vino, repartidor a la derecha.
+ * El velo va en ::before para que sobreviva al cambio de foto en Personalizar
+ * («Fondo: …llamada a la acción» sobrescribe background-image de .cta-wrapper). */
+.cta-section .cta-wrapper { background: var(--primary-dark, #481920) url("../img/ejemplo/almacen-pasillo.webp") center 40% / cover no-repeat; border-radius: 22px; overflow: hidden; padding: 42px 48px; min-height: 300px; box-shadow: 0 22px 50px -26px rgba(94, 33, 41, .55); }
 .cta-section .cta-wrapper::before {
-    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .35;
-    background: url("../img/map-pattern.png") right center / auto 100% no-repeat;
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(100deg, rgba(60, 16, 22, .94) 0%, rgba(94, 33, 41, .86) 45%, rgba(94, 33, 41, .6) 100%);
+    background: linear-gradient(100deg,
+        color-mix(in srgb, var(--primary-dark, #481920) 94%, transparent) 0%,
+        color-mix(in srgb, var(--primary-color, #5e2129) 86%, transparent) 45%,
+        color-mix(in srgb, var(--primary-color, #5e2129) 60%, transparent) 100%);
 }
 .cta-section .cta-wrapper::after {
     content: ""; position: absolute; right: 3%; bottom: 0; width: 34%; height: 100%; pointer-events: none;
     background: url("../img/cta-repartidor-4.webp") right bottom / contain no-repeat;
+    /* La imagen trae su propio fondo vino: se funde con la foto por la izquierda. */
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 38%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 38%);
 }
 .cta-section .cta-wrapper > div { position: relative; z-index: 2; max-width: 62%; margin: 0 !important; flex: 0 0 62%; }
 .cta-section .cta-wrapper .section-heading, .cta-section .cta-wrapper .section-heading.text-center { text-align: left !important; margin: 0; }
@@ -901,6 +910,14 @@ body.gr-v2 .dest-seo-glosario dd { font-size: 15px; line-height: 1.65; margin: 0
     .gr-og, .gr-og--n2 { grid-template-columns: 1fr; }
     .gr-og-panel:first-child .gr-og-lista { grid-template-columns: 1fr; }
     .cta-section .cta-wrapper { padding: 32px 22px 0; text-align: center; }
+    /* En móvil el texto ocupa todo el ancho: velo fuerte de arriba abajo. */
+    .cta-section .cta-wrapper::before {
+        background: linear-gradient(180deg, rgba(60, 16, 22, .94) 0%, rgba(94, 33, 41, .88) 60%, rgba(94, 33, 41, .72) 100%);
+        background: linear-gradient(180deg,
+            color-mix(in srgb, var(--primary-dark, #481920) 94%, transparent) 0%,
+            color-mix(in srgb, var(--primary-color, #5e2129) 88%, transparent) 60%,
+            color-mix(in srgb, var(--primary-color, #5e2129) 72%, transparent) 100%);
+    }
     .cta-section .cta-wrapper > div { max-width: none; flex: 0 0 100%; }
     .cta-section .cta-wrapper .section-heading, .cta-section .cta-wrapper .section-heading.text-center { text-align: center !important; }
     .cta-section .btn-wrapper { justify-content: center; }

@@ -37,7 +37,7 @@ function grenvios_media_registry() {
 		'slider-badge.png'     => array( 'Insignia / sello del slider', 'hero' ),
 
 		// ── Fondos de secciones (CSS) ──
-		'content-bg-3.jpg'     => array( 'Fondo: sección de proceso / llamada a la acción', 'fondos' ),
+		'content-bg-3.jpg'     => array( 'Fondo: franja de llamada a la acción (foto bajo velo vino)', 'fondos' ),
 		'content-bg-5.jpg'     => array( 'Fondo: sección de cotización', 'fondos' ),
 		'content-bg-7.jpg'     => array( 'Fondo: servicios y CTA (varias secciones)', 'fondos' ),
 		'page-banner.jpg'      => array( 'Fondo: banner superior de páginas internas', 'fondos' ),
