@@ -111,6 +111,7 @@ add_action( 'grenvios_destino_tras_proceso', function ( $slug, $d0 ) {
 add_action( 'grenvios_destino_antes_cta', function ( $slug, $d0 ) {
 	if ( ! function_exists( 'grenvios_hq_form_html' ) ) return;
 	$p = isset( $d0['title'] ) ? $d0['title'] : '';
+	if ( function_exists( 'grenvios_rd_cotizador_propio' ) ) grenvios_rd_cotizador_propio( true );
 
 	echo '<section class="srv-section dest-cotiza padding"><div class="container">';
 	echo '<div class="row align-items-center">';

@@ -735,22 +735,6 @@ function grenvios_text_registry() {
 						'home_dest5_name' => array( 'Destino 5 · Nombre', 'text', 'España' ),
 					),
 				),
-				'quickquote' => array(
-					'label'  => 'Inicio · Cotiza en 1 minuto',
-					'fields' => array(
-						'home_qq_sub'        => array( 'Subtítulo', 'text', 'Cotiza en 1 minuto' ),
-						'home_qq_title'      => array( 'Título', 'html', 'Pide tu <span class="hl">cotización</span> al instante' ),
-						'home_qq_text'       => array( 'Texto introductorio', 'text', 'Cuéntanos lo básico y te atendemos al instante por WhatsApp.' ),
-						'home_qq_pais_label' => array( 'Etiqueta · País', 'text', 'País de destino' ),
-						'home_qq_pais_ph' => array( 'País · Opción inicial', 'text', 'Selecciona un país' ),
-						'home_qq_tipo_label' => array( 'Etiqueta · Tipo', 'text', 'Tipo de envío' ),
-						'home_qq_tipo_ph' => array( 'Tipo · Opción inicial', 'text', 'Selecciona una opción' ),
-						'home_qq_peso_label' => array( 'Etiqueta · Peso', 'text', 'Peso aprox. (kg)' ),
-						'home_qq_peso_ph' => array( 'Peso · Placeholder', 'text', 'Ej. 5' ),
-						'home_qq_btn'        => array( 'Texto del botón', 'text', 'Cotizar por WhatsApp' ),
-						'home_qq_note'       => array( 'Nota inferior', 'html', '¿Prefieres el formulario completo? <a href="/cotizar/">Cotiza aquí</a> y te respondemos por correo.' ),
-					),
-				),
 				'counters' => array(
 					'label'  => 'Inicio · Contadores',
 					'fields' => array(

@@ -168,10 +168,6 @@ function grenvios_repeater_schema_base( $slug ) {
 					'tpl' => '<option value="%value%">%label%</option>' ),
 				array( 'key' => 'home_services',     'section' => 'services',     'label' => '🗂️ Tarjetas de Servicios', 'sel' => '.service-section',     'item_label' => 'Servicio', 'add_label' => 'Agregar servicio', 'fields' => $service_fields ),
 				array( 'key' => 'home_testimonials', 'section' => 'testimonials', 'label' => '⭐ Testimonios',            'sel' => '.testimonial-section', 'item_label' => 'Reseña',   'add_label' => 'Agregar reseña',  'fields' => $testi_fields ),
-				array( 'key' => 'home_qq_countries', 'section' => 'quickquote', 'label' => '🌎 Cotizador · Países', 'sel' => '#cotiza-rapido', 'item_label' => 'País', 'add_label' => 'Agregar país', 'fields' => $option_fields,
-					'tpl' => '<option value="%value%">%label%</option>' ),
-				array( 'key' => 'home_qq_types', 'section' => 'quickquote', 'label' => '📦 Cotizador · Tipos de envío', 'sel' => '#cotiza-rapido', 'item_label' => 'Tipo', 'add_label' => 'Agregar tipo', 'fields' => $option_fields,
-					'tpl' => '<option value="%value%">%label%</option>' ),
 			);
 
 		case 'destinos':
