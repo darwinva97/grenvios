@@ -20,7 +20,7 @@ mayoría del tráfico es móvil).
 |---|---|---|
 | **Servicio** (`/servicios/…`) | hero + garantías → entradilla → intro con imagen → tarjetas/paneles → franja de garantías → CTA vino → **contenido SEO con foto** → guías con miniatura → «Del blog» → enlaces → CTA final → FAQ | motor pse, partials, `ui-global.php` |
 | **Destino** (`/destinos/<país>/`) | hero → chips estáticos → soluciones (foto + 2×2) → datos + qué enviar → precio (4 factores) → plazos → listas en tarjetas → **cobertura con foto del país** → datos prácticos → comparativa → cotizador → FAQ | `functions.php`, `inc/destinos-*.php` |
-| **Portada** | cotizador en el hero → quiénes somos (collage) → servicios con foto → destinos con foto de ciudad → cifras → proceso → precio → tabla de plazos → testimonios → guías | plantilla + `customizer.php` |
+| **Portada** (Perú y **cada país**, mismo diseño) | cotizador en el hero → quiénes somos (collage) → servicios → otros envíos → destinos con foto de ciudad → cifras → proceso → testimonios → precio → plazos de cada destino → destinos uno por uno → lo que cambia entre destinos → (en los países: sus bloques propios) → guías | plantilla + `customizer.php`; `front-page.php` |
 | **Guía del blog** | H1 + extracto → cuerpo con H2 que responden preguntas → FAQ → «Sigue leyendo» con miniatura → CTA | `inc/blog-guias*.php` |
 
 Reglas de composición:

@@ -23,6 +23,7 @@ Complementa a:
 | Listado del blog | `/co/guias-para-enviar-a-colombia/` | **Cabecera del blog por país** (`gr-bh`) → entradilla → filtros por tema → tarjetas → bloque del país |
 | Entrada | `/co/enviar-ropa-y-calzado-a-colombia/` | Ver `grenvios-diseno` § «Detalle de entrada del blog» (`single.php`, `gr-blog.css`) |
 | Portada, cotizar, contacto, rastreo | — | Tienen su propio formulario: **sin** formulario de solicitud |
+| Portada de un país (`/bo/`) | `/bo/` | **Igual que la de Perú** (las 5 secciones de la maqueta: otros envíos, precio, plazos, destinos uno por uno, lo que cambia) y **después** los bloques del país. Las FAQ generales de la portada de Perú no se añaden en los países (`grenvios_home_es_principal()`): se repetirían en las nueve. |
 
 ## 2. Piezas (todas en `inc/rutas-diseno.php` + `assets/css/gr-rutas.css`)
 
@@ -120,13 +121,15 @@ PYTHONIOENCODING=utf-8 MSYS_NO_PATHCONV=1 python a11y-perf.py co/envio-de-docume
   - Inicio · Servicios · **Envíos Internacionales** (→ `/destinos/`, con el desplegable de países) · Contacto · Rastrea tu Pedido.
   - «Nosotros» va en el pie, al inicio de «Servicios y enlaces».
   - Plantillas: `template-parts/header.html` y `footer.html`. En cada ruta, los enlaces se adaptan solos (`/us/sobre-nosotros-envios-a-estados-unidos/`).
-- **Selector de país:** no se oculta por ancho fijo. `grAjustarCabecera()` (`main.js`) mide si el último enlace choca con el selector:
-  - primero oculta el nombre del país (`gr-sin-nombre`; queda la bandera con su `aria-label`);
-  - si aún no cabe, aprieta la separación y la letra (`gr-menu-apretado`).
-  - Con la regla fija anterior, «Estados Unidos» pisaba «Rastrea tu Pedido» a 1366 px.
-  - Medido: cabe de 993 a 1600 px en `/us/` y en Perú.
+- **Cabecera idéntica en todos los países** (el cliente lo exige):
+  - El selector muestra siempre bandera y nombre, como en Perú. «Estados Unidos» sale como «EE. UU.» en la cabecera (en el desplegable va completo).
+  - Por debajo de 1250 px se oculta el nombre en todos los países a la vez.
+  - Separación del menú: 22 px; 16 px por debajo de 1250 px; 12 px y letra de 14 px entre 993 y 1100 px.
+  - Las reglas antiguas de 20 y 14 px nunca se aplicaban (las pisaba `.header-menu-wrap ul li { margin-right: 30px }`).
+  - Medido: cabe de 993 a 1600 px con todos los nombres; el más justo es «Venezuela», a 19 px de la línea.
+  - **No ocultes el nombre según el país:** se probó (`grAjustarCabecera`) y la cabecera dejaba de ser igual en todas las rutas.
 - **Panel de países:**
-  - Una columna justo debajo del selector, alineada con su borde izquierdo (`left: -14px`, 232 px). Si solo se ve la bandera (`gr-sin-nombre`), se abre hacia la izquierda para no salirse de la pantalla.
+  - Una columna justo debajo del selector, alineada con su borde izquierdo (`left: -14px`, 232 px). Por debajo de 1250 px (solo bandera, en todos los países) se abre hacia la izquierda para no salirse de la pantalla.
   - El cliente rechazó las dos columnas: se abrían sobre el menú.
   - Alto máximo `calc(100vh - 150px)`: si la ventana es baja, se desplaza por dentro en vez de recortarse.
   - Siempre opaco y con `z-index: 1000`. El `transition: all .25s … .1s` del tema animaba la opacidad y el z-index al cerrar, y se veía gris y translúcido.
