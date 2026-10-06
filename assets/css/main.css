@@ -374,6 +374,11 @@
         .grenvios-lang-switcher > a .gr-lang-nombre { display: none; }
     }
 
+    /* Lo deciden en main.js (grAjustarCabecera) midiendo si el menú choca. */
+    .header-menu-wrap.gr-sin-nombre .grenvios-lang-switcher > a .gr-lang-nombre { display: none; }
+    .header-menu-wrap.gr-menu-apretado .nav-menu > li { margin-right: 10px; }
+    .header-menu-wrap.gr-menu-apretado .nav-menu > li > a { font-size: 14.5px; letter-spacing: -.01em; }
+
     /* El selector vive en el bloque de la derecha, junto a la lupa. */
     .menu-right-item .grenvios-lang-menu {
         margin: 0;
@@ -476,6 +481,73 @@
         max-height: min(70vh, 520px);
         overflow-y: auto;
     }
+
+    /* ── Panel de países en dos columnas (2026-10-06) ─────────────────────────
+     * En una columna, once países medían 430 px: con la ventana baja el panel
+     * se desplazaba por dentro y empezaba en «Bolivia». En dos columnas mide
+     * unos 230 px. Siempre opaco y por encima del hero: el `transition: all`
+     * del tema animaba la opacidad y el z-index con 0,1 s de retraso al
+     * cerrar, y el panel se veía gris y translúcido. */
+    .header-menu-wrap .menu-right-item .grenvios-lang-switcher > ul {
+        /* !important: el tema fuerza `.header-menu-wrap li ul { display: block !important }`. */
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 2px 6px;
+        width: 380px;
+        padding: 10px;
+        border-radius: 14px;
+        border: 1px solid #efe6e0;
+        background: #fff;
+        box-shadow: 0 24px 50px -20px rgba(94, 33, 41, .35);
+        z-index: 1000;
+        transform: none;
+        transition: opacity .15s ease, visibility 0s linear .15s;
+    }
+    .header-menu-wrap .menu-right-item .grenvios-lang-switcher:hover > ul,
+    .header-menu-wrap .menu-right-item .grenvios-lang-switcher:focus-within > ul {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        z-index: 1000;
+        transform: none;
+        transition: opacity .15s ease, visibility 0s;
+    }
+    .header-menu-wrap .menu-right-item .grenvios-lang-switcher > ul > li {
+        display: block;
+        padding: 0;
+        margin: 0;
+        border: 0;
+    }
+    .header-menu-wrap .menu-right-item .grenvios-lang-switcher > ul > li > a {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 9px 12px;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 500;
+        white-space: nowrap;
+        color: var(--heading-color, #0c0c0c);
+        transition: background-color .15s ease, color .15s ease;
+    }
+    .header-menu-wrap .menu-right-item .grenvios-lang-switcher > ul > li > a:hover,
+    .header-menu-wrap .menu-right-item .grenvios-lang-switcher > ul > li > a:focus-visible {
+        background: #f7eaec;
+        color: var(--primary-color, #5e2129);
+    }
+    .header-menu-wrap .menu-right-item .grenvios-lang-switcher > ul > li.current-lang > a {
+        background: #f7eaec;
+        color: var(--primary-color, #5e2129);
+        font-weight: 700;
+    }
+    .header-menu-wrap .menu-right-item .grenvios-lang-switcher > ul > li.current-lang > a::after {
+        content: "\f00c";
+        margin-left: auto;
+        font-family: "Font Awesome 6 Pro", "Font Awesome 6 Free";
+        font-weight: 900;
+        font-size: 12px;
+    }
+    .header-menu-wrap .menu-right-item .grenvios-lang-switcher > ul > li > a .gr-lang-flag { margin: 0; flex: 0 0 20px; }
 
     .header-menu-wrap ul li {
         display: inline-block;
@@ -3336,4 +3408,9 @@
  * se pintaba como una lista abierta de países encima de la cabecera. */
 @media (max-width: 992px) {
     .main-header .menu-right-item .grenvios-lang-menu { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .header-menu-wrap .menu-right-item .grenvios-lang-switcher > ul,
+    .header-menu-wrap .menu-right-item .grenvios-lang-switcher > ul > li > a { transition: none; }
 }
