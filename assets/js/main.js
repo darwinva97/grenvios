@@ -632,26 +632,6 @@
         // hero-quote.js: con los dos encima, el icono se descolocaba.
         $('select').not('.gr-select-nativo, .gr-hq select').niceSelect();
 
-        // Cabecera: si el último enlace del menú choca con el selector de país,
-        // primero se oculta el nombre (queda la bandera y su aria-label) y, si aún
-        // no cabe, se aprieta la separación. Un corte fijo por ancho no servía:
-        // «Estados Unidos» chocaba a 1366 px y «Perú» cabe de sobra.
-        function grAjustarCabecera() {
-            document.querySelectorAll('.header-menu-wrap').forEach(function (w) {
-                w.classList.remove('gr-sin-nombre', 'gr-menu-apretado');
-                var items = w.querySelectorAll('.nav-menu > li'), sw = w.querySelector('.grenvios-lang-switcher > a');
-                if (!items.length || !sw || !sw.offsetParent) return;
-                var choca = function () { return items[items.length - 1].getBoundingClientRect().right > sw.getBoundingClientRect().left - 16; };
-                if (choca()) w.classList.add('gr-sin-nombre');
-                if (choca()) w.classList.add('gr-menu-apretado');
-            });
-        }
-        grAjustarCabecera();
-        $(window).on('load', grAjustarCabecera);
-        var grCabTimer;
-        $(window).on('resize', function () { clearTimeout(grCabTimer); grCabTimer = setTimeout(grAjustarCabecera, 120); });
-        if (document.fonts && document.fonts.ready) document.fonts.ready.then(grAjustarCabecera);
-
         // Current Year
         var currentYear = new Date().getFullYear();
         $('#currentYear').append(currentYear);

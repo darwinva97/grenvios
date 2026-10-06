@@ -374,10 +374,23 @@
         .grenvios-lang-switcher > a .gr-lang-nombre { display: none; }
     }
 
-    /* Lo deciden en main.js (grAjustarCabecera) midiendo si el menú choca. */
-    .header-menu-wrap.gr-sin-nombre .grenvios-lang-switcher > a .gr-lang-nombre { display: none; }
-    .header-menu-wrap.gr-menu-apretado .nav-menu > li { margin-right: 10px; }
-    .header-menu-wrap.gr-menu-apretado .nav-menu > li > a { font-size: 14.5px; letter-spacing: -.01em; }
+
+    /* Separación del menú, igual en todos los países. Las reglas de arriba
+     * (20 px ≤1400, 14 px ≤1250) no se aplicaban: `.header-menu-wrap ul li
+     * { margin-right: 30px }`, más abajo y con el mismo peso, las pisaba, y con
+     * «Envíos Internacionales» y «Venezuela» el menú llegaba a la línea del
+     * selector. Este selector pesa más. */
+    .header-menu-wrap .nav-menu > li { margin-right: 22px; }
+    .header-menu-wrap .nav-menu > li:last-child { margin-right: 0; }
+    @media (max-width: 1250px) {
+        .header-menu-wrap .nav-menu > li { margin-right: 16px; }
+    }
+    /* Tramo estrecho de escritorio (993–1100 px): letra algo menor, en todos
+     * los países por igual. Sin esto el menú pisaba el selector (ya pasaba antes). */
+    @media (max-width: 1100px) {
+        .header-menu-wrap .nav-menu > li { margin-right: 12px; }
+        .header-menu-wrap .nav-menu > li > a { font-size: 14px; }
+    }
 
     /* El selector vive en el bloque de la derecha, junto a la lupa. */
     .menu-right-item .grenvios-lang-menu {
@@ -508,11 +521,10 @@
         transform: none;
         transition: opacity .15s ease, visibility 0s linear .15s;
     }
-    /* Con solo la bandera (ancho justo), se abre hacia la izquierda para no
-     * salirse de la pantalla. */
-    .header-menu-wrap.gr-sin-nombre .menu-right-item .grenvios-lang-switcher > ul {
-        left: auto;
-        right: -14px;
+    /* Por debajo de 1250 px solo queda la bandera (en todos los países): se
+     * abre hacia la izquierda para no salirse de la pantalla. */
+    @media (max-width: 1250px) {
+        .header-menu-wrap .menu-right-item .grenvios-lang-switcher > ul { left: auto; right: -14px; }
     }
     .header-menu-wrap .menu-right-item .grenvios-lang-switcher:hover > ul,
     .header-menu-wrap .menu-right-item .grenvios-lang-switcher:focus-within > ul {
