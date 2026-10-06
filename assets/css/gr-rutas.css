@@ -62,11 +62,24 @@
 .gr-lf-form label{display:block;font-size:13px;font-weight:600;color:var(--heading-color,#0c0c0c);margin-bottom:6px}
 .gr-lf-form .form-control{width:100%;min-height:48px;border-radius:12px;border:1px solid #e7ddd6;background:#fbf8f5;padding:10px 14px;font-size:15px;transition:border-color .2s,box-shadow .2s,background .2s}
 .gr-lf-form textarea.form-control{min-height:92px}
+.gr-lf-form .form-control:hover{border-color:#d9c6bf}
 .gr-lf-form .form-control:focus{outline:0;background:#fff;border-color:var(--primary-color,#5e2129);box-shadow:0 0 0 4px rgba(94,33,41,.12)}
+/* Desplegables nativos (main.js no les aplica nice-select): misma caja que los
+ * demás campos; nice-select medía 50 px con line-height 40 y el texto caía. */
+.gr-lf-form select.form-control{-webkit-appearance:none;appearance:none;height:48px;line-height:1.4;padding-right:42px;cursor:pointer;color:var(--heading-color,#0c0c0c);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%235e2129' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 16px center;background-size:12px 8px}
+.gr-lf-form select.form-control::-ms-expand{display:none}
+.gr-lf-req{color:var(--gr-acc,#d8465c);margin-left:2px}
+.gr-lf-form input::placeholder,.gr-lf-form textarea::placeholder{color:#a39591}
 .gr-lf-consent{display:flex;gap:10px;align-items:flex-start}
-.gr-lf-consent input{margin-top:4px;accent-color:var(--primary-color,#5e2129)}
+.gr-lf-consent input{flex:0 0 18px;width:18px;height:18px;margin-top:2px;accent-color:var(--primary-color,#5e2129);cursor:pointer}
 .gr-lf-consent label{font-weight:400;color:var(--body-color,#666);margin:0}
-.gr-lf-btn{width:100%;justify-content:center;min-height:52px}
+.gr-lf-btn{width:100%;justify-content:center;min-height:52px;border-radius:12px}
+/* El barrido de .default-btn es negro (--bg-dark): aquí, vino oscuro de la marca. */
+.gr-lf-btn::before{background-color:var(--primary-dark,#481920)}
+.gr-lf-btn:hover{box-shadow:0 16px 28px -14px rgba(94,33,41,.6)}
+.gr-lf-btn:hover i{transform:translateX(3px)}
 .gr-lf-btn[disabled]{opacity:.6;cursor:wait}
 .gr-lf-msgbox{margin:14px 0 0 !important;padding:12px 16px;border-radius:12px;font-weight:500}
 .gr-lf-msgbox.is-ok,.gr-lf-msgbox:not(.is-error){background:#eaf7ee;color:#1e6b3a}
@@ -139,3 +152,4 @@
 .gr-sv .gr-pv3-head h2{text-align:left}
 .gr-sv--no .gr-bq-check-ic{background:#fbe9ec;color:var(--gr-acc,#d8465c)}
 @media (max-width:575px){.gr-sv .gr-pv3-body .gr-bq-checks{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){.gr-lf-btn:hover i{transform:none}}

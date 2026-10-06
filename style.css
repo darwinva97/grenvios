@@ -197,6 +197,12 @@ Tags: logistics, transportation, shipping, business, custom-menu, featured-image
 .mobile-menu-cta {
     display: block; margin: 18px 20px 0; text-align: center;
 }
+/* El outline hereda texto blanco: sobre el panel blanco del menú no se veía. */
+.mobile-navigation-menu .mobile-menu-cta.btn-outline {
+    color: var(--primary-color, #5e2129); border: 1.5px solid var(--primary-color, #5e2129); background: #fff;
+}
+.mobile-navigation-menu .mobile-menu-cta.btn-outline i { color: #25d366; }
+.mobile-navigation-menu .mobile-menu-cta.btn-outline:hover { color: #fff; }
 
 /* ─────────────────────────────────────────────────────────────
  * Sección de Preguntas Frecuentes por página (SEO + FAQPage schema)

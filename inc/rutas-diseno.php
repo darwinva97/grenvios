@@ -167,15 +167,15 @@ function grenvios_rd_form_html( $slug ) {
 					<input type="hidden" name="ts" value="<?php echo esc_attr( time() ); ?>">
 					<div class="gr-lf-hp" aria-hidden="true"><label for="gr-lf-web">Web</label><input id="gr-lf-web" type="text" name="web" tabindex="-1" autocomplete="off"></div>
 					<div class="gr-lf-row">
-						<p><label for="gr-lf-nombre">Nombre y apellido *</label><input id="gr-lf-nombre" name="nombre" type="text" class="form-control" autocomplete="name" required></p>
-						<p><label for="gr-lf-tel">WhatsApp o teléfono *</label><input id="gr-lf-tel" name="telefono" type="tel" class="form-control" autocomplete="tel" required></p>
+						<p><label for="gr-lf-nombre">Nombre y apellido <span class="gr-lf-req" aria-hidden="true">*</span></label><input id="gr-lf-nombre" name="nombre" type="text" class="form-control" autocomplete="name" required></p>
+						<p><label for="gr-lf-tel">WhatsApp o teléfono <span class="gr-lf-req" aria-hidden="true">*</span></label><input id="gr-lf-tel" name="telefono" type="tel" class="form-control" autocomplete="tel" required></p>
 					</div>
 					<div class="gr-lf-row">
-						<p><label for="gr-lf-email">Correo *</label><input id="gr-lf-email" name="email" type="email" class="form-control" autocomplete="email" required></p>
-						<p><label for="gr-lf-pais">País de destino</label><select id="gr-lf-pais" name="pais" class="form-control"><?php echo $ops; // phpcs:ignore ?></select></p>
+						<p><label for="gr-lf-email">Correo <span class="gr-lf-req" aria-hidden="true">*</span></label><input id="gr-lf-email" name="email" type="email" class="form-control" autocomplete="email" required></p>
+						<p><label for="gr-lf-pais">País de destino</label><select id="gr-lf-pais" name="pais" class="form-control gr-select-nativo"><?php echo $ops; // phpcs:ignore ?></select></p>
 					</div>
 					<div class="gr-lf-row">
-						<p><label for="gr-lf-tipo">Qué envías</label><select id="gr-lf-tipo" name="tipo" class="form-control"><?php echo $tipos; // phpcs:ignore ?></select></p>
+						<p><label for="gr-lf-tipo">Qué envías</label><select id="gr-lf-tipo" name="tipo" class="form-control gr-select-nativo"><?php echo $tipos; // phpcs:ignore ?></select></p>
 						<p><label for="gr-lf-peso">Peso aproximado (kg)</label><input id="gr-lf-peso" name="peso" type="text" inputmode="decimal" class="form-control"></p>
 					</div>
 					<p><label for="gr-lf-msg">Detalle del envío</label><textarea id="gr-lf-msg" name="mensaje" rows="3" class="form-control" placeholder="Contenido, medidas, ciudad de destino…"></textarea></p>

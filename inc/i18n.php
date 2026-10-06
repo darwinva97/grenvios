@@ -318,6 +318,15 @@ function grenvios_i18n_switcher_html() {
 	// y quede solo la bandera (ver .gr-lang-nombre en assets/css/main.css).
 	$h .= '<span class="gr-lang-nombre">' . esc_html( $nombre( $cur, strtoupper( $cur ) ) ) . '</span>'
 		. '</a><ul class="sub-menu">';
+	/* Un país, una fila: la ruta principal y la ruta «pe» de Polylang se llaman
+	 * las dos «Perú» y salían repetidas. Se queda la primera, o la actual. */
+	$vistos = array();
+	foreach ( $alts as $slug => $a ) {
+		$n = $nombre( $slug, $a['name'] );
+		if ( isset( $vistos[ $n ] ) && ! $a['current'] ) unset( $alts[ $slug ] );
+		elseif ( isset( $vistos[ $n ] ) ) unset( $alts[ $vistos[ $n ] ] );
+		if ( isset( $alts[ $slug ] ) ) $vistos[ $n ] = $slug;
+	}
 	foreach ( $alts as $slug => $a ) {
 		$cls = $a['current'] ? ' class="current-lang"' : '';
 		$h  .= '<li' . $cls . '><a href="' . esc_url( $a['url'] ) . '" hreflang="' . esc_attr( $a['hreflang'] ) . '" lang="' . esc_attr( $a['hreflang'] ) . '">';

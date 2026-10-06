@@ -54,6 +54,12 @@ Complementa a:
   - **Cada solicitud se guarda** en el tipo privado `gr_solicitud` (menú «Solicitudes» del panel), con la marca `_gr_correo_enviado`: si el correo falla, no se pierde nada.
 - **Antispam:** campo trampa `web` y un mínimo de 3 s entre cargar y enviar. Al bot se le responde «gracias» sin guardar.
 - **Accesibilidad:** cada campo con `<label for>`, mensaje en `role="status"` y `aria-live`.
+- **Desplegables nativos (`gr-select-nativo`):**
+  - `main.js` aplica nice-select a todos los `<select>` salvo a estos.
+  - nice-select medía 50 px con `line-height:40px`, así que el texto caía y no cuadraba con los campos de 48 px. Además no se actualizaba tras `form.reset()`.
+  - El nativo lleva `appearance:none` y una flecha vino en SVG.
+  - Todos los campos tienen el mismo borde al pasar el ratón y el mismo foco.
+  - El barrido del botón es vino oscuro (`--primary-dark`), no el negro de `.default-btn`.
 - No inventes promesas: «Respuesta en menos de 24 horas hábiles» ya figura en el formulario de la portada.
 
 ### 2.3 Cabecera del blog por país (`gr-bh`)
@@ -104,3 +110,26 @@ PYTHONIOENCODING=utf-8 MSYS_NO_PATHCONV=1 python a11y-perf.py co/envio-de-docume
    - Un POST con el campo `web` relleno no debe crear nada.
    - **Borra la solicitud de prueba.**
 5. **Si «se sale del ancho» en móvil:** mide la cadena de anchos con CDP, del elemento hacia arriba. Casi siempre es un `margin:auto` o un `1fr` sin `minmax(0,…)` en una rejilla.
+
+## 5. Cabecera y menú (2026-10-06)
+
+- **Menú:**
+  - Inicio · Servicios · **Envíos Internacionales** (→ `/destinos/`, con el desplegable de países) · Contacto · Rastrea tu Pedido.
+  - «Nosotros» va en el pie, al inicio de «Servicios y enlaces».
+  - Plantillas: `template-parts/header.html` y `footer.html`. En cada ruta, los enlaces se adaptan solos (`/us/sobre-nosotros-envios-a-estados-unidos/`).
+- **Selector de país:** no se oculta por ancho fijo. `grAjustarCabecera()` (`main.js`) mide si el último enlace choca con el selector:
+  - primero oculta el nombre del país (`gr-sin-nombre`; queda la bandera con su `aria-label`);
+  - si aún no cabe, aprieta la separación y la letra (`gr-menu-apretado`).
+  - Con la regla fija anterior, «Estados Unidos» pisaba «Rastrea tu Pedido» a 1366 px.
+  - Medido: cabe de 993 a 1600 px en `/us/` y en Perú.
+- **Panel de países:**
+  - Dos columnas (unos 220 px de alto con 11 países). En una columna medía 430 px y, con la ventana baja, se desplazaba por dentro: empezaba en «Bolivia».
+  - Siempre opaco y con `z-index: 1000`. El `transition: all .25s … .1s` del tema animaba la opacidad y el z-index al cerrar, y se veía gris y translúcido.
+  - Se abre también con el teclado (`:focus-within`). El país actual va marcado con un ✓.
+  - El tema fuerza `.header-menu-wrap li ul { display: block !important }`; por eso el panel lleva `display: grid !important`.
+  - `grenvios_i18n_switcher_html()` quita los países repetidos: la ruta principal y la ruta `pe` de Polylang salían las dos como «Perú».
+- **`/destinos/` daba 404:**
+  - Una categoría vacía `destinos` (y `destinos-<país>` en cada ruta) tenía regla de URL, y esas reglas van antes que las de páginas.
+  - `grenvios_upn_reglas_terminos()` ya no crea reglas para slugs que son de una página.
+  - Las reglas se regeneran al entrar un administrador en el panel tras subir `GRENVIOS_UPN_V`.
+- **Versiones de CSS y JS:** se versionan por la fecha del fichero (`filemtime`), no con `LOGISKO_VER`. Con la constante fija, un `main.js` cambiado seguía saliendo de la caché del navegador.
