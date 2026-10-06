@@ -252,7 +252,8 @@ add_action( 'wp_enqueue_scripts', function () {
 	);
 	$prev = array();
 	foreach ( $styles as $handle => $path ) {
-		wp_enqueue_style( $handle, $uri . $path, $prev, LOGISKO_VER );
+		$f = get_template_directory() . $path;   // versión = fecha del fichero (ver scripts)
+		wp_enqueue_style( $handle, $uri . $path, $prev, file_exists( $f ) ? (string) filemtime( $f ) : LOGISKO_VER );
 		$prev = array( $handle );
 	}
 	/* Tipografía del sitio (Poppins, la de la maqueta). Se carga como hoja propia,
@@ -261,7 +262,7 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_enqueue_style( 'grenvios-fuente', 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap', array(), null );
 	$prev[] = 'grenvios-fuente';
 
-	wp_enqueue_style( 'logisko-style', get_stylesheet_uri(), $prev, LOGISKO_VER );
+	wp_enqueue_style( 'logisko-style', get_stylesheet_uri(), $prev, (string) filemtime( get_stylesheet_directory() . '/style.css' ) );
 
 	/* Idiomas de escritura derecha-a-izquierda (arabe, hebreo): hoja adicional
 	 * que solo se carga cuando el idioma activo es RTL. */
@@ -296,7 +297,10 @@ add_action( 'wp_enqueue_scripts', function () {
 	);
 	$prev = array( 'jquery' );
 	foreach ( $scripts as $handle => $path ) {
-		wp_enqueue_script( $handle, $uri . $path, $prev, LOGISKO_VER, true );
+		/* Versión = fecha del fichero: con la constante fija, un main.js cambiado
+		 * seguía saliendo de la caché del navegador. */
+		$f = get_template_directory() . $path;
+		wp_enqueue_script( $handle, $uri . $path, $prev, file_exists( $f ) ? (string) filemtime( $f ) : LOGISKO_VER, true );
 		$prev = array( $handle );
 	}
 

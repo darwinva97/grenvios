@@ -34,7 +34,9 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'GRENVIOS_UPN_V', 1 );
+/* 2: regenera las reglas sin los términos que chocan con páginas (y reintenta
+ * los renombres, que en producción no se habían aplicado). */
+define( 'GRENVIOS_UPN_V', 2 );
 
 /* ─────────────────────────────────────────────────────────────────────────
  * 0) Renombres de términos que chocaban con páginas o entre taxonomías
@@ -141,9 +143,16 @@ add_filter( 'term_link', function ( $url, $term, $tax ) {
 }, 99, 3 );
 
 function grenvios_upn_reglas_terminos( $tax, $var ) {
+	global $wpdb;
 	$slugs = get_terms( array( 'taxonomy' => $tax, 'hide_empty' => false, 'lang' => '', 'fields' => 'id=>slug' ) );
 	if ( is_wp_error( $slugs ) || ! $slugs ) return array();
-	$alt = implode( '|', array_map( function ( $s ) { return preg_quote( $s, '#' ); }, array_values( $slugs ) ) );
+	/* Gana la página: estas reglas van antes que las de páginas, y un término con
+	 * el slug de una página (la categoría «destinos», o «destinos-ecuador» frente
+	 * a /ec/destinos-ecuador/) la dejaba en 404. */
+	$paginas = $wpdb->get_col( "SELECT DISTINCT post_name FROM {$wpdb->posts} WHERE post_type='page' AND post_status='publish'" );
+	$slugs   = array_diff( array_values( $slugs ), (array) $paginas );
+	if ( ! $slugs ) return array();
+	$alt = implode( '|', array_map( function ( $s ) { return preg_quote( $s, '#' ); }, $slugs ) );
 	return array(
 		'(' . $alt . ')/page/?([0-9]{1,})/?$' => 'index.php?' . $var . '=$matches[1]&paged=$matches[2]',
 		'(' . $alt . ')/?$'                   => 'index.php?' . $var . '=$matches[1]',
