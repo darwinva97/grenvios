@@ -628,7 +628,9 @@
 
         // Nice Select Active (los .gr-select-nativo se quedan nativos: misma caja
         // que los demás campos, accesibles y sin desfase tras form.reset())
-        $('select').not('.gr-select-nativo').niceSelect();
+        // y los del cotizador (.gr-hq), que ya tienen su desplegable propio en
+        // hero-quote.js: con los dos encima, el icono se descolocaba.
+        $('select').not('.gr-select-nativo, .gr-hq select').niceSelect();
 
         // Cabecera: si el último enlace del menú choca con el selector de país,
         // primero se oculta el nombre (queda la bandera y su aria-label) y, si aún

@@ -44,6 +44,9 @@ Complementa a:
 - **Dónde:** al pie de cada página (`do_action( 'grenvios_pagina_cierre', $slug )` en `page.php`, tras las FAQ).
   - Sustituye a la llamada final «¿Listo para enviar?» (`grenvios_cta_enabled` → false) para no repetir.
   - Excluidas: portada, `cotizar`, `contacto` y `rastreo-de-envios` (filtro `grenvios_form_excluir`).
+  - **Tampoco sale en las fichas de destino**: ya tienen su cotizador (`dest-cotiza`, en `inc/destinos-ciudades.php`). Ese cotizador llama a `grenvios_rd_cotizador_propio( true )`, y entonces no se pintan ni el formulario del pie ni la franja CTA. Antes las fichas tenían dos formularios. **Regla: un solo formulario de cotización por página.** Si una sección nueva trae su propio formulario, que también llame a `grenvios_rd_cotizador_propio( true )`.
+  - La portada tampoco tiene ya la sección «Pide tu cotización al instante» (`quick-quote`): repetía el cotizador del hero.
+  - Los desplegables del cotizador (`.gr-hq`) tienen su propio desplegable en `hero-quote.js` y se quedan fuera de nice-select. Con los dos encima, el icono se descolocaba en las pantallas táctiles.
 - **Se adapta solo a la página:**
   - título «Cotiza tu envío a <país>»;
   - país preseleccionado;
@@ -123,7 +126,9 @@ PYTHONIOENCODING=utf-8 MSYS_NO_PATHCONV=1 python a11y-perf.py co/envio-de-docume
   - Con la regla fija anterior, «Estados Unidos» pisaba «Rastrea tu Pedido» a 1366 px.
   - Medido: cabe de 993 a 1600 px en `/us/` y en Perú.
 - **Panel de países:**
-  - Dos columnas (unos 220 px de alto con 11 países). En una columna medía 430 px y, con la ventana baja, se desplazaba por dentro: empezaba en «Bolivia».
+  - Una columna justo debajo del selector, alineada con su borde izquierdo (`left: -14px`, 232 px). Si solo se ve la bandera (`gr-sin-nombre`), se abre hacia la izquierda para no salirse de la pantalla.
+  - El cliente rechazó las dos columnas: se abrían sobre el menú.
+  - Alto máximo `calc(100vh - 150px)`: si la ventana es baja, se desplaza por dentro en vez de recortarse.
   - Siempre opaco y con `z-index: 1000`. El `transition: all .25s … .1s` del tema animaba la opacidad y el z-index al cerrar, y se veía gris y translúcido.
   - Se abre también con el teclado (`:focus-within`). El país actual va marcado con un ✓.
   - El tema fuerza `.header-menu-wrap li ul { display: block !important }`; por eso el panel lleva `display: grid !important`.
@@ -133,3 +138,17 @@ PYTHONIOENCODING=utf-8 MSYS_NO_PATHCONV=1 python a11y-perf.py co/envio-de-docume
   - `grenvios_upn_reglas_terminos()` ya no crea reglas para slugs que son de una página.
   - Las reglas se regeneran al entrar un administrador en el panel tras subir `GRENVIOS_UPN_V`.
 - **Versiones de CSS y JS:** se versionan por la fecha del fichero (`filemtime`), no con `LOGISKO_VER`. Con la constante fija, un `main.js` cambiado seguía saliendo de la caché del navegador.
+
+## 6. Una sola FAQ por página (2026-10-06)
+
+- Las fichas pintaban dos bloques de FAQ: «Preguntas frecuentes sobre X» (5 preguntas generadas con los datos del gestor) y el acordeón final (`grenvios_render_page_faqs`).
+- Ahora las 5 preguntas de la ficha van al **principio del acordeón final**, sin repetir: `$GLOBALS['grenvios_dsec_faq_visibles']` en `inc/destinos-secciones.php`.
+- El esquema FAQPage sigue siendo uno solo y coincide con lo visible.
+- El chip «Preguntas» del índice apunta a `#preguntas-frecuentes`, el `id` del acordeón.
+- **Una URL, una entrada:**
+  - La ruta principal y la ruta `pe` de Polylang pueden tener dos entradas con el mismo slug.
+  - La URL encontraba las dos y `single.php` pintaba la página dos veces: dos H1 y dos FAQ, y la primera era la del otro idioma.
+  - Ahora el filtro `the_posts` (`inc/urls-primer-nivel.php` §5) se queda con la entrada cuyo enlace coincide con la dirección pedida.
+  - Caso real: `como-enviar-tus-compras-hechas-en-peru` (2205 y 2234).
+- **Verificar:** baja el sitio (páginas + entradas del sitemap) y pasa `grenvios-secciones/scripts/duplicados.py <carpeta> <salida.json>`. Cuenta formularios de cotización y contacto, bloques de FAQ, preguntas repetidas y esquemas FAQPage por página.
+  - Medido el 2026-10-06 sobre 831 páginas y entradas de las 9 rutas: antes, 18 páginas con dos formularios y 10 con dos FAQ; con los cambios, 0 y 0. Ninguna página con dos FAQPage.

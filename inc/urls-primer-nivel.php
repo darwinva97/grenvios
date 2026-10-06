@@ -507,3 +507,19 @@ function grenvios_upn_sitemap_xsl() {
 </xsl:template>
 </xsl:stylesheet>';
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * 5) Una URL, una entrada
+ *    La ruta principal y la ruta «pe» de Polylang pueden tener dos entradas con
+ *    el mismo slug (p. ej. «como-enviar-tus-compras-hechas-en-peru»). La URL las
+ *    encontraba a las dos y single.php pintaba la página dos veces: dos H1, dos
+ *    FAQ y, primero, la del otro idioma. Se queda la que vive en esta dirección.
+ * ───────────────────────────────────────────────────────────────────────── */
+add_filter( 'the_posts', function ( $posts, $q ) {
+	if ( is_admin() || ! $q->is_main_query() || ! $q->is_singular() || count( (array) $posts ) < 2 ) return $posts;
+	$pedida = untrailingslashit( (string) wp_parse_url( isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '', PHP_URL_PATH ) );
+	foreach ( $posts as $p ) {
+		if ( untrailingslashit( (string) wp_parse_url( get_permalink( $p ), PHP_URL_PATH ) ) === $pedida ) return array( $p );
+	}
+	return array( $posts[0] );
+}, 10, 2 );

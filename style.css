@@ -1686,6 +1686,7 @@ img { max-width: 100%; height: auto; }
 .gr-hq-input > i {
     position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
     color: #9aa1ab; font-size: 15px; pointer-events: none;
+    z-index: 2;   /* sobre el botón blanco del desplegable propio (.gr-dd), que lo tapaba */
 }
 .gr-hq-input input,
 .gr-hq-input select {

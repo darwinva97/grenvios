@@ -1504,6 +1504,20 @@ function grenvios_render_page_faqs( $slug ) {
 		if ( trim( (string) $q ) === '' && trim( (string) $a ) === '' ) continue;
 		$faqs[] = array( $q, $a );
 	}
+	/* Preguntas propias de la ficha de destino (inc/destinos-secciones.php): antes
+	 * salían en un segundo bloque de FAQ; van en este, primero y sin repetir. */
+	if ( ! empty( $GLOBALS['grenvios_dsec_faq_visibles'] ) ) {
+		$clave  = function ( $q ) { return mb_strtolower( trim( wp_strip_all_tags( (string) $q ) ) ); };
+		$vistas = array();
+		foreach ( $faqs as $f ) $vistas[ $clave( $f[0] ) ] = true;
+		$extra = array();
+		foreach ( (array) $GLOBALS['grenvios_dsec_faq_visibles'] as $f ) {
+			if ( isset( $vistas[ $clave( $f[0] ) ] ) ) continue;
+			$vistas[ $clave( $f[0] ) ] = true;
+			$extra[] = array( $f[0], wp_strip_all_tags( $f[1] ) );
+		}
+		$faqs = array_merge( $extra, $faqs );
+	}
 	if ( empty( $faqs ) ) return false;
 	$pf_sub   = function_exists( 'grenvios_field' ) ? grenvios_field( 'pf_sub', 'Preguntas frecuentes' ) : 'Preguntas frecuentes';
 	$pf_title = function_exists( 'grenvios_field' ) ? grenvios_field( 'pf_title', 'Resolvemos tus <span class="hl">dudas</span>' ) : 'Resolvemos tus <span class="hl">dudas</span>';
@@ -1511,7 +1525,7 @@ function grenvios_render_page_faqs( $slug ) {
 	$base = 'pf-' . sanitize_html_class( $slug );
 	ob_start();
 	?>
-	<section class="grenvios-faq-section blog-section padding">
+	<section class="grenvios-faq-section blog-section padding" id="preguntas-frecuentes">
 		<div class="container">
 			<div class="section-heading text-center">
 				<h3 class="sub-heading is-border"><?php echo esc_html( $pf_sub ); ?><span class="sh-underline"><img class="sh-truck" src="<?php echo esc_url( $uri . '/assets/img/truck.svg' ); ?>" alt="truck"></span></h3>

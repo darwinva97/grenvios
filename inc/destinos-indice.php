@@ -31,8 +31,8 @@ function grenvios_toc_items() {
 		'via'        => array( '/^Aéreo o terrestre/u',         'Aéreo o terrestre' ),
 		'ciudades'   => array( '/^Ciudades de/u',               'Ciudades' ),
 		'datos'      => array( '/^Datos prácticos/u',           'Datos prácticos' ),
-		'preguntas'  => array( '/^Preguntas frecuentes sobre/u', 'Preguntas' ),
 		'cotizar'    => array( '/^Cotiza tu envío/u',           'Cotizar' ),
+		'preguntas'  => array( '/^Preguntas frecuentes sobre/u', 'Preguntas' ),
 	);
 }
 
@@ -47,6 +47,12 @@ add_filter( 'grenvios_html_final', function ( $html ) {
 
 	$enlaces = '';
 	foreach ( grenvios_toc_items() as $k => $it ) {
+		/* Las preguntas de la ficha ya no tienen sección propia: van en el
+		 * acordeón final (#preguntas-frecuentes, grenvios_render_page_faqs). */
+		if ( $k === 'preguntas' && ! empty( $GLOBALS['grenvios_dsec_faq_visibles'] ) ) {
+			$enlaces .= '<li><a href="#preguntas-frecuentes">' . esc_html( grenvios_field( 'toc_preguntas', $it[1] ) ) . '</a></li>';
+			continue;
+		}
 		/* El H2 que abre la sección; se le da el ancla a su <section>. */
 		if ( ! preg_match_all( '~<h2[^>]*>(.*?)</h2>~su', $html, $m, PREG_OFFSET_CAPTURE ) ) break;
 		foreach ( $m[1] as $h ) {

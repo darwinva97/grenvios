@@ -97,14 +97,22 @@ add_filter( 'grenvios_pais_bloque_html', 'grenvios_rd_bloques', 10 );
 /* ═════════════════════════════════════════════════════════════════════════
  * 2) Formulario de solicitud al pie de cada página
  * ═════════════════════════════════════════════════════════════════════════ */
+/* ¿La página ya pintó su propio cotizador (ficha de destino: dest-cotiza)?
+ * Entonces no lleva un segundo formulario al pie. */
+function grenvios_rd_cotizador_propio( $marcar = false ) {
+	static $hay = false;
+	if ( $marcar ) $hay = true;
+	return $hay;
+}
+
 function grenvios_rd_form_activo( $slug ) {
-	if ( is_front_page() || ! is_page() ) return false;
+	if ( is_front_page() || ! is_page() || grenvios_rd_cotizador_propio() ) return false;
 	return ! in_array( (string) $slug, apply_filters( 'grenvios_form_excluir', array( 'cotizar', 'contacto', 'home', 'rastreo-de-envios' ) ), true );
 }
 
 /* La llamada final («¿Listo para enviar?») se sustituye por el formulario. */
 add_filter( 'grenvios_cta_enabled', function ( $on, $slug ) {
-	return grenvios_rd_form_activo( $slug ) ? false : $on;
+	return ( grenvios_rd_form_activo( $slug ) || grenvios_rd_cotizador_propio() ) ? false : $on;
 }, 20, 2 );
 
 /* Tipo de envío sugerido por el tema de la página. */
