@@ -45,8 +45,11 @@ function grenvios_rd_etiqueta( $titulo ) {
 		'no se puede' => 'Restricciones', 'embal' => 'Embalaje', 'precio' => 'Precio', 'cuesta' => 'Precio',
 		'compar' => 'Comparativa', 'quien' => 'Quién envía', 'comunidad' => 'Quién envía', 'temporada' => 'Fechas clave',
 		'error' => 'Errores frecuentes', 'checklist' => 'Antes de despachar', 'lista' => 'Antes de despachar',
+		// Al final: un título sobre impuestos o plazos «terrestres» es de aduana o de plazos.
+		'aere' => 'La ruta', 'terrestre' => 'La ruta',
 	);
-	foreach ( $m as $k => $v ) if ( strpos( $t, $k ) !== false ) return $v;
+	/* Desde el inicio de palabra: «via» no debe saltar dentro de «enviarlas». */
+	foreach ( $m as $k => $v ) if ( preg_match( '~\\b' . preg_quote( $k, '~' ) . '~u', $t ) ) return $v;
 	return '';
 }
 

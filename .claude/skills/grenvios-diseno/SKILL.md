@@ -17,6 +17,8 @@ Tema WordPress en `wp-content/themes/grenvios/`, sitio local `http://greenvios.l
 > **Diseño visual de secciones, imágenes y animaciones → skill `grenvios-ui`.** Cárgala también
 > cuando crees o cambies una sección: una sección nunca es solo «título + párrafo».
 
+> **Norma de secciones** (qué debe tener cada una, convertidor de secciones de solo texto, auditoría y comparación entre países) → skill **grenvios-secciones**.
+
 > Para el diseño de páginas de ruta, servicio, destino y blog por país (bloques del país v3, formulario de solicitud, cabecera del blog), ver la skill **grenvios-rutas**.
 
 ## 1. Regla de oro: reutilizar, no inventar

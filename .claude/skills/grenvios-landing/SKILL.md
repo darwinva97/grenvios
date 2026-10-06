@@ -24,6 +24,7 @@ mayoría del tráfico es móvil).
 | **Guía del blog** | H1 + extracto → cuerpo con H2 que responden preguntas → FAQ → «Sigue leyendo» con miniatura → CTA | `inc/blog-guias*.php` |
 
 Reglas de composición:
+- **Qué tiene que tener cada sección** (cabecera + cuerpo + un elemento visual), el convertidor automático de secciones de solo texto y la auditoría están en la skill **grenvios-secciones**.
 - **Nunca dos secciones seguidas con la misma forma** (dos rejillas de tarjetas, dos listas). Alterna: texto+foto → tarjetas → tabla → franja.
 - **Un elemento visual por sección**: foto, ilustración, icono grande, número o bandera. Una sección de solo texto es un error.
 - **Un CTA cada 2–3 pantallas**, siempre el mismo verbo («Cotizar mi envío») + WhatsApp como secundario.
@@ -38,6 +39,7 @@ Reglas de composición:
 | Rosado con esquinas de 40 px | la sección principal de la página | `.gr-dsol--v2` |
 | Vino degradado | franjas de cierre y CTA; **máx. una por pantalla** | `.dest-precio-cta`, `.grenvios-cta-box` |
 | Foto con velo vino (≥ 80 % de opacidad a la izquierda) | cabeceras sobre foto (portada «Destinos») | `.project-section .bg-half::after` |
+| Foto con velo vino en la franja CTA | franja «¿Listo para enviar?» de todas las páginas (`.cta-section .cta-wrapper`) | foto `ejemplo/almacen-pasillo` en el fondo del wrapper y velo en `::before` (gr-landing.css §17); la foto se cambia en Personalizar («Fondo: franja de llamada a la acción»), el velo se queda |
 | Ruta punteada con punto de destino | márgenes de secciones anchas, solo ≥ 1500 px, nunca detrás de texto | `::before/::after` en `gr-landing.css` §4 |
 
 Nunca dos fondos de color seguidos sin un blanco entre medias. Texto sobre foto solo con velo.

@@ -133,6 +133,7 @@ require_once get_template_directory() . '/inc/home-mas.php';
 require_once get_template_directory() . '/inc/peru-seo-ampliacion.php';
 require_once get_template_directory() . '/inc/paginas-nuevas-seo.php';
 require_once get_template_directory() . '/inc/ui-bloques.php';
+require_once get_template_directory() . '/inc/secciones-visuales.php';
 require_once get_template_directory() . '/inc/ui-global.php';
 // Estilo v2 (maquetas del cliente) en todo el sitio; cada página puede volver al clásico desde el panel.
 require_once get_template_directory() . '/inc/estilo-v2.php';
