@@ -482,19 +482,24 @@
         overflow-y: auto;
     }
 
-    /* ── Panel de países en dos columnas (2026-10-06) ─────────────────────────
-     * En una columna, once países medían 430 px: con la ventana baja el panel
-     * se desplazaba por dentro y empezaba en «Bolivia». En dos columnas mide
-     * unos 230 px. Siempre opaco y por encima del hero: el `transition: all`
-     * del tema animaba la opacidad y el z-index con 0,1 s de retraso al
-     * cerrar, y el panel se veía gris y translúcido. */
+    /* ── Panel de países (2026-10-06) ─────────────────────────────────────────
+     * Una columna justo debajo del selector, alineada con su borde izquierdo.
+     * Antes se recortaba (empezaba en «Bolivia») y se veía gris: el
+     * `transition: all` del tema animaba opacidad y z-index con 0,1 s de
+     * retraso al cerrar. Ahora es opaco, va por encima del hero y, si la
+     * ventana es baja, mide lo que queda de pantalla y se desplaza por dentro. */
     .header-menu-wrap .menu-right-item .grenvios-lang-switcher > ul {
         /* !important: el tema fuerza `.header-menu-wrap li ul { display: block !important }`. */
         display: grid !important;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 2px 6px;
-        width: 380px;
-        padding: 10px;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 2px;
+        left: -14px;
+        right: auto;
+        width: 232px;
+        max-height: calc(100vh - 150px);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding: 8px;
         border-radius: 14px;
         border: 1px solid #efe6e0;
         background: #fff;
@@ -502,6 +507,12 @@
         z-index: 1000;
         transform: none;
         transition: opacity .15s ease, visibility 0s linear .15s;
+    }
+    /* Con solo la bandera (ancho justo), se abre hacia la izquierda para no
+     * salirse de la pantalla. */
+    .header-menu-wrap.gr-sin-nombre .menu-right-item .grenvios-lang-switcher > ul {
+        left: auto;
+        right: -14px;
     }
     .header-menu-wrap .menu-right-item .grenvios-lang-switcher:hover > ul,
     .header-menu-wrap .menu-right-item .grenvios-lang-switcher:focus-within > ul {
