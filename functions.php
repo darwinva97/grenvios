@@ -95,6 +95,7 @@ require_once get_template_directory() . '/inc/diseno-tarjetas.php';
 require_once get_template_directory() . '/inc/servicios-mas.php';
 require_once get_template_directory() . '/inc/paginas-contenido-seo.php';
 require_once get_template_directory() . '/inc/contenido-ampliacion.php';
+require_once get_template_directory() . '/inc/contenido-ampliacion-2.php';
 require_once get_template_directory() . '/inc/seo-entradas.php';
 require_once get_template_directory() . '/inc/blog-guias-contenido.php';
 require_once get_template_directory() . '/inc/blog-guias-importar.php';
