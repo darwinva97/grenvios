@@ -194,6 +194,19 @@ function grenvios_hd_tarjetas() {
 		 * ejemplo del país. */
 		$n++;
 		$img = trim( (string) grenvios_field( 'home_hd_img_' . str_replace( '-', '_', $slug ), '' ) );
+		/* Si no, la imagen destacada de la ficha del país; si tampoco, la de ejemplo. */
+		if ( $img === '' && function_exists( 'grenvios_imagen_destacada' ) ) {
+			$fm = get_page_by_path( 'destinos/' . $slug );
+			if ( $fm ) {
+				$fid = $fm->ID;
+				if ( function_exists( 'pll_get_post' ) && function_exists( 'grenvios_i18n_current' ) ) {
+					$t = (int) pll_get_post( $fm->ID, grenvios_i18n_current() );
+					if ( $t ) $fid = $t;
+				}
+				$img = grenvios_imagen_destacada( $fid, 'large' );
+				if ( $img === '' && $fid !== $fm->ID ) $img = grenvios_imagen_destacada( $fm->ID, 'large' );
+			}
+		}
 		if ( $img === '' && function_exists( 'grenvios_ej_img' ) ) $img = grenvios_ej_img( $slug );
 		$aire = ! empty( $d['aereo'] ); $terr = ! empty( $d['terr'] );
 		$via_ic = ( $aire ? '<i class="fa-solid fa-plane" aria-hidden="true"></i>' : '' ) . ( $terr ? '<i class="fa-solid fa-truck" aria-hidden="true"></i>' : '' );

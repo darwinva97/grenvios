@@ -299,3 +299,13 @@ titulares desbordados. Después **mira las capturas** (córtalas en tramos, mide
 el detector no ve un botón sin estilo ni una sección mal colocada.
 
 Para menús y desplegables, hover/clic reales por CDP (no forzar CSS).
+
+### Imagen destacada de cada página (2026-10-08)
+- La **imagen destacada** de WordPress («Set featured image» en el editor, o «🖼️ Imagen de esta página» en el panel «Editar») manda en:
+  - **og:image / twitter:image** al compartir el enlace;
+  - el **sitemap de imágenes**;
+  - las tarjetas de destinos de la portada (si la tarjeta no tiene foto propia);
+  - en las entradas, además, las tarjetas de los listados.
+- `grenvios_imagen_destacada( $id )` (`functions.php`): la de la página o, si es la copia de una ruta y no tiene la suya, la de su original de Perú. Basta con ponerla una vez en Perú; cada país puede cambiarla por la suya.
+- Sin imagen destacada: se usa lo que había (hero de la página, carrusel en la portada, foto de ejemplo por tema), nunca un relleno.
+- La página del blog (`is_home`) también usa la suya (`grenvios_og_post_id()`).

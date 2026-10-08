@@ -23,6 +23,18 @@ function grenvios_ee_adjunto( $url ) {
 	return (int) $id;
 }
 
+/* Páginas: la imagen destacada es la que sale al compartir el enlace (og:image),
+ * en el sitemap de imágenes y en las tarjetas que enlazan a la página. Vacía en
+ * la copia de un país = la de la página de Perú. */
+add_action( 'grenvios_editor_secciones', function ( $slug, $post_id = 0, $render_field = null ) {
+	if ( ! is_callable( $render_field ) || ! $post_id || get_post_type( $post_id ) !== 'page' ) return;
+	$img = (string) get_the_post_thumbnail_url( $post_id, 'large' );
+	echo '<div class="nep-accordion"><button class="nep-acc-header" type="button"><span>🖼️ Imagen de esta página (al compartir y en tarjetas)</span><i class="fa-solid fa-chevron-down"></i></button>'
+		. '<div class="nep-acc-body"><div class="nep-grid">'
+		. $render_field( 'post_imagen', 'Imagen destacada', 'image', $img, 'Es la que se ve al compartir el enlace (WhatsApp, Facebook…) y en las tarjetas que enlazan aquí. Vacía: en un país se usa la de Perú; si tampoco hay, una del tema.' )
+		. '</div></div></div>';
+}, 5, 3 );
+
 add_action( 'grenvios_editor_secciones', function ( $slug, $post_id = 0, $render_field = null ) {
 	if ( ! is_callable( $render_field ) || ! grenvios_ee_es_entrada( $post_id ) ) return;
 	$p   = get_post( $post_id );
@@ -36,7 +48,8 @@ add_action( 'grenvios_editor_secciones', function ( $slug, $post_id = 0, $render
 }, 5, 3 );
 
 add_action( 'grenvios_editor_guardar', function ( $request, $post_id ) {
-	if ( ! grenvios_ee_es_entrada( $post_id ) ) return;
+	$tipo = get_post_type( $post_id );
+	if ( $tipo !== 'post' && $tipo !== 'page' ) return;
 	$f = $request->get_param( 'fields' );
 	if ( ! is_array( $f ) ) return;
 
@@ -51,6 +64,7 @@ add_action( 'grenvios_editor_guardar', function ( $request, $post_id ) {
 		delete_post_meta( $post_id, 'grenvios_post_imagen' );   // la fuente es la imagen destacada
 	}
 
+	if ( $tipo !== 'post' ) return;   // título y extracto: solo en las entradas
 	$cambios = array();
 	if ( isset( $f['post_titulo'] ) && trim( (string) $f['post_titulo'] ) !== '' ) $cambios['post_title'] = sanitize_text_field( (string) $f['post_titulo'] );
 	if ( isset( $f['post_extracto'] ) ) $cambios['post_excerpt'] = sanitize_textarea_field( (string) $f['post_extracto'] );
