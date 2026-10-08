@@ -311,6 +311,11 @@ Para menús y desplegables, hover/clic reales por CDP (no forzar CSS).
 - `grenvios_imagen_destacada( $id )` (`functions.php`): la de la página o, si es la copia de una ruta y no tiene la suya, la de su original de Perú. Basta con ponerla una vez en Perú; cada país puede cambiarla por la suya.
 - Sin imagen destacada: se usa lo que había (hero de la página, carrusel en la portada, foto de ejemplo por tema), nunca un relleno.
 - La página del blog (`is_home`) también usa la suya (`grenvios_og_post_id()`).
+- **Todas las páginas y entradas tienen una imagen destacada asignada** (`inc/imagenes-destacadas.php`, 2026-10-08).
+  - Las fotos de ejemplo se suben una vez a la Biblioteca de medios (sin `bodega`) y cada contenido sin imagen recibe la que corresponde a su título y su slug.
+  - Se procesan en tandas de 200 al entrar al panel (`GRENVIOS_DESTACADAS_V`) y al guardar.
+  - No se toca nada que ya tenga imagen, ni la portada principal (comparte la foto del carrusel).
+  - Si el cliente quita la imagen de una página y la guarda en el editor de WordPress, vuelve a recibir una de ejemplo: para cambiarla, que ponga otra.
 
 ### Mínimos de FAQ y contenido (2026-10-08, `inc/contenido-ampliacion-2.php`)
 - **FAQ: 7 por página**, también en las rutas. El filtro `grenvios_page_faqs` (prioridad 99) completa con preguntas propias del tipo de página (`grenvios_fa_propias()`) y luego con comunes (plazo, vía, entrega, precio, seguimiento, impuestos, recojo, datos del destinatario, cotizar). No añade una pregunta si ya hay otra del mismo tema.
