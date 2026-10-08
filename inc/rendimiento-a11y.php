@@ -42,7 +42,7 @@ function grenvios_ra_img_de( $id ) {
 /* og:image / twitter:image: la de la página si es real; si no, la del tema. */
 add_filter( 'grenvios_og_image', function ( $u ) {
 	if ( $u && ! grenvios_ra_es_relleno( $u ) ) return $u;
-	$id = is_singular() ? (int) get_queried_object_id() : 0;
+	$id = function_exists( 'grenvios_og_post_id' ) ? grenvios_og_post_id() : ( is_singular() ? (int) get_queried_object_id() : 0 );
 	$r  = grenvios_ra_img_de( $id );
 	return $r ? $r : $u;
 } );

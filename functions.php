@@ -820,12 +820,38 @@ add_filter( 'pre_get_document_title', function ( $title ) {
 function grenvios_og_image() {
 	return (string) apply_filters( 'grenvios_og_image', grenvios_og_image_base() );
 }
-function grenvios_og_image_base() {
-	// 1) Imagen destacada del post/página
-	if ( is_singular() && has_post_thumbnail() ) {
-		$u = get_the_post_thumbnail_url( get_queried_object_id(), 'full' );
-		if ( $u ) return $u;
+/* Imagen destacada de una página o entrada; si es la copia de una ruta de país
+ * y no tiene la suya, la de su original (Perú). Así basta con ponerla una vez
+ * y cada país puede cambiarla por la suya. */
+function grenvios_imagen_destacada( $id, $tam = 'full' ) {
+	$id = (int) $id;
+	if ( ! $id ) return '';
+	if ( has_post_thumbnail( $id ) ) return (string) get_the_post_thumbnail_url( $id, $tam );
+	if ( function_exists( 'grenvios_i18n_master_id' ) ) {
+		$m = (int) grenvios_i18n_master_id( $id );
+		if ( $m && $m !== $id && has_post_thumbnail( $m ) ) return (string) get_the_post_thumbnail_url( $m, $tam );
 	}
+	return '';
+}
+
+/* Página que se está viendo (también la del blog, que no es «singular»). */
+function grenvios_og_post_id() {
+	if ( is_singular() ) return (int) get_queried_object_id();
+	if ( is_home() && ! is_front_page() && get_option( 'page_for_posts' ) ) {
+		$id = (int) get_option( 'page_for_posts' );
+		if ( function_exists( 'pll_get_post' ) && function_exists( 'grenvios_i18n_current' ) ) {
+			$t = (int) pll_get_post( $id, grenvios_i18n_current() );
+			if ( $t ) $id = $t;
+		}
+		return $id;
+	}
+	return 0;
+}
+
+function grenvios_og_image_base() {
+	// 1) Imagen destacada de la página o entrada (o la de su original de Perú).
+	$u = grenvios_imagen_destacada( grenvios_og_post_id() );
+	if ( $u !== '' ) return $u;
 	$slug = grenvios_current_slug();
 
 	// 2a) Página de destino-país → imagen de fondo del banner del hero
@@ -1064,11 +1090,9 @@ function grenvios_sitemap_image_base( $post_id ) {
 	$post_id = (int) $post_id;
 	if ( ! $post_id ) return '';
 
-	// 1) Imagen destacada de la página.
-	if ( has_post_thumbnail( $post_id ) ) {
-		$u = get_the_post_thumbnail_url( $post_id, 'full' );
-		if ( $u ) return $u;
-	}
+	// 1) Imagen destacada de la página (o la de su original de Perú).
+	$u = grenvios_imagen_destacada( $post_id );
+	if ( $u !== '' ) return $u;
 
 	// 2) Hero o banner puesto en el editor de esa página.
 	foreach ( get_post_meta( $post_id ) as $k => $v ) {
