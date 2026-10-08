@@ -369,12 +369,14 @@ Tags: logistics, transportation, shipping, business, custom-menu, featured-image
 .header-menu-wrap li ul li.menu-group-label::after { content: none; display: none; }
 /* Mega-dropdown de Destinos en 2 columnas (solo desktop) */
 @media (min-width: 993px) {
+    /* Una columna y ancho justo (el cliente lo pidió más estrecho): los nombres
+     * de país caben de sobra en 250 px. */
     .header-menu-wrap li ul.grenvios-mega-destinos {
-        width: 520px;
-        left: -90px;
-        padding: 12px 14px 16px;
+        width: 250px;
+        left: -14px;
+        padding: 10px 10px 12px;
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: minmax(0, 1fr);
         column-gap: 10px;
         row-gap: 0;
     }
