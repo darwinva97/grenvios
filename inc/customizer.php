@@ -865,6 +865,7 @@ function grenvios_text_registry() {
 				'historia' => array(
 					'label'  => 'Nosotros · Historia, Misión y Visión',
 					'fields' => array(
+						'nos_historia_sub' => array( 'Antetítulo', 'text', 'Quiénes somos' ),
 						'nos_historia_title' => array( 'Título', 'text', 'Nuestra historia' ),
 						'nos_historia_text' => array( 'Texto historia', 'html', 'Grenvíos nació con una misión clara: conectar personas, negocios y sueños sin importar las distancias. Nos especializamos en el transporte internacional de <a href="HOMEURL/servicios/envio-internacional-de-paquetes/">paquetes</a>, <a href="HOMEURL/servicios/envio-internacional-de-documentos/">documentos</a> y <a href="HOMEURL/servicios/carga-internacional/">carga</a>, uniendo de manera eficiente a toda América, Europa y Asia con cobertura a más de 30 <a href="HOMEURL/destinos/">destinos</a>. Para ofrecerte una solución verdaderamente integral, no solo movemos tus documentos, sino que los legalizamos para el mundo: gestionamos trámites de <a href="HOMEURL/servicios/apostilla-y-traduccion/">apostilla y traducción</a> profesional al inglés e italiano. En Grenvíos eliminamos cualquier barrera logística y burocrática para que tu mundo llegue más lejos.' ),
 						'nos_historia_mision_title' => array( 'Misión · Título', 'text', 'Misión' ),
