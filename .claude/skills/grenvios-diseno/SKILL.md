@@ -313,7 +313,7 @@ Para menús y desplegables, hover/clic reales por CDP (no forzar CSS).
 - La página del blog (`is_home`) también usa la suya (`grenvios_og_post_id()`).
 - **Todas las páginas y entradas tienen una imagen destacada asignada** (`inc/imagenes-destacadas.php`, 2026-10-08).
   - Las fotos de ejemplo se suben una vez a la Biblioteca de medios (sin `bodega`) y cada contenido sin imagen recibe la que corresponde a su título y su slug.
-  - Se procesan en tandas de 200 al entrar al panel (`GRENVIOS_DESTACADAS_V`) y al guardar.
+  - Se procesan en tandas de 300 al entrar al panel, recorriendo todo por ID (`GRENVIOS_DESTACADAS_V` = 2; la v1 saltaba las que tenían `_thumbnail_id` vacío, a 0 o apuntando a una imagen borrada). También se asigna al abrir la página en el editor y después de guardar con el editor de bloques. Si las fotos no se pudieron subir, sale un aviso en el panel.
   - No se toca nada que ya tenga imagen, ni la portada principal (comparte la foto del carrusel).
   - Si el cliente quita la imagen de una página y la guarda en el editor de WordPress, vuelve a recibir una de ejemplo: para cambiarla, que ponga otra.
 
