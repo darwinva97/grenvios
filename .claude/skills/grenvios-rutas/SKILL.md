@@ -134,6 +134,8 @@ PYTHONIOENCODING=utf-8 MSYS_NO_PATHCONV=1 python a11y-perf.py co/envio-de-docume
   - Alto máximo `calc(100vh - 150px)`: si la ventana es baja, se desplaza por dentro en vez de recortarse.
   - Siempre opaco y con `z-index: 1000`. El `transition: all .25s … .1s` del tema animaba la opacidad y el z-index al cerrar, y se veía gris y translúcido.
   - Se abre también con el teclado (`:focus-within`). El país actual va marcado con un ✓.
+  - Al pasar el ratón, solo el fondo rosado del enlace: se quitan la raya vino de 3 px y el relleno gris que el tema pone a todos los submenús (`li li::before/::after`).
+- **Desplegable «Envíos Internacionales»** (`.grenvios-mega-destinos`, `style.css`): una columna de 250 px. Antes eran 520 px y el cliente lo quería más estrecho.
   - El tema fuerza `.header-menu-wrap li ul { display: block !important }`; por eso el panel lleva `display: grid !important`.
   - `grenvios_i18n_switcher_html()` quita los países repetidos: la ruta principal y la ruta `pe` de Polylang salían las dos como «Perú».
 - **`/destinos/` daba 404:**
@@ -155,3 +157,21 @@ PYTHONIOENCODING=utf-8 MSYS_NO_PATHCONV=1 python a11y-perf.py co/envio-de-docume
   - Caso real: `como-enviar-tus-compras-hechas-en-peru` (2205 y 2234).
 - **Verificar:** baja el sitio (páginas + entradas del sitemap) y pasa `grenvios-secciones/scripts/duplicados.py <carpeta> <salida.json>`. Cuenta formularios de cotización y contacto, bloques de FAQ, preguntas repetidas y esquemas FAQPage por página.
   - Medido el 2026-10-06 sobre 831 páginas y entradas de las 9 rutas: antes, 18 páginas con dos formularios y 10 con dos FAQ; con los cambios, 0 y 0. Ninguna página con dos FAQPage.
+
+## 7. Cada página habla de su país, y todo se edita desde el panel (2026-10-06)
+
+- **Auditoría país por país** (717 páginas y entradas de las 8 rutas en vivo):
+  - 184 páginas indexables, unas 23 por ruta, salían con el H1 y el title de Perú («Envío de libros al extranjero»), aunque tienen canónica propia.
+  - Ahora `grenvios_cab_mas()` (`inc/paises-cabecera.php`) les da H1, title y description del país: «Envío de libros a Argentina».
+  - Cada patrón está escrito para la intención de su página y respeta lo que la clienta edite (`grenvios_cab_sin_editar` y el filtro `grenvios_seo_guardado`, que solo sustituye el title si sigue siendo el literal de Perú).
+  - Carga terrestre solo dice «terrestre» si el país tiene esa vía (`grenvios_cab_terrestre()`).
+  - «Cuánto cuesta enviar un paquete…» pasa a «Cómo se calcula el precio…», para no competir con `cuanto-cuesta-enviar-a-<país>`.
+  - Todos los titles ocupan 60 caracteres o menos, también con «Estados Unidos».
+- **Páginas de región dentro de una ruta** («Envíos a Europa» en `/ar/`): no tratan del país. Canónica a la de Perú y fuera del sitemap (`grenvios_cab_region_original()`).
+- **Menciones de otros países:** 104 páginas nombran otro destino. Son listas generales («terrestre a Ecuador, Colombia, Chile…»), reglas («salvo hacia Chile»), testimonios y enlaces a otras rutas (enlazado interno a propósito). No se tocan.
+- **Cabecera:** idéntica en las 832 páginas y entradas (una sola plantilla).
+- **Entradas del blog en el panel** (`inc/editor-entradas.php`):
+  - acordeón «🖼️ Esta entrada» con **imagen** (la imagen destacada de WordPress: listado, «Del blog», cabecera y og:image), **título** y **extracto**;
+  - cada país tiene su propia copia de la entrada, así que cada una tiene su imagen;
+  - el cuerpo del artículo se sigue editando en el editor de WordPress.
+- **Verificar:** `python3 .claude/skills/grenvios-secciones/scripts/paises.py <carpeta_html> <salida.json>`. Lista: title o H1 sin su país, texto sin su país y menciones de otros países con contexto.

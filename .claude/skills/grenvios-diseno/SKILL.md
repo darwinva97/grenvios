@@ -61,6 +61,7 @@ Nunca pongas colores en duro: usa `var(--primary-color, #5e2129)` con respaldo.
 Formularios: campos con `form-control` (el de comentarios se añade por filtro en `inc/blog-guias.php`).
 Entradilla SEO (`.gr-ent`): va **siempre justo debajo del hero**. `page.php` la coloca con
 `grenvios_ent_tras_hero()` también en las páginas pintadas por PHP; no la imprimas a mano.
+Desde 2026-10-07 la entradilla se pinta como **sección de dos columnas**: antetítulo, el texto en su caja de cita, el botón «Cotizar mi envío» y una foto a la derecha (filtro `grenvios_html_final`, prioridad 62, en `inc/seo-entradillas.php`; CSS `.gr-ent--sec` en `gr-bloques.css`). Foto, antetítulo y botón se editan en el panel, en el acordeón «📝 Entradilla» (`ent_img`, `ent_sub`, `ent_btn`). Si la foto está vacía se usa `grenvios_ej_por_tema()`, nunca `bodega`. El marcado original se mantiene hasta esa pasada, porque `servicio-intro-v2` lo busca tal cual.
 
 **Imágenes de relleno.** Casi todo `assets/img/` son rellenos de la plantilla («1000X650»,
 siluetas grises): `post-*`, `content-bg-*`, `page-banner`, `slider-bg`, `hero-background`,

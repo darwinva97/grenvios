@@ -535,6 +535,14 @@
         transform: none;
         transition: opacity .15s ease, visibility 0s;
     }
+    /* Sin la raya vino de 3 px ni el relleno gris que el tema pone a los
+     * submenús al pasar el ratón (`li li:before/:after`): aquí el hover es
+     * solo el fondo rosado del enlace. */
+    .header-menu-wrap .menu-right-item .grenvios-lang-switcher > ul > li::before,
+    .header-menu-wrap .menu-right-item .grenvios-lang-switcher > ul > li::after {
+        content: none;
+        display: none;
+    }
     .header-menu-wrap .menu-right-item .grenvios-lang-switcher > ul > li {
         display: block;
         padding: 0;
