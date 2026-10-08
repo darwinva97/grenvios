@@ -310,3 +310,10 @@ Para menús y desplegables, hover/clic reales por CDP (no forzar CSS).
 - `grenvios_imagen_destacada( $id )` (`functions.php`): la de la página o, si es la copia de una ruta y no tiene la suya, la de su original de Perú. Basta con ponerla una vez en Perú; cada país puede cambiarla por la suya.
 - Sin imagen destacada: se usa lo que había (hero de la página, carrusel en la portada, foto de ejemplo por tema), nunca un relleno.
 - La página del blog (`is_home`) también usa la suya (`grenvios_og_post_id()`).
+
+### Mínimos de FAQ y contenido (2026-10-08, `inc/contenido-ampliacion-2.php`)
+- **FAQ: 7 por página**, también en las rutas. El filtro `grenvios_page_faqs` (prioridad 99) completa con preguntas propias del tipo de página (`grenvios_fa_propias()`) y luego con comunes (plazo, vía, entrega, precio, seguimiento, impuestos, recojo, datos del destinatario, cotizar). No añade una pregunta si ya hay otra del mismo tema.
+  - En las rutas las respuestas salen de `grenvios_dsec_red()`: plazo, vías, entrega e impuesto terrestre del país. Por eso no se duplican entre países, y si el país no tiene ruta terrestre la respuesta lo dice.
+  - Quedan fuera las fichas de destino (tienen su FAQ propia), la portada, rastreo, cotizar y las páginas de región dentro de una ruta.
+- **Contenido: unas 700 palabras** en las páginas de servicio de la ruta principal, con secciones `grenvios_pseo_secciones` (pasos, listas y una tabla de destinos con los datos del gestor donde no la había). En las rutas, mudanzas, repuestos, ropa y carga terrestre tienen sus dos bloques locales por país (`grenvios_ppl_matriz`).
+- Medir con `fino.py`: FAQ y palabras por página sobre el HTML descargado.
