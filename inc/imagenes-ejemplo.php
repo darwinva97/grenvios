@@ -113,6 +113,9 @@ add_filter( 'grenvios_campo_valor', function ( $valor, $key, $default ) {
 	if ( preg_match( '/^home_dest(\d)_img$/', $key, $m ) ) {
 		$orden  = array( 1 => 'Ecuador', 2 => 'Colombia', 3 => 'Chile', 4 => 'Estados Unidos', 5 => 'España' );
 		$nombre = grenvios_field_crudo( 'home_dest' . $m[1] . '_name', isset( $orden[ (int) $m[1] ] ) ? $orden[ (int) $m[1] ] : '' );
+		/* Primero, la imagen destacada de la ficha del país. */
+		$fd = function_exists( 'grenvios_imagen_de_ruta' ) ? grenvios_imagen_de_ruta( 'destinos/' . sanitize_title( remove_accents( $nombre ) ) ) : '';
+		if ( $fd !== '' ) return $fd;
 		$u      = grenvios_ej_img( $nombre );
 		return $u !== '' ? $u : grenvios_ej_por_tema( $nombre, 'almacen' );
 	}
