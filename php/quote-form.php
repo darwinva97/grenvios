@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/enviar.php';
 // Procesa solo solicitudes POST. Atiende el formulario de cotización (/cotizar/).
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -53,9 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Destinatario de las cotizaciones.
     $recipient = "info@grenvios.com";
     $subject   = "Nueva cotización de $name — $country";
-    if (function_exists('mb_encode_mimeheader')) {
-        $subject = mb_encode_mimeheader($subject, 'UTF-8');
-    }
+    $asunto_plano = $subject;   // wp_mail codifica el asunto él mismo
 
     // Medidas en una sola línea, si se indicaron.
     $dimensions = '';
@@ -77,15 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($declared_value !== '') $email_content .= "Valor de la mercancía: $declared_value\n";
     if ($message !== '')        $email_content .= "\nDetalles adicionales:\n$message\n";
 
-    // Cabeceras del correo. El From usa el dominio del sitio (info@grenvios.com) para
-    // pasar SPF/DKIM y NO caer en spam; las respuestas van al visitante (Reply-To).
-    $email_headers  = "From: Grenvios <info@grenvios.com>\r\n";
-    if ($has_email) $email_headers .= "Reply-To: $name <$email>\r\n";
-    $email_headers .= "MIME-Version: 1.0\r\n";
-    $email_headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-
-    // Envío.
-    if (mail($recipient, $subject, $email_content, $email_headers)) {
+    if (grenvios_form_enviar($asunto_plano, $email_content, $name, $has_email ? $email : '', 'Cotización')) {
         http_response_code(200);
         echo "¡Gracias! Recibimos tu solicitud de cotización. Te responderemos en breve.";
     } else {
