@@ -125,10 +125,20 @@ function grenvios_rd_tipo( $slug ) {
 }
 
 /* Correo que recibe las solicitudes: el de la sede, con respaldo. */
+/* Correo de la sede del país Y siempre el de la sede principal (Perú): si la
+ * sede de un país tiene otro correo, o uno mal escrito, la solicitud no se
+ * pierde. Sin duplicados cuando son el mismo. */
 function grenvios_rd_destinatario() {
 	$e = function_exists( 'grenvios_sede_tokens_apply' ) ? trim( grenvios_sede_tokens_apply( '{{contacto_email}}' ) ) : '';
-	if ( ! is_email( $e ) ) $e = (string) apply_filters( 'grenvios_form_email', 'info@grenvios.com' );
-	return $e;
+	$principal = '';
+	if ( function_exists( 'grenvios_biz' ) && function_exists( 'grenvios_sede_master' ) ) {
+		$b = grenvios_biz( grenvios_sede_master() );
+		$principal = isset( $b['email'] ) ? trim( (string) $b['email'] ) : '';
+	}
+	if ( ! is_email( $principal ) ) $principal = (string) apply_filters( 'grenvios_form_email', 'info@grenvios.com' );
+	$a = array( $principal );
+	if ( is_email( $e ) && strtolower( $e ) !== strtolower( $principal ) ) $a[] = $e;
+	return $a;
 }
 
 function grenvios_rd_form_html( $slug ) {
