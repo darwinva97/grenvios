@@ -36,7 +36,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 /* 2: regenera las reglas sin los términos que chocan con páginas (y reintenta
  * los renombres, que en producción no se habían aplicado). */
-define( 'GRENVIOS_UPN_V', 2 );
+/* 3: reglas de /envios-internacionales/ (antes /destinos/). */
+define( 'GRENVIOS_UPN_V', 3 );
 
 /* ─────────────────────────────────────────────────────────────────────────
  * 0) Renombres de términos que chocaban con páginas o entre taxonomías
@@ -266,6 +267,18 @@ add_action( 'template_redirect', function () {
 			}
 		}
 		return;
+	}
+
+	/* /destinos/[…] → /envios-internacionales/[…] (las fichas con otra canónica
+	 * las lleva el bloque de abajo directamente a su ficha de ruta). */
+	if ( is_page() && ( $ruta === 'destinos' || strpos( $ruta, 'destinos/' ) === 0 ) ) {
+		$id = (int) get_queried_object_id();
+		$c  = function_exists( 'grenvios_canib_ficha_de' ) ? grenvios_canib_ficha_de( $id ) : '';
+		$u  = get_permalink( $id );
+		if ( $c === '' && $u && trim( (string) wp_parse_url( $u, PHP_URL_PATH ), '/' ) !== $ruta ) {
+			wp_safe_redirect( $u, 301, 'Grenvios' );
+			exit;
+		}
 	}
 
 	/* Servicio pedido como /servicios/<slug>/ → /<slug>/. */
@@ -523,3 +536,43 @@ add_filter( 'the_posts', function ( $posts, $q ) {
 	}
 	return array( $posts[0] );
 }, 10, 2 );
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * 6) /destinos/ se llama /envios-internacionales/ (2026-10-08)
+ *    Como el menú («Envíos Internacionales»). En la base sigue siendo la página
+ *    «destinos» con sus hijas: el código las busca por esa ruta
+ *    (get_page_by_path( 'destinos/…' )). Solo cambia la URL pública.
+ * ───────────────────────────────────────────────────────────────────────── */
+function grenvios_upn_base_destinos() { return 'envios-internacionales'; }
+
+add_action( 'init', function () {
+	$b = grenvios_upn_base_destinos();
+	add_rewrite_rule( '^' . $b . '/?$', 'index.php?pagename=destinos', 'top' );
+	add_rewrite_rule( '^' . $b . '/(.+?)/?$', 'index.php?pagename=destinos/$matches[1]', 'top' );
+}, 20 );
+
+add_filter( 'page_link', function ( $link, $post_id ) {
+	$uri = get_page_uri( $post_id );
+	if ( $uri !== 'destinos' && strpos( (string) $uri, 'destinos/' ) !== 0 ) return $link;
+	$r = preg_replace( '~^(https?://[^/]+(?:/[^/]+)*?)/destinos(/|$)~', '$1/' . grenvios_upn_base_destinos() . '$2', $link, 1 );
+	return is_string( $r ) ? $r : $link;
+}, 99, 2 );
+
+/* Enlaces escritos a mano (plantillas, guías, contenido guardado, migas en
+ * JSON-LD): se cambian sobre la página entera, al final, para no interferir
+ * con la reescritura de /destinos/<país>/ a la ficha de cada ruta. */
+function grenvios_upn_destinos_html( $html ) {
+	if ( ! is_string( $html ) || strpos( $html, 'destinos' ) === false ) return $html;
+	$root = untrailingslashit( function_exists( 'grenvios_i18n_site_root' ) ? grenvios_i18n_site_root() : get_option( 'home' ) );
+	$b    = grenvios_upn_base_destinos();
+	$html = str_replace(
+		array( $root . '/destinos/', str_replace( '/', '\/', $root ) . '\/destinos\/', 'href="/destinos/', "href='/destinos/" ),
+		array( $root . '/' . $b . '/', str_replace( '/', '\/', $root ) . '\/' . $b . '\/', 'href="/' . $b . '/', "href='/" . $b . '/' ),
+		$html
+	);
+	return $html;
+}
+add_action( 'template_redirect', function () {
+	if ( is_admin() || is_feed() || wp_doing_ajax() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) return;
+	ob_start( 'grenvios_upn_destinos_html' );
+}, 2 );
