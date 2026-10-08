@@ -192,8 +192,9 @@ add_filter( 'grenvios_text_registry', function ( $reg ) {
 	if ( ! is_admin() && function_exists( 'grenvios_hq_pais' ) && grenvios_hq_pais() !== '' ) return $reg;
 	foreach ( grenvios_ent_textos() as $slug => $txt ) {
 		if ( ! isset( $reg[ $slug ] ) ) continue;
-		// En la portada principal no se pinta (ver grenvios_ent_html): el campo no haría nada.
-		if ( $slug === 'home' ) continue;
+		// Solo donde la entradilla sigue saliendo: las páginas que la integran en
+		// su franja de cita (inc/servicio-intro-v2.php). En el resto se quita.
+		if ( ! function_exists( 'grenvios_si_paginas' ) || ! array_key_exists( $slug, grenvios_si_paginas() ) ) continue;
 		$reg[ $slug ]['sections'] = array_merge(
 			array( 'entradilla' => array(
 				'label'           => 'Entradilla SEO',
@@ -352,56 +353,15 @@ add_action( 'wp_head', function () {
 }, 108 );
 
 /* ─────────────────────────────────────────────────────────────────────────
- * Entradilla como sección (2026-10-07)
+ * Fuera la entradilla suelta (2026-10-08)
  *
- * Suelta bajo el hero era una caja de texto sola (406 de 423 páginas): el
- * cliente la veía «fea». Ahora es una sección de dos columnas: antetítulo,
- * el mismo texto, botón y foto. Se hace en la pasada final para no romper a
- * quien busca el marcado original (servicio-intro-v2 la mueve a su franja de
- * cita con prioridad 44/45). La clase gr-ent se conserva: el panel (dt y
- * «Entradilla SEO») la sigue encontrando.
+ * El cliente no la quiere: ni como caja de texto bajo el hero ni como sección
+ * con foto. Se quita en la pasada final, así las páginas de servicio que la
+ * integran en su propio diseño (servicio-intro-v2, prioridad 44/45, la mueve a
+ * su franja de cita) la conservan.
  * ───────────────────────────────────────────────────────────────────────── */
-function grenvios_ent_foto_defecto() {
-	$t = function_exists( 'grenvios_current_slug' ) && is_singular() ? get_the_title( get_queried_object_id() ) : '';
-	if ( $t === '' && is_home() ) $t = 'guías de envío';
-	$u = function_exists( 'grenvios_ej_por_tema' ) ? grenvios_ej_por_tema( $t, 'almacen', true ) : '';
-	/* «bodega» lleva el logo de otra empresa en uniformes y cajas. */
-	if ( strpos( $u, '/bodega.' ) !== false && function_exists( 'grenvios_ej_img' ) ) $u = grenvios_ej_img( 'almacen' );
-	return $u;
-}
-
-function grenvios_ent_sub_defecto() {
-	$pais = function_exists( 'grenvios_cab_pais' ) ? grenvios_cab_pais() : '';
-	return $pais !== '' ? 'Envíos a ' . $pais : 'En pocas palabras';
-}
-
 add_filter( 'grenvios_html_final', function ( $html ) {
-	if ( is_admin() || ! is_string( $html ) || strpos( $html, '<section class="gr-ent"><div class="container"><p class="gr-ent-p">' ) === false ) return $html;
-	$r = preg_replace_callback( '~<section class="gr-ent"><div class="container"><p class="gr-ent-p">(.*?)</p></div></section>~s', function ( $m ) {
-		$img = (string) grenvios_field( 'ent_img', '' );
-		if ( $img === '' ) $img = grenvios_ent_foto_defecto();
-		$sub = (string) grenvios_field( 'ent_sub', grenvios_ent_sub_defecto() );
-		$btn = (string) grenvios_field( 'ent_btn', 'Cotizar mi envío' );
-		$url = ( function_exists( 'grenvios_url_base' ) ? grenvios_url_base() : home_url() ) . '/cotizar/';
-		return '<section class="gr-ent gr-ent--sec"><div class="container"><div class="gr-ent-grid">'
-			. '<div class="gr-ent-tx wow fade-in-bottom" data-wow-delay="100ms">'
-			. ( $sub !== '' ? '<p class="gr-ent-sub">' . esc_html( $sub ) . '</p>' : '' )
-			. '<p class="gr-ent-p">' . $m[1] . '</p>'
-			. ( $btn !== '' ? '<a class="default-btn gr-ent-btn" href="' . esc_url( $url ) . '">' . esc_html( $btn ) . ' <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>' : '' )
-			. '</div>'
-			. ( $img !== '' ? '<figure class="gr-ent-foto wow fade-in-right" data-wow-delay="150ms"><img src="' . esc_url( $img ) . '" alt="" width="1200" height="800" decoding="async"></figure>' : '' )
-			. '</div></div></section>';
-	}, $html, 1 );
+	if ( is_admin() || ! is_string( $html ) || strpos( $html, '<section class="gr-ent">' ) === false ) return $html;
+	$r = preg_replace( '~<section class="gr-ent"><div class="container"><p class="gr-ent-p">.*?</p></div></section>~s', '', $html );
 	return is_string( $r ) ? $r : $html;
 }, 62 );
-
-/* Panel: foto, antetítulo y botón de la entradilla, en toda página que la tenga. */
-add_action( 'grenvios_editor_secciones', function ( $slug, $post_id = 0, $render_field = null ) {
-	if ( ! is_callable( $render_field ) || ! is_page() || $slug === 'home' ) return;
-	echo '<div class="nep-accordion" data-sel=".gr-ent"><button class="nep-acc-header" type="button"><span>📝 Entradilla · foto, antetítulo y botón</span><i class="fa-solid fa-chevron-down"></i></button>'
-		. '<div class="nep-acc-body"><div class="nep-grid">'
-		. $render_field( 'ent_img', 'Foto de la entradilla', 'image', (string) grenvios_field( 'ent_img', '' ), 'Vacía = una foto de ejemplo según el tema de la página.' )
-		. $render_field( 'ent_sub', 'Antetítulo', 'text', (string) grenvios_field( 'ent_sub', grenvios_ent_sub_defecto() ) )
-		. $render_field( 'ent_btn', 'Texto del botón (vacío = sin botón)', 'text', (string) grenvios_field( 'ent_btn', 'Cotizar mi envío' ) )
-		. '</div></div></div>';
-}, 6, 3 );
