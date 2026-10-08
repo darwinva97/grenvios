@@ -66,29 +66,42 @@
     </section>
     <!--/.about-section-->
 
-    <section class="blog-section padding-bottom">
+    <section class="gr-nh padding">
         <div class="container">
-            <div class="col-lg-10 mx-auto">
-                <div class="service-details text-center mb-40">
+            <div class="gr-nh-top">
+                <div class="gr-nh-cab wow fade-in-bottom" data-wow-delay="100ms">
+                    <p class="gr-nh-sub">{{nos_historia_sub}}</p>
                     <h2>{{nos_historia_title}}</h2>
+                    <div class="gr-nh-mapa" aria-hidden="true">
+                        <span class="gr-nh-mapa-img"></span>
+                        <svg class="gr-nh-rutas" viewBox="0 0 640 300" preserveAspectRatio="xMidYMid meet" focusable="false">
+                            <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="4 5" stroke-linecap="round">
+                                <path d="M10 250 C 60 190, 130 150, 175 130"/>
+                                <path d="M175 130 C 250 80, 330 70, 390 98"/>
+                                <path d="M390 98 C 430 140, 470 175, 500 210"/>
+                                <path d="M390 98 C 345 140, 300 180, 265 228"/>
+                                <path d="M390 98 C 450 50, 520 45, 600 75"/>
+                            </g>
+                            <circle class="gr-nh-halo" cx="175" cy="130" r="17"/>
+                            <g fill="currentColor"><circle cx="175" cy="130" r="9"/><circle cx="390" cy="98" r="6"/><circle cx="500" cy="210" r="5.5"/><circle cx="265" cy="228" r="6"/><circle cx="530" cy="47" r="5"/><circle cx="600" cy="118" r="5"/></g>
+                        </svg>
+                    </div>
+                </div>
+                <div class="gr-nh-tx wow fade-in-bottom" data-wow-delay="200ms">
                     <p>{{nos_historia_text}}</p>
                 </div>
             </div>
-            <div class="row gy-4">
-                <div class="col-lg-6">
-                    <div class="grenvios-info-card h-100">
-                        <div class="info-icon"><i class="fa-solid fa-bullseye"></i></div>
-                        <h3>{{nos_historia_mision_title}}</h3>
-                        <p>{{nos_historia_mision_text}}</p>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="grenvios-info-card h-100">
-                        <div class="info-icon"><i class="fa-solid fa-eye"></i></div>
-                        <h3>{{nos_historia_vision_title}}</h3>
-                        <p>{{nos_historia_vision_text}}</p>
-                    </div>
-                </div>
+            <div class="gr-nh-cards">
+                <article class="gr-nh-card wow fade-in-bottom" data-wow-delay="100ms">
+                    <span class="gr-nh-ic" aria-hidden="true"><i class="fa-solid fa-bullseye"></i></span>
+                    <h3>{{nos_historia_mision_title}}</h3>
+                    <p>{{nos_historia_mision_text}}</p>
+                </article>
+                <article class="gr-nh-card wow fade-in-bottom" data-wow-delay="200ms">
+                    <span class="gr-nh-ic" aria-hidden="true"><i class="fa-solid fa-eye"></i></span>
+                    <h3>{{nos_historia_vision_title}}</h3>
+                    <p>{{nos_historia_vision_text}}</p>
+                </article>
             </div>
         </div>
     </section>

@@ -1446,3 +1446,43 @@ body.gr-v2 .srv-features { padding: 20px 0 30px; }
 .gr-ppl-card p.gr-ppl-lead{color:var(--heading-color,#0c0c0c);font-weight:500}
 @media (max-width:767px){.gr-ppl-grid{grid-template-columns:1fr;gap:18px}.gr-ppl-card{padding:26px 20px 20px}.gr-ppl-card::before{left:20px;right:20px}}
 @media (prefers-reduced-motion:reduce){.gr-ppl-card,.gr-ppl-card:hover{transition:none;transform:none}}
+
+/* ════ Nosotros · «Nuestra historia» + Misión y Visión (maqueta 2026-10-08) ════
+ * Cabecera a la izquierda con mapa del mundo teñido y rutas punteadas, texto a
+ * la derecha, y dos tarjetas con icono vino en círculo y ruta decorativa. */
+.gr-nh { position: relative; overflow: hidden; background: linear-gradient(160deg, #fbf8f7 0%, #f8f1f1 55%, #fbf7f6 100%); }
+.gr-nh::before { content: ""; position: absolute; left: -10%; right: -10%; top: 46%; height: 70%; pointer-events: none;
+    background: linear-gradient(170deg, rgba(255, 255, 255, .7) 0%, rgba(247, 234, 236, .45) 100%); transform: skewY(-6deg); }
+.gr-nh .container { position: relative; z-index: 1; }
+.gr-nh-top { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+.gr-nh-sub { display: flex; align-items: center; gap: 18px; margin: 0 0 14px; font-size: 15px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--primary-color, #5e2129); }
+.gr-nh-sub::before { content: ""; width: 48px; height: 4px; border-radius: 4px; background: var(--primary-color, #5e2129); }
+.gr-nh-cab h2 { margin: 0; font-size: clamp(40px, 4.8vw, 68px); line-height: 1; white-space: nowrap; letter-spacing: -.035em; font-weight: 800; color: var(--heading-color, #0c0c0c); }
+.gr-nh-mapa { position: relative; margin: 14px 0 -70px; aspect-ratio: 640 / 300; color: var(--primary-color, #5e2129); }
+.gr-nh-mapa-img { position: absolute; inset: 0; background: #cf96a0; opacity: .7;
+    -webkit-mask: url("../img/map-pattern.png") center / contain no-repeat; mask: url("../img/map-pattern.png") center / contain no-repeat; }
+.gr-nh-rutas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.gr-nh-rutas path { opacity: .75; }
+.gr-nh-halo { fill: rgba(94, 33, 41, .12); stroke: rgba(94, 33, 41, .25); stroke-width: 1.5; }
+.gr-nh-tx { padding-top: 96px; }
+.gr-nh-tx p { margin: 0; font-size: 18px; line-height: 1.75; color: #4a4446; }
+.gr-nh-tx a { color: var(--primary-color, #5e2129); font-weight: 600; }
+.gr-nh-cards { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; margin-top: 30px; }
+.gr-nh-card { position: relative; overflow: hidden; padding: 36px 44px 40px; border-radius: 22px; border: 1px solid #efe4e4;
+    background: rgba(255, 255, 255, .78); backdrop-filter: blur(4px); box-shadow: 0 24px 50px -34px rgba(94, 33, 41, .35); transition: transform .3s ease, box-shadow .3s ease; }
+.gr-nh-card::after { content: ""; position: absolute; top: 18px; right: -10px; width: 230px; height: 140px; pointer-events: none;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 230 140'%3E%3Cpath d='M0 10 C 90 20, 170 40, 225 130' fill='none' stroke='%23c98a95' stroke-width='1.4' stroke-dasharray='4 5'/%3E%3Ccircle cx='170' cy='62' r='11' fill='%23f2dfe2'/%3E%3Ccircle cx='170' cy='62' r='6' fill='%23c98a95'/%3E%3C/svg%3E") no-repeat right top / contain; }
+.gr-nh-card:hover { transform: translateY(-5px); box-shadow: 0 30px 60px -32px rgba(94, 33, 41, .45); }
+.gr-nh-ic { display: inline-flex; align-items: center; justify-content: center; width: 68px; height: 68px; border-radius: 50%; margin-bottom: 18px;
+    background: linear-gradient(135deg, #8a2438 0%, var(--primary-color, #5e2129) 100%); color: #fff; font-size: 26px; box-shadow: 0 12px 24px -12px rgba(94, 33, 41, .6); }
+.gr-nh-card h3 { margin: 0 0 12px; font-size: clamp(26px, 2.4vw, 34px); letter-spacing: -.03em; font-weight: 800; color: var(--heading-color, #0c0c0c); }
+.gr-nh-card p { margin: 0; font-size: 17px; line-height: 1.65; color: #4a4446; }
+@media (max-width: 991px) {
+    .gr-nh-top { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+    .gr-nh-cab h2 { white-space: normal; }
+    .gr-nh-mapa { margin-bottom: 0; max-width: 560px; }
+    .gr-nh-tx { padding-top: 0; }
+    .gr-nh-cards { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+}
+@media (max-width: 575px) { .gr-nh-card { padding: 28px 24px 30px; } .gr-nh-tx p, .gr-nh-card p { font-size: 16px; } }
+@media (prefers-reduced-motion: reduce) { .gr-nh-card { transition: none; } .gr-nh-card:hover { transform: none; } }
