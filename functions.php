@@ -31,6 +31,7 @@ require_once get_template_directory() . '/inc/customizer.php';
 /* Editor de Página en línea: panel en el sitio que edita el texto de cada página
  * (post-meta por página). Reemplaza la edición de textos por Customizer. */
 require_once get_template_directory() . '/inc/page-editor.php';
+require_once get_template_directory() . '/inc/editor-entradas.php';
 
 /* Repeaters: contenido dinámico (añadir/quitar/reordenar ítems) por página.
  * Renderiza los tokens {{REP:clave}} de los partials. */
@@ -772,7 +773,10 @@ function grenvios_seo_for_slug( $slug, $post_id = 0 ) {
 		$md = (string) get_post_meta( $post_id, 'grenvios_seo_desc', true );
 		if ( $mt !== '' || $md !== '' ) {
 			$base = grenvios_seo_defaults_for_slug( $slug );
-			return array( $mt !== '' ? $mt : $base[0], $md !== '' ? $md : $base[1] );
+			/* Filtro `grenvios_seo_guardado`: lo usa inc/paises-cabecera.php para que
+			 * la copia de una ruta que sigue con el title literal de Perú hable de
+			 * su país (lo editado a mano se respeta). */
+			return (array) apply_filters( 'grenvios_seo_guardado', array( $mt !== '' ? $mt : $base[0], $md !== '' ? $md : $base[1] ), $post_id, $slug );
 		}
 	}
 	return grenvios_seo_defaults_for_slug( $slug );

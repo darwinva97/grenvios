@@ -148,3 +148,108 @@ add_filter( 'grenvios_miga_inicio', function ( $txt ) {
 	$pais = grenvios_cab_pais();
 	return $pais !== '' ? 'Envíos a ' . $pais : $txt;
 } );
+
+/* ══════════════════════════════════════════════════════════════════════════
+ *  Las páginas que faltaban (2026-10-06)
+ *
+ *  23 páginas por ruta salían con el H1 y el <title> de Perú («Envío de libros
+ *  al extranjero»), indexables y con canónica propia: no hablaban de su país y
+ *  eran la misma página en las nueve rutas. Cada patrón está escrito para la
+ *  intención de su página. Lo que la clienta edite en la copia manda.
+ * ══════════════════════════════════════════════════════════════════════════ */
+
+/* ¿La ruta actual tiene vía terrestre? (solo países vecinos). */
+function grenvios_cab_terrestre() {
+	$s = function_exists( 'grenvios_perfil_pais_actual' ) ? grenvios_perfil_pais_actual() : '';
+	$d = function_exists( 'grenvios_destinos' ) ? grenvios_destinos() : array();
+	return $s !== '' && ! empty( $d[ $s ]['terr'] );
+}
+
+/* Páginas de región: no tratan del país de la ruta. */
+function grenvios_cab_regiones() {
+	return array( 'envios-a-centroamerica-y-el-caribe', 'envios-a-europa', 'envios-a-norteamerica', 'envios-a-sudamerica' );
+}
+
+/* slug maestro => [ H1, title, description ]; %1$s = país. */
+function grenvios_cab_mas() {
+	$terr = grenvios_cab_terrestre();
+	return apply_filters( 'grenvios_cabecera_mas', array(
+		'carga-aerea-internacional'              => array( 'Carga aérea a <span>%1$s</span> desde Lima', 'Carga Aérea a %1$s desde Lima | Grenvíos', 'Envía carga por avión a %1$s desde Lima: qué admite la vía aérea, cómo se cotiza por peso o volumen y qué documentos necesitas.' ),
+		'carga-terrestre-internacional'          => $terr
+			? array( 'Carga terrestre a <span>%1$s</span> desde Lima', 'Carga Terrestre a %1$s desde Lima | Grenvíos', 'Carga por carretera de Lima a %1$s: qué admite la vía terrestre, plazos, impuesto pagado en Lima y cómo preparar el despacho.' )
+			: array( 'Carga a <span>%1$s</span>: va por avión, no por carretera', 'Carga a %1$s: Solo por Vía Aérea | Grenvíos', 'A %1$s no hay ruta terrestre desde Lima: la carga viaja por avión. Qué cambia en plazos, contenido admitido y documentos.' ),
+		'courier-internacional-en-lima'          => array( 'Courier en Lima para enviar a <span>%1$s</span>', 'Courier en Lima para Envíos a %1$s | Grenvíos', 'Courier en Lima para enviar documentos, paquetes y carga a %1$s: recojo, despacho, seguimiento y entrega en destino.' ),
+		'cuanto-cuesta-enviar-un-paquete-al-extranjero' => array( 'Cómo se calcula el precio de un paquete a <span>%1$s</span>', 'Cómo se Calcula el Envío a %1$s | Grenvíos', 'De qué depende el precio de un paquete a %1$s: peso real o volumétrico, vía de envío y valor declarado. Te lo confirmamos al cotizar.' ),
+		'embalaje-para-envios-internacionales'   => array( 'Cómo embalar un envío a <span>%1$s</span>', 'Embalaje para Envíos a %1$s: Guía | Grenvíos', 'Cómo embalar tu envío a %1$s para que llegue entero y no pague volumen de más: caja, relleno, frágiles y cierre.' ),
+		'encomiendas-internacionales'            => array( 'Encomiendas a <span>%1$s</span> desde Lima', 'Encomiendas a %1$s desde Lima | Grenvíos', 'Envía encomiendas a %1$s desde Lima: qué puedes mandar, cómo se declara el contenido y cómo la recibe tu familia.' ),
+		'envio-de-artesanias-al-extranjero'      => array( 'Envío de artesanías peruanas a <span>%1$s</span>', 'Enviar Artesanías Peruanas a %1$s | Grenvíos', 'Cómo enviar artesanías peruanas a %1$s: embalaje de piezas frágiles, declaración y qué revisa la aduana al llegar.' ),
+		'envio-de-celulares-y-laptops'           => array( 'Envío de celulares y laptops a <span>%1$s</span>', 'Enviar Celulares y Laptops a %1$s | Grenvíos', 'Cómo enviar celulares y laptops a %1$s: baterías, vía de envío, valor declarado y lo que pide la aduana del destino.' ),
+		'envio-de-correspondencia-internacional' => array( 'Envío de correspondencia a <span>%1$s</span> desde Lima', 'Correspondencia a %1$s desde Lima | Grenvíos', 'Envía cartas, tarjetas e invitaciones a %1$s desde Lima con seguimiento: qué va en un sobre y cómo llega.' ),
+		'envio-de-libros-al-extranjero'          => array( 'Envío de libros a <span>%1$s</span>', 'Enviar Libros a %1$s desde Lima | Grenvíos', 'Cómo enviar libros a %1$s desde Lima: embalaje para que no se doblen, peso volumétrico y cómo se declaran.' ),
+		'envio-de-medicinas-al-extranjero'       => array( 'Envío de medicinas a <span>%1$s</span> desde Perú', 'Enviar Medicinas a %1$s desde Perú | Grenvíos', 'Qué medicinas se pueden enviar a %1$s desde Perú: receta, envase original, cantidades de uso personal y declaración.' ),
+		'envio-de-muestras-comerciales'          => array( 'Envío de muestras comerciales a <span>%1$s</span>', 'Muestras Comerciales a %1$s | Grenvíos', 'Envía muestras comerciales a %1$s: factura proforma, valor declarado y cómo evitar que la aduana las trate como venta.' ),
+		'envio-de-regalos-al-extranjero'         => array( 'Envío de regalos a <span>%1$s</span> desde Lima', 'Enviar Regalos a %1$s desde Perú | Grenvíos', 'Envía regalos a %1$s desde Lima: qué se puede mandar, cómo embalarlo y con cuánta antelación para que llegue a tiempo.' ),
+		'envio-de-repuestos-al-extranjero'       => array( 'Envío de repuestos a <span>%1$s</span>', 'Enviar Repuestos a %1$s desde Lima | Grenvíos', 'Cómo enviar repuestos a %1$s desde Lima: piezas con o sin batería, embalaje, factura y vía de envío según el tamaño.' ),
+		'envio-de-ropa-al-extranjero'            => array( 'Envío de ropa a <span>%1$s</span>', 'Enviar Ropa a %1$s desde Lima | Grenvíos', 'Cómo enviar ropa y calzado a %1$s desde Lima: cómo declararla, cuánto ocupa la caja y qué revisa la aduana.' ),
+		'envio-express-internacional'            => array( 'Envío express a <span>%1$s</span> desde Lima', 'Envío Express a %1$s desde Lima | Grenvíos', 'Envío express a %1$s desde Lima para lo que no puede esperar: por vía aérea, con seguimiento y plazo confirmado al cotizar.' ),
+		'glosario-de-envios-internacionales'     => array( 'Glosario para enviar a <span>%1$s</span>', 'Glosario de Envíos a %1$s | Grenvíos', 'Las palabras que verás al enviar a %1$s: peso volumétrico, valor declarado, guía, aduana y entrega, explicadas en claro.' ),
+		'mudanzas-internacionales'               => array( 'Mudanzas pequeñas a <span>%1$s</span>', 'Mudanza a %1$s desde Lima | Grenvíos', 'Mudanzas pequeñas a %1$s desde Lima: qué se puede mandar, cómo embalar las cajas y qué vía conviene según el volumen.' ),
+		'traduccion-oficial-de-documentos'       => array( 'Traducción oficial de documentos para <span>%1$s</span>', 'Traducción Oficial para %1$s | Grenvíos', 'Traducción oficial de tus documentos para que tengan validez en %1$s, y envío del original apostillado desde Lima.' ),
+	) );
+}
+
+/* H1 (páginas pintadas desde PHP y de plantilla) por el mapa de arriba. */
+add_filter( 'grenvios_cabecera_titulos', function ( $mapa ) {
+	foreach ( grenvios_cab_mas() as $slug => $t ) {
+		if ( ! isset( $mapa[ $slug ] ) ) $mapa[ $slug ] = str_replace( '%1$s', '%s', $t[0] );
+	}
+	return $mapa;
+} );
+
+function grenvios_cab_seo_de( $slug ) {
+	$pais = grenvios_cab_pais();
+	$m    = grenvios_cab_mas();
+	if ( $pais === '' || ! isset( $m[ $slug ] ) ) return null;
+	$tok = function ( $t ) { return function_exists( 'grenvios_sede_tokens_apply' ) ? grenvios_sede_tokens_apply( $t ) : $t; };
+	return array( $tok( sprintf( $m[ $slug ][1], $pais ) ), $tok( sprintf( $m[ $slug ][2], $pais ) ) );
+}
+
+/* <title> y description: por defecto… */
+add_filter( 'grenvios_seo_defaults', function ( $base, $slug ) {
+	$s = grenvios_cab_seo_de( $slug );
+	return $s ? $s : $base;
+}, 40, 2 );
+
+/* …y también si la copia guardó el title de Perú tal cual (al duplicar se
+ * copian los metadatos). Lo que la clienta haya cambiado en la copia manda. */
+add_filter( 'grenvios_seo_guardado', function ( $par, $post_id, $slug ) {
+	$s = grenvios_cab_seo_de( $slug );
+	if ( ! $s || ! function_exists( 'grenvios_i18n_master_id' ) ) return $par;
+	$m = (int) grenvios_i18n_master_id( $post_id );
+	if ( ! $m || $m === (int) $post_id ) return $par;
+	$igual = function ( $k ) use ( $post_id, $m ) {
+		return (string) get_post_meta( $post_id, $k, true ) === (string) get_post_meta( $m, $k, true );
+	};
+	return array( $igual( 'grenvios_seo_title' ) ? $s[0] : $par[0], $igual( 'grenvios_seo_desc' ) ? $s[1] : $par[1] );
+}, 10, 3 );
+
+/* ── Páginas de región dentro de una ruta: copia de la de Perú ──
+ * «Envíos a Europa» dentro de /ar/ no habla de Argentina: canónica a la página
+ * de Perú y fuera del sitemap, como las demás copias (inc/seo-canibalizacion.php). */
+function grenvios_cab_region_original( $post_id ) {
+	if ( ! $post_id || ! function_exists( 'grenvios_i18n_master_id' ) || ! function_exists( 'grenvios_canonical_slug' ) ) return '';
+	if ( ! in_array( grenvios_canonical_slug( $post_id ), grenvios_cab_regiones(), true ) ) return '';
+	$m = (int) grenvios_i18n_master_id( $post_id );
+	return ( $m && $m !== (int) $post_id ) ? (string) get_permalink( $m ) : '';
+}
+add_filter( 'grenvios_canonical', function ( $url ) {
+	if ( ! is_singular( 'page' ) ) return $url;
+	$o = grenvios_cab_region_original( (int) get_queried_object_id() );
+	return $o !== '' ? $o : $url;
+}, 31 );
+add_filter( 'grenvios_sitemap_urls', function ( $urls ) {
+	foreach ( $urls as $i => $u ) {
+		if ( ! empty( $u['post_id'] ) && grenvios_cab_region_original( (int) $u['post_id'] ) !== '' ) unset( $urls[ $i ] );
+	}
+	return array_values( $urls );
+}, 57 );
