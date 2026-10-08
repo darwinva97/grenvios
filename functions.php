@@ -836,6 +836,20 @@ function grenvios_imagen_destacada( $id, $tam = 'full' ) {
 	return '';
 }
 
+/* Imagen destacada de la página con esa ruta («servicios/envio-de-equipaje»,
+ * «destinos/ecuador»), en su versión del país actual si existe. Para los
+ * listados que enlazan a páginas: así muestran la imagen que se le puso. */
+function grenvios_imagen_de_ruta( $ruta, $tam = 'large' ) {
+	$p = get_page_by_path( trim( (string) $ruta, '/' ) );
+	if ( ! $p ) return '';
+	$id = (int) $p->ID;
+	if ( function_exists( 'pll_get_post' ) && function_exists( 'grenvios_i18n_current' ) ) {
+		$t = (int) pll_get_post( $id, grenvios_i18n_current() );
+		if ( $t ) $id = $t;
+	}
+	return grenvios_imagen_destacada( $id, $tam );
+}
+
 /* Página que se está viendo (también la del blog, que no es «singular»). */
 function grenvios_og_post_id() {
 	if ( is_singular() ) return (int) get_queried_object_id();

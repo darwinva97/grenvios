@@ -49,8 +49,11 @@ function grenvios_hm_servicios_html() {
 	$base  = function_exists( 'grenvios_url_base' ) ? grenvios_url_base() : home_url();
 	$f     = function ( $k, $d ) { return function_exists( 'grenvios_field' ) ? grenvios_field( $k, $d ) : $d; };
 	$ej    = function ( $n ) { return function_exists( 'grenvios_ej_img' ) ? grenvios_ej_img( $n ) : ''; };
-	$img1  = trim( (string) $f( 'home_mas_img1', '' ) ); if ( $img1 === '' ) $img1 = $ej( 'equipaje' );
-	$img5  = trim( (string) $f( 'home_mas_img5', '' ) ); if ( $img5 === '' ) $img5 = $ej( 'almacen-pasillo' );
+	/* Foto: la del campo; si no, la imagen destacada del servicio enlazado; si no, una de ejemplo. */
+	$dest  = function ( $ruta ) { return function_exists( 'grenvios_imagen_de_ruta' ) ? grenvios_imagen_de_ruta( $ruta ) : ''; };
+	$svs   = grenvios_hm_servicios();
+	$img1  = trim( (string) $f( 'home_mas_img1', '' ) ); if ( $img1 === '' ) $img1 = $dest( $svs[0][2] ); if ( $img1 === '' ) $img1 = $ej( 'equipaje' );
+	$img5  = trim( (string) $f( 'home_mas_img5', '' ) ); if ( $img5 === '' ) $img5 = $dest( $svs[4][2] ); if ( $img5 === '' ) $img5 = $ej( 'almacen-pasillo' );
 	$badge = $f( 'home_mas_badge', 'Más consultado' );
 	$btn1  = $f( 'home_mas_btn1', 'Ver servicio' );
 	$btn5  = $f( 'home_mas_btn5', 'Soluciones para empresas' );
