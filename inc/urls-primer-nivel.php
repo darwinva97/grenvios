@@ -36,8 +36,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 /* 2: regenera las reglas sin los términos que chocan con páginas (y reintenta
  * los renombres, que en producción no se habían aplicado). */
-/* 3: reglas de /envios-internacionales/ (antes /destinos/). */
-define( 'GRENVIOS_UPN_V', 3 );
+/* 3: reglas de /envios-internacionales/ (antes /destinos/); 4: también /<ruta>/envios-internacionales/. */
+define( 'GRENVIOS_UPN_V', 4 );
 
 /* ─────────────────────────────────────────────────────────────────────────
  * 0) Renombres de términos que chocaban con páginas o entre taxonomías
@@ -267,6 +267,15 @@ add_action( 'template_redirect', function () {
 			}
 		}
 		return;
+	}
+
+	/* /ec/destinos-ecuador/ → /ec/envios-internacionales/. */
+	if ( is_page() && in_array( (int) get_queried_object_id(), grenvios_upn_hubs_ruta(), true ) ) {
+		$u = get_permalink( (int) get_queried_object_id() );
+		if ( $u && trim( (string) wp_parse_url( $u, PHP_URL_PATH ), '/' ) !== $ruta ) {
+			wp_safe_redirect( $u, 301, 'Grenvios' );
+			exit;
+		}
 	}
 
 	/* /destinos/[…] → /envios-internacionales/[…] (las fichas con otra canónica
@@ -545,13 +554,36 @@ add_filter( 'the_posts', function ( $posts, $q ) {
  * ───────────────────────────────────────────────────────────────────────── */
 function grenvios_upn_base_destinos() { return 'envios-internacionales'; }
 
+/* Hub de cada ruta: lang => ID de su copia del hub (/ec/destinos-ecuador/). */
+function grenvios_upn_hubs_ruta() {
+	static $m = null;
+	if ( $m !== null ) return $m;
+	$m   = array();
+	$hub = get_page_by_path( 'destinos' );
+	if ( ! $hub || ! function_exists( 'pll_languages_list' ) || ! function_exists( 'pll_get_post' ) ) return $m;
+	foreach ( pll_languages_list() as $l ) {
+		$t = (int) pll_get_post( $hub->ID, $l );
+		if ( $t && $t !== (int) $hub->ID && get_post_status( $t ) === 'publish' ) $m[ $l ] = $t;
+	}
+	return $m;
+}
+
 add_action( 'init', function () {
 	$b = grenvios_upn_base_destinos();
 	add_rewrite_rule( '^' . $b . '/?$', 'index.php?pagename=destinos', 'top' );
 	add_rewrite_rule( '^' . $b . '/(.+?)/?$', 'index.php?pagename=destinos/$matches[1]', 'top' );
+	/* /ec/envios-internacionales/ → el hub de la ruta de Ecuador. */
+	foreach ( grenvios_upn_hubs_ruta() as $l => $id ) {
+		add_rewrite_rule( '^' . preg_quote( $l, '#' ) . '/' . $b . '/?$', 'index.php?page_id=' . $id . '&lang=' . $l, 'top' );
+	}
 }, 20 );
 
 add_filter( 'page_link', function ( $link, $post_id ) {
+	$l = array_search( (int) $post_id, grenvios_upn_hubs_ruta(), true );
+	if ( $l !== false ) {
+		$root = untrailingslashit( function_exists( 'grenvios_i18n_site_root' ) ? grenvios_i18n_site_root() : get_option( 'home' ) );
+		return $root . '/' . $l . '/' . grenvios_upn_base_destinos() . '/';
+	}
 	$uri = get_page_uri( $post_id );
 	if ( $uri !== 'destinos' && strpos( (string) $uri, 'destinos/' ) !== 0 ) return $link;
 	$r = preg_replace( '~^(https?://[^/]+(?:/[^/]+)*?)/destinos(/|$)~', '$1/' . grenvios_upn_base_destinos() . '$2', $link, 1 );
