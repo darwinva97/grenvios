@@ -21,7 +21,8 @@
  */
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'GRENVIOS_DESTACADAS_V', 1 );
+/* 2: recorre todo por ID (la v1 saltaba las que tenían _thumbnail_id vacío o a 0). */
+define( 'GRENVIOS_DESTACADAS_V', 2 );
 
 /* Nombre de foto de ejemplo => ID de adjunto (sube las que falten). */
 function grenvios_dest_medios() {
@@ -67,31 +68,56 @@ function grenvios_dest_para( $post ) {
 }
 
 function grenvios_dest_asignar( $post_id ) {
-	if ( has_post_thumbnail( $post_id ) ) return false;
+	$t = (int) get_post_thumbnail_id( $post_id );
+	if ( $t && get_post( $t ) && wp_attachment_is_image( $t ) ) return false;   // ya tiene una imagen válida
 	/* La portada principal ya comparte la foto real de su carrusel. */
 	if ( (int) $post_id === (int) get_option( 'page_on_front' ) ) return false;
 	$id = grenvios_dest_para( $post_id );
 	return $id ? (bool) set_post_thumbnail( $post_id, $id ) : false;
 }
 
-/* Tanda en el panel hasta que no quede ninguna sin imagen. */
+/* Tanda en el panel: recorre TODAS las páginas y entradas por ID y comprueba
+ * de verdad si tienen imagen (has_post_thumbnail). Buscar «sin _thumbnail_id»
+ * no basta: hay copias con el campo vacío, a 0 o apuntando a una imagen
+ * borrada, y esas se quedaban sin imagen. */
 add_action( 'admin_init', function () {
 	if ( wp_doing_ajax() || ! current_user_can( 'manage_options' ) ) return;
 	if ( (int) get_option( 'grenvios_destacadas_v' ) >= GRENVIOS_DESTACADAS_V ) return;
-	$ids = get_posts( array(
-		'post_type'        => array( 'page', 'post' ),
-		'post_status'      => 'publish',
-		'numberposts'      => 200,
-		'fields'           => 'ids',
-		'lang'             => '',
-		'suppress_filters' => true,
-		'meta_query'       => array( array( 'key' => '_thumbnail_id', 'compare' => 'NOT EXISTS' ) ),
+	if ( ! grenvios_dest_medios() ) return;   // sin fotos subidas no hay qué asignar (ver aviso)
+	global $wpdb;
+	$desde = (int) get_option( 'grenvios_destacadas_cursor', 0 );
+	$ids   = $wpdb->get_col( $wpdb->prepare(
+		"SELECT ID FROM {$wpdb->posts} WHERE post_type IN ('page','post') AND post_status='publish' AND ID > %d ORDER BY ID ASC LIMIT 300", $desde
 	) );
 	foreach ( $ids as $id ) grenvios_dest_asignar( (int) $id );
-	if ( count( $ids ) < 200 ) {
+	if ( $ids ) update_option( 'grenvios_destacadas_cursor', (int) end( $ids ), false );
+	if ( count( $ids ) < 300 ) {
 		update_option( 'grenvios_destacadas_v', GRENVIOS_DESTACADAS_V );
+		delete_option( 'grenvios_destacadas_cursor' );
 		if ( function_exists( 'grenvios_cache_bump' ) ) grenvios_cache_bump();
 	}
+} );
+
+/* Al abrir una página o entrada en el editor, si no tiene imagen, se le pone ya. */
+add_action( 'load-post.php', function () {
+	$id = isset( $_GET['post'] ) ? (int) $_GET['post'] : 0;
+	if ( $id && current_user_can( 'edit_post', $id ) && get_post_status( $id ) === 'publish' && in_array( get_post_type( $id ), array( 'page', 'post' ), true ) ) {
+		grenvios_dest_asignar( $id );
+	}
+} );
+
+/* El editor de bloques guarda «featured_media» DESPUÉS de save_post: se vuelve a
+ * comprobar cuando ya terminó. */
+foreach ( array( 'page', 'post' ) as $tipo ) {
+	add_action( 'rest_after_insert_' . $tipo, function ( $post ) {
+		if ( $post && $post->post_status === 'publish' ) grenvios_dest_asignar( $post->ID );
+	} );
+}
+
+/* Si las fotos de ejemplo no se pudieron subir, que se vea. */
+add_action( 'admin_notices', function () {
+	if ( ! current_user_can( 'manage_options' ) || grenvios_dest_medios() ) return;
+	echo '<div class="notice notice-warning"><p><strong>Grenvíos:</strong> no se pudieron subir a la Biblioteca de medios las fotos de ejemplo para las imágenes destacadas. Revisa que la carpeta de subidas tenga permisos de escritura y que el servidor admita imágenes WebP.</p></div>';
 } );
 
 /* Lo nuevo (o lo que se guarde sin imagen) también la recibe. */
