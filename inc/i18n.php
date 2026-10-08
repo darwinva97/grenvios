@@ -142,6 +142,14 @@ function grenvios_i18n_master_id( $post_id ) {
 	return $m ? $m : $post_id;
 }
 
+/* ¿Es la copia en una ruta del hub de destinos («Envíos internacionales»)? */
+function grenvios_es_hub_espejo( $post_id ) {
+	static $hub = null;
+	if ( $hub === null ) { $h = get_page_by_path( 'destinos' ); $hub = $h ? (int) $h->ID : 0; }
+	return $hub && function_exists( 'grenvios_espejo_es' ) && grenvios_espejo_es( $post_id )
+		&& (int) get_post_meta( (int) $post_id, '_grenvios_espejo', true ) === $hub;
+}
+
 /* Traducción de una página a un idioma (0 si aún no existe). */
 function grenvios_i18n_translation_id( $post_id, $lang ) {
 	if ( ! grenvios_i18n_active() || ! $post_id ) return 0;
@@ -150,7 +158,10 @@ function grenvios_i18n_translation_id( $post_id, $lang ) {
 	 * para que la ruta quede completa, pero no deben recibir enlaces: el menú,
 	 * los enlaces del contenido y el selector de país siguen llevando a la
 	 * página real del destino. Para el tema, un espejo no es una traducción. */
-	if ( $t && function_exists( 'grenvios_espejo_es' ) && grenvios_espejo_es( $t ) ) return 0;
+	/* Excepción: el hub «Envíos internacionales» de cada ruta SÍ recibe enlaces,
+	 * para que el menú no saque al visitante de su país (canónica a la de Perú y
+	 * fuera del sitemap, como todo espejo). */
+	if ( $t && function_exists( 'grenvios_espejo_es' ) && grenvios_espejo_es( $t ) && ! grenvios_es_hub_espejo( $t ) ) return 0;
 	return $t;
 }
 
