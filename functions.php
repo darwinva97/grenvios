@@ -141,6 +141,7 @@ require_once get_template_directory() . '/inc/ui-global.php';
 require_once get_template_directory() . '/inc/estilo-v2.php';
 // Fotos de ejemplo en lugar de los rellenos grises de la plantilla (se sustituyen al subir una propia).
 require_once get_template_directory() . '/inc/imagenes-ejemplo.php';
+require_once get_template_directory() . '/inc/imagenes-destacadas.php';
 // Intro de servicio v2: antetítulo, iconos, botones, foto con tarjeta y cita (maqueta carga internacional).
 require_once get_template_directory() . '/inc/servicio-intro-v2.php';
 // SEO: /destinos/<país>/ cede la canónica a la ficha de la ruta del país (evita canibalización).
