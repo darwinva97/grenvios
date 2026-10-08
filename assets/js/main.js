@@ -323,21 +323,25 @@
 
         // Mobile Menu
         function mobileMenu() {
-            $("header.main-header").after('<div class="mobile-navigation-menu"><button id="mobile-menu-close"><i class="fa-regular fa-xmark"></i></button></div>');
-            var menuWrapper = $("header.main-header .header-menu-wrap .nav-menu").clone();
+            // Una sola vez: si main.js se ejecuta dos veces (caché o
+            // optimizador que sirve dos versiones), el panel salía duplicado.
+            if ($(".mobile-navigation-menu").length) return;
+            var cabecera = $("header.main-header").first();
+            cabecera.after('<div class="mobile-navigation-menu"><button id="mobile-menu-close"><i class="fa-regular fa-xmark"></i></button></div>');
+            var menuWrapper = cabecera.find(".header-menu-wrap .nav-menu").first().clone();
 
             // El selector de país vive fuera del menú (en el bloque de la lupa y
             // Cotizar) para que un nombre largo no parta el encabezado en dos
             // líneas. Pero el menú móvil se clona de .nav-menu, así que sin esto
             // en móvil desaparecía la forma de cambiar de país.
-            var langMenu = $("header.main-header .menu-right-item .grenvios-lang-menu").children().clone();
-            if (langMenu.length) {
+            var langMenu = cabecera.find(".menu-right-item .grenvios-lang-menu").first().children(".grenvios-lang-switcher").first().clone();
+            if (langMenu.length && !menuWrapper.find(".grenvios-lang-switcher").length) {
                 menuWrapper.append(langMenu);
             }
 
             $('.mobile-navigation-menu #mobile-menu-close').after(menuWrapper);
 
-            $("#mobile-menu-close, .mobile-menu-icon").on("click", function () {
+            $("#mobile-menu-close, .mobile-menu-icon").off("click.grmenu").on("click.grmenu", function () {
                 $(".mobile-menu-icon").toggleClass("menu-open");
                 $(".mobile-navigation-menu").toggleClass("open-mobile-menu");
             });
