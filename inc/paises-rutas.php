@@ -663,6 +663,27 @@ function grenvios_rutas_reescribir_destinos( $html ) {
 	return grenvios_rutas_reescribir_destinos_raw( $html );
 }
 
+/* Ficha de un destino DENTRO de la ruta que se está viendo (en Perú, la del hub
+ * principal; en /bo/, su copia /bo/envios-internacionales/ecuador/). '' si es el
+ * propio país de la ruta (va a su ficha de siempre) o si no hay copia. */
+function grenvios_rutas_ficha_en_ruta( $slug ) {
+	static $c = array();
+	$lang = function_exists( 'grenvios_i18n_current' ) ? (string) grenvios_i18n_current() : '';
+	$k = $lang . '|' . $slug;
+	if ( isset( $c[ $k ] ) ) return $c[ $k ];
+	$m = get_page_by_path( 'destinos/' . $slug );
+	if ( ! $m || get_post_status( $m ) !== 'publish' ) return $c[ $k ] = '';
+	$ruta = function_exists( 'grenvios_es_ruta_pais' ) && $lang !== '' && grenvios_es_ruta_pais( $lang );
+	if ( $ruta && function_exists( 'grenvios_sede_destino_propio' ) && grenvios_sede_destino_propio( $lang ) === $slug ) return $c[ $k ] = '';
+	$id = (int) $m->ID;
+	if ( $ruta && function_exists( 'pll_get_post' ) ) {
+		$t = (int) pll_get_post( $id, $lang );
+		if ( ! $t || $t === $id || get_post_status( $t ) !== 'publish' ) return $c[ $k ] = '';
+		$id = $t;
+	}
+	return $c[ $k ] = (string) get_permalink( $id );
+}
+
 /* El trabajo de verdad, sin caché. */
 function grenvios_rutas_reescribir_destinos_raw( $html ) {
 
@@ -683,6 +704,8 @@ function grenvios_rutas_reescribir_destinos_raw( $html ) {
 	return preg_replace_callback(
 		'~href="([^"]*?/destinos/([a-z0-9-]+)/?)"(?!\s+hreflang=)~i',   // el selector de país no se toca
 		function ( $m ) use ( $mapa ) {
+			$u = grenvios_rutas_ficha_en_ruta( strtolower( $m[2] ) );
+			if ( $u !== '' ) return 'href="' . esc_url( $u ) . '"';
 			return isset( $mapa[ $m[2] ] ) ? 'href="' . esc_url( $mapa[ $m[2] ] ) . '"' : $m[0];
 		},
 		$html
@@ -706,6 +729,8 @@ function grenvios_rutas_url_destino( $url ) {
 
 	if ( ! preg_match( '~/destinos/([a-z0-9-]+)/?$~i', $url, $m ) ) return $url;
 	$pais = strtolower( $m[1] );
+	$u = grenvios_rutas_ficha_en_ruta( $pais );
+	if ( $u !== '' ) return $u;
 
 	foreach ( grenvios_sedes() as $lang => $l ) {
 		if ( ! grenvios_es_ruta_pais( $lang ) ) continue;

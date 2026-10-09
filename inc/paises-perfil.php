@@ -270,6 +270,8 @@ function grenvios_perfil_render( $base, $slug_pais ) {
 /* País de la ruta actual ('' en la ruta principal). */
 function grenvios_perfil_pais_actual() {
 	if ( ! function_exists( 'grenvios_i18n_current' ) || ! function_exists( 'grenvios_es_ruta_pais' ) ) return '';
+	/* La ficha de Ecuador vista dentro de /bo/ habla de Ecuador, no de Bolivia. */
+	if ( is_singular() && function_exists( 'grenvios_espejo_es' ) && grenvios_espejo_es( (int) get_queried_object_id() ) ) return '';
 	$lang = grenvios_i18n_current();
 	if ( ! grenvios_es_ruta_pais( $lang ) || ! function_exists( 'grenvios_sede_destino_propio' ) ) return '';
 	return (string) grenvios_sede_destino_propio( $lang );

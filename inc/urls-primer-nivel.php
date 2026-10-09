@@ -36,8 +36,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 /* 2: regenera las reglas sin los términos que chocan con páginas (y reintenta
  * los renombres, que en producción no se habían aplicado). */
-/* 3: reglas de /envios-internacionales/ (antes /destinos/); 4: también /<ruta>/envios-internacionales/. */
-define( 'GRENVIOS_UPN_V', 4 );
+/* 3: /envios-internacionales/ (antes /destinos/); 4: /<ruta>/envios-internacionales/; 5: /<ruta>/envios-internacionales/<país>/. */
+define( 'GRENVIOS_UPN_V', 5 );
 
 /* ─────────────────────────────────────────────────────────────────────────
  * 0) Renombres de términos que chocaban con páginas o entre taxonomías
@@ -282,9 +282,8 @@ add_action( 'template_redirect', function () {
 	 * las lleva el bloque de abajo directamente a su ficha de ruta). */
 	if ( is_page() && ( $ruta === 'destinos' || strpos( $ruta, 'destinos/' ) === 0 ) ) {
 		$id = (int) get_queried_object_id();
-		$c  = function_exists( 'grenvios_canib_ficha_de' ) ? grenvios_canib_ficha_de( $id ) : '';
 		$u  = get_permalink( $id );
-		if ( $c === '' && $u && trim( (string) wp_parse_url( $u, PHP_URL_PATH ), '/' ) !== $ruta ) {
+		if ( $u && trim( (string) wp_parse_url( $u, PHP_URL_PATH ), '/' ) !== $ruta ) {
 			wp_safe_redirect( $u, 301, 'Grenvios' );
 			exit;
 		}
@@ -303,6 +302,17 @@ add_action( 'template_redirect', function () {
 	if ( is_singular( 'page' ) && ! is_user_logged_in() ) {
 		$id = (int) get_queried_object_id();
 		$p  = get_post( $id );
+		/* Fichas del hub (en Perú o dentro de una ruta): se ven en su propia ruta para
+		 * que el menú no saque al visitante de su país. Canónica a la ficha del país
+		 * y fuera del sitemap, así que no compiten en Google. Solo se normaliza la URL. */
+		if ( $p && $p->post_parent && in_array( (int) $p->post_parent, grenvios_upn_hubs_todos(), true ) ) {
+			$u = get_permalink( $id );
+			if ( $u && trim( (string) wp_parse_url( $u, PHP_URL_PATH ), '/' ) !== $ruta ) {
+				wp_safe_redirect( $u, 301, 'Grenvios' );
+				exit;
+			}
+			return;
+		}
 		if ( $p && $p->post_parent ) {
 			$c = '';
 			if ( function_exists( 'grenvios_espejo_es' ) && grenvios_espejo_es( $id ) && function_exists( 'grenvios_espejo_canonica' ) ) $c = grenvios_espejo_canonica( $id );
@@ -575,15 +585,26 @@ add_action( 'init', function () {
 	/* /ec/envios-internacionales/ → el hub de la ruta de Ecuador. */
 	foreach ( grenvios_upn_hubs_ruta() as $l => $id ) {
 		add_rewrite_rule( '^' . preg_quote( $l, '#' ) . '/' . $b . '/?$', 'index.php?page_id=' . $id . '&lang=' . $l, 'top' );
+		$hs = get_post_field( 'post_name', $id );
+		if ( $hs ) add_rewrite_rule( '^' . preg_quote( $l, '#' ) . '/' . $b . '/([^/]+)/?$', 'index.php?pagename=' . $hs . '/$matches[1]&lang=' . $l, 'top' );
 	}
 }, 20 );
 
+/* Hub de Perú y de todas las rutas (IDs). */
+function grenvios_upn_hubs_todos() {
+	$h = get_page_by_path( 'destinos' );
+	return array_values( array_merge( $h ? array( (int) $h->ID ) : array(), grenvios_upn_hubs_ruta() ) );
+}
+
 add_filter( 'page_link', function ( $link, $post_id ) {
-	$l = array_search( (int) $post_id, grenvios_upn_hubs_ruta(), true );
-	if ( $l !== false ) {
-		$root = untrailingslashit( function_exists( 'grenvios_i18n_site_root' ) ? grenvios_i18n_site_root() : get_option( 'home' ) );
-		return $root . '/' . $l . '/' . grenvios_upn_base_destinos() . '/';
-	}
+	$hubs = grenvios_upn_hubs_ruta();
+	$root = untrailingslashit( function_exists( 'grenvios_i18n_site_root' ) ? grenvios_i18n_site_root() : get_option( 'home' ) );
+	$l = array_search( (int) $post_id, $hubs, true );
+	if ( $l !== false ) return $root . '/' . $l . '/' . grenvios_upn_base_destinos() . '/';
+	/* Ficha dentro de una ruta: /bo/envios-internacionales/ecuador/. */
+	$par = (int) wp_get_post_parent_id( $post_id );
+	$l   = $par ? array_search( $par, $hubs, true ) : false;
+	if ( $l !== false ) return $root . '/' . $l . '/' . grenvios_upn_base_destinos() . '/' . get_post_field( 'post_name', $post_id ) . '/';
 	$uri = get_page_uri( $post_id );
 	if ( $uri !== 'destinos' && strpos( (string) $uri, 'destinos/' ) !== 0 ) return $link;
 	$r = preg_replace( '~^(https?://[^/]+(?:/[^/]+)*?)/destinos(/|$)~', '$1/' . grenvios_upn_base_destinos() . '$2', $link, 1 );
