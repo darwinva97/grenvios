@@ -155,6 +155,15 @@ add_action( 'wp_enqueue_scripts', function () {
 	if ( file_exists( $f ) ) wp_enqueue_style( 'gr-blog', get_template_directory_uri() . '/assets/css/gr-blog.css', array(), (string) filemtime( $f ) );
 }, 30 );
 
+/* Paleta del blog: listado, categorías, etiquetas y detalle de la entrada. Las
+ * cabeceras conservan su color (assets/css/gr-paleta-blog.css solo toca el
+ * contenido). Prioridad alta para cargar después del resto de hojas. */
+add_action( 'wp_enqueue_scripts', function () {
+	if ( ! ( ( is_home() && ! is_front_page() ) || is_category() || is_tag() || is_singular( 'post' ) ) ) return;
+	$f = get_template_directory() . '/assets/css/gr-paleta-blog.css';
+	if ( file_exists( $f ) ) wp_enqueue_style( 'gr-paleta-blog', get_template_directory_uri() . '/assets/css/gr-paleta-blog.css', array(), (string) filemtime( $f ) );
+}, 99 );
+
 /* ── Schema: autor organización e imagen real ───────────────────────── */
 add_filter( 'grenvios_blogposting_node', function ( $node, $id ) {
 	$home = untrailingslashit( home_url() );
