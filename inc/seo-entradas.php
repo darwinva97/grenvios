@@ -92,6 +92,14 @@ add_filter( 'pre_get_document_title', function ( $title ) {
 	 * de los dos puntos («Valor declarado de un envío a Ecuador: cómo…»), así
 	 * que el <title> se queda con esa parte; el H1 conserva el título entero. */
 	if ( mb_strlen( $t . ' | Grenvíos' ) > 60 && ( $c = mb_strpos( $t, ':' ) ) !== false && $c >= 12 ) $t = mb_substr( $t, 0, $c );
+	/* Si el país iba después de los dos puntos, el corte lo perdía y las nueve
+	 * rutas compartían el mismo <title> (duplicado para Google): se añade. Si no
+	 * cabe con la marca, se prioriza el país. */
+	$pais = function_exists( 'grenvios_se_pais' ) ? grenvios_se_pais() : '';
+	if ( $pais !== '' && mb_stripos( $t, $pais ) === false ) {
+		$t .= ' a ' . $pais;
+		if ( mb_strlen( $t . ' | Grenvíos' ) > 60 ) return $t;
+	}
 	return $t . ' | Grenvíos';
 }, 25 );
 

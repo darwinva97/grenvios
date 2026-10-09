@@ -317,6 +317,34 @@ add_action( 'template_redirect', function () {
 
 	if ( ! is_404() ) return;
 
+	/* Copias borradas que Google tenía indexadas (2026-10-09):
+	 *   /x-2/, /ar/x-3-a-argentina/ → la página sin el sufijo, si existe;
+	 *   /sample-page/, /ar/sample-page-a-argentina/ → la portada de su ruta.
+	 * Un 301 conserva lo ganado en vez de un 404. */
+	if ( preg_match( '~^((?:[a-z]{2}/)?)(?:sample-page|hello-world)(?:-a-[a-z-]+)?$~', $ruta, $m ) ) {
+		wp_safe_redirect( home_url( '/' . $m[1] ), 301, 'Grenvios' );
+		exit;
+	}
+	if ( preg_match( '~^(.*?)-[234]((?:-(?:a|para)-[a-z-]+)?)$~', $ruta, $m ) ) {
+		$base = untrailingslashit( function_exists( 'grenvios_i18n_site_root' ) ? grenvios_i18n_site_root() : get_option( 'home' ) );
+		$cand = $base . '/' . $m[1] . $m[2] . '/';
+		if ( url_to_postid( $cand ) ) {
+			wp_safe_redirect( $cand, 301, 'Grenvios' );
+			exit;
+		}
+		/* En una ruta el slug del país no siempre es «-a-X» (apostilla «-para-X»):
+		 * se busca la página de Perú y su versión en esa ruta. */
+		if ( preg_match( '~^([a-z]{2})/(.+)$~', $m[1], $r ) && function_exists( 'pll_get_post' ) ) {
+			$master = get_page_by_path( $r[2] );
+			if ( ! $master && ( $s = get_posts( array( 'post_type' => 'page', 'name' => $r[2], 'numberposts' => 1, 'lang' => '', 'suppress_filters' => true ) ) ) ) $master = $s[0];
+			$t = $master ? (int) pll_get_post( $master->ID, $r[1] ) : 0;
+			if ( $t && get_post_status( $t ) === 'publish' ) {
+				wp_safe_redirect( get_permalink( $t ), 301, 'Grenvios' );
+				exit;
+			}
+		}
+	}
+
 	/* /[ruta/]AAAA/MM/DD/slug/ → la entrada. */
 	if ( preg_match( '~^(?:[a-z]{2}/)?20\d\d/\d\d/\d\d/([^/]+)$~', $ruta, $m ) ) {
 		$id = grenvios_upn_entrada_por_slug( $m[1] );

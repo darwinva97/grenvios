@@ -913,6 +913,16 @@ add_action( 'wp_head', function () {
 		$term = get_queried_object();
 		if ( $term && ! is_wp_error( $term ) ) {
 			$td = wp_strip_all_tags( (string) $term->description );
+			/* En una ruta, la misma descripción salía en los diez países (duplicado
+			 * para Google): se antepone el país y se deja en 160 caracteres. */
+			$cp = function_exists( 'grenvios_cab_pais' ) ? grenvios_cab_pais() : '';
+			if ( $td !== '' && $cp !== '' ) {
+				$td = 'Guías para enviar a ' . $cp . '. ' . $td;
+				if ( mb_strlen( $td ) > 160 ) {
+					$td = mb_substr( $td, 0, 157 );
+					$td = mb_substr( $td, 0, (int) mb_strrpos( $td, ' ' ) ) . '…';
+				}
+			}
 			$desc = $td !== ''
 				? $td
 				: sprintf(
